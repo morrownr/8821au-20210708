@@ -1,6 +1,5 @@
 ##### [Click for USB WiFi Adapter Information for Linux](https://github.com/morrownr/USB-WiFi)
 
-
 -----
 
 ### 8821au ( 8821au.ko ) :rocket:
@@ -35,8 +34,8 @@
 
 ### Compatible Kernels
 
-- Kernels: 2.6.24 - 5.11 (Realtek)
-- Kernels: 5.12 - 5.14 
+- Kernels: 4.15 - 5.11 (Realtek)
+- Kernels: 5.12 - 5.14 (community support)
 
 ### Tested Linux Distributions
 
@@ -46,7 +45,6 @@
 - Fedora (kernel 5.11)
 
 - Linux Mint 20.2 (Linux Mint based on Ubuntu) (kernel 5.11)
-- Linux Mint 20   (Linux Mint based on Ubuntu) (kernel 5.4)
 
 - LMDE 4 (Linux Mint based on Debian) (kernel 4.19)
 
@@ -56,6 +54,7 @@
 - Raspberry Pi Desktop (x86 32 bit) (kernel 4.19)
 
 - Ubuntu 21.04 (kernel 5.11)
+- Ubuntu 20.10 (kernel 5.8)
 - Ubuntu 20.04 (kernel 5.4)
 
 ### Download Locations for Tested Linux Distributions
@@ -86,13 +85,13 @@
 * TP Link T2U Plus
 * Numerous products that are based on the supported chipsets
 
-Note: Some adapter makers change the chipsets in their products while keeping the same model number so please check to confirm that the product you plan to buy has the chipset you are expecting.
+Note: Please read "supported-device-IDs" for information about how to confirm the correct driver for your adapter.
 
 ### Installation Information
 
 The installation instructions are for the novice user. Experienced users are welcome to alter the installation to meet their needs.
 
-Temporary internet access is required for installation. There are numerous ways to enable temporary internet access depending on your hardware and situation. [One method is to use tethering from a phone.](https://www.makeuseof.com/tag/how-to-tether-your-smartphone-in-linux). Another method to enable temporary internet access is to keep a [wifi adapter that uses an in-kernel driver](https://github.com/morrownr/USB-WiFi) in your toolkit.
+Temporary internet access is required for installation. There are numerous ways to enable temporary internet access depending on your hardware and situation. [One method is to use tethering from a phone.](https://www.makeuseof.com/tag/how-to-tether-your-smartphone-in-linux) Another method to enable temporary internet access is to keep a [wifi adapter that uses an in-kernel driver](https://github.com/morrownr/USB-WiFi) in your toolkit.
 
 You will need to use the terminal interface. The quick way to open a terminal: Ctrl+Alt+T (hold down on the Ctrl and Alt keys then press the T key)
 
@@ -108,7 +107,7 @@ Step 1: Open a terminal (Ctrl+Alt+T)
 
 Step 2: Update the system (select the option for the OS you are using)
 ```
-    Option for Debian based distributions such as Ubuntu, Linux Mint, Kali and the Raspberry Pi OS
+    Option for Debian based distributions such as Ubuntu, Linux Mint, Kali and Raspberry Pi OS
 
     $ sudo apt update
 ```
@@ -136,22 +135,23 @@ Step 3: Install the required packages (select the option for the OS you are usin
 ```
     Option for Ubuntu (all flavors) or Linux Mint
 
-    $ sudo apt install -y dkms git
+    $ sudo apt install -y dkms git build-essential
 ```
 ```
     Options for Arch or Manjaro
 
-    1) if using pacman
+    if using pacman
 
     $ sudo pacman -S --noconfirm linux-headers dkms git
-```
-Note: If you are asked to choose a provider, make sure to choose the one that corresponds to your version of the linux kernel (for example, ```linux510-headers``` for Linux kernel version 5.10) if you install the incorrect version, you'll have to uninstall it and reinstall the correct version.
-```
-    2) if using an AUR helper like paru or yay
 
-    $ paru -S rtl8814au-dkms-git
+    Note: If you are asked to choose a provider, make sure to choose the one that
+    corresponds to your version of the linux kernel (for example, "linux510-headers"
+    for Linux kernel version 5.10) if you install the incorrect version, you'll have
+    to uninstall it and reinstall the correct version.
+
+    if using other methods, please follow the instructions provided by those methods
+
 ```
-Note: Make sure to uninstall any existing driver installations from other installation method. If the installation fails and its cause is related to AUR's BUILDPKG script, please address the issue first to the package maintainer at https://aur.archlinux.org/packages/rtl8814au-dkms-git/.
 
 ```
     Option for Fedora
@@ -187,6 +187,9 @@ Run a preparation script
     Option for 64 bit operating systems to be installed to Raspberry Pi hardware
 
     $ ./raspi64.sh
+
+    Note: I will only address issues having to do with the 64 bit version of the
+    Raspberry Pi OS once it is out of beta and is released as generally available.
 ```
 Step 9: Run the installation script (For automated builds, use _NoPrompt_ as an option)
 ```bash
