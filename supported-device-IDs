@@ -1,0 +1,58 @@
+USB Vendor and Device ID List for the rtl8821au
+
+To determine your Device ID:
+
+$ lsusb
+
+Example output:
+
+Bus 003 Device 011: ID 0bda:b811 Realtek Semiconductor Corp.
+
+ID VendorID:DeviceID = 0bda:b811
+
+We can search the list of driver supported IDs shown below.
+
+Realtek default IDs
+
+ID 0BDA:0811
+ID 0BDA:0821
+ID 0BDA:8822
+ID 0BDA:A811
+ID 0BDA:0820
+ID 0BDA:0823
+
+Seller specific IDs
+
+ID 7392:A811
+ID 7392:A812
+ID 7392:A813
+ID 7392:B611
+ID 04BB:0953
+ID 2001:3314
+ID 2001:3318
+ID 0E66:0023
+ID 056E:400E
+ID 056E:400F
+ID 0411:0242
+ID 2019:AB32
+ID 0846:9052
+ID 0411:029B
+ID 056E:4007
+ID 0BDA:A811
+ID 3823:6249
+ID 2357:011E
+ID 2357:0122
+ID 2357:0120
+ID 2357:011F
+ID 20f4:804b
+
+If your adapter matches one of the default or seller specific
+IDs then this is the driver to use.
+
+If you are sure that your adapter contains either a rtl8811au
+or rtl8821au chipset and the ID is not shown above, please provide
+the follow information so that I can include your adapter in the
+driver source code so that the driver will work with your adapter:
+
+1. VendorID:DeviceID
+2. Link to device on internet
