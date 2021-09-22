@@ -37,7 +37,7 @@
 ### Compatible Kernels
 
 - Kernels: 4.15 - 5.11 (Realtek)
-- Kernels: 5.12 - 5.14 (community support)
+- Kernels: 5.12 - 5.15 (community support)
 
 ### Tested Linux Distributions
 
