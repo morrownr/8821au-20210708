@@ -1,4 +1,4 @@
-USB Vendor and Device ID List for the rtl8821au
+USB Vendor and Device ID List for rtl8811au and rtl8821au chipset based USB WiFi Adapters
 
 To determine your Device ID:
 
@@ -41,7 +41,6 @@ ID 056E:4007
 ID 0BDA:A811
 ID 3823:6249
 ID 2357:011E
-ID 2357:0122
 ID 2357:0120
 ID 2357:011F
 ID 20f4:804b
