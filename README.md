@@ -83,9 +83,7 @@
 * GMYLE - AC450
 * Netgear A6100
 * Planex GW-450S
-* TP Link T2U Nano
-* TP Link T2U Plus
-* Numerous products that are based on the supported chipsets
+* Numerous adapters that are based on the supported chipsets
 
 Note: Please read "supported-device-IDs" for information about how to confirm the correct driver for your adapter.
 
