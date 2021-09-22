@@ -26,6 +26,8 @@
 - Log level control
 - Power saving control
 - VHT control (allows 80 MHz channel width in AP mode)
+- SU Beamformee and MU Beamformee control
+- SU Beamformer control
 
 ### Compatible CPUs
 
