@@ -46,6 +46,8 @@
 
 - Fedora (kernel 5.11)
 
+- Debian 11 (kernel 5.10)
+
 - Linux Mint 20.2 (Linux Mint based on Ubuntu) (kernel 5.11)
 
 - LMDE 4 (Linux Mint based on Debian) (kernel 4.19)
@@ -62,7 +64,7 @@
 ### Download Locations for Tested Linux Distributions
 
 - [Arch Linux](https://www.archlinux.org)
-- [Debian]()
+- [Debian](https://www.debian.org/)
 - [Fedora](https://getfedora.org)
 - [Linux Mint](https://www.linuxmint.com)
 - [Manjaro](https://manjaro.org)
