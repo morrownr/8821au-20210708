@@ -62,6 +62,7 @@
 ### Download Locations for Tested Linux Distributions
 
 - [Arch Linux](https://www.archlinux.org)
+- [Debian]()
 - [Fedora](https://getfedora.org)
 - [Linux Mint](https://www.linuxmint.com)
 - [Manjaro](https://manjaro.org)
