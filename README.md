@@ -73,7 +73,7 @@
 
 ### Tested Hardware
 
-- [Alfa AWUS036ACS 802.11ac AC600 Wi-Fi Wireless Network Adapter](https://www.amazon.com/gp/product/B0752CTSGD)
+- [Alfa AWUS036ACS 802.11ac AC600 Wi-Fi Wireless Network Adapter](https://store.rokland.com/collections/wi-fi-usb-adapters/products/alfa-awus036acs-802-11ac-ac600-dual-band-wifi-usb-adapter-rp-sma)
 
 ### Compatible Devices
 
@@ -86,13 +86,9 @@
 * GMYLE - AC450
 * Netgear A6100
 * Planex GW-450S
-<<<<<<< HEAD
 * TP Link T2U Nano
 * TP Link T2U Plus
 * Numerous adapters that are based on the supported chipsets.
-=======
-* Numerous adapters that are based on the supported chipsets
->>>>>>> a0bfa6ab86d5feefafc9fc53781ca5da122bc4c3
 
 Note: Please read "supported-device-IDs" for information about how to confirm the correct driver for your adapter.
 
