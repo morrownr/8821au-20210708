@@ -44,8 +44,6 @@
 - Arch Linux (kernel 5.4)
 - Arch Linux (kernel 5.9)
 
-- Debian 11 (kernel 5.10)
-
 - Fedora (kernel 5.11)
 
 - Linux Mint 20.2 (Linux Mint based on Ubuntu) (kernel 5.11)
@@ -64,7 +62,6 @@
 ### Download Locations for Tested Linux Distributions
 
 - [Arch Linux](https://www.archlinux.org)
-- [Debian](https://www.debian.org/)
 - [Fedora](https://getfedora.org)
 - [Linux Mint](https://www.linuxmint.com)
 - [Manjaro](https://manjaro.org)
@@ -86,9 +83,13 @@
 * GMYLE - AC450
 * Netgear A6100
 * Planex GW-450S
+<<<<<<< HEAD
 * TP Link T2U Nano
 * TP Link T2U Plus
 * Numerous adapters that are based on the supported chipsets.
+=======
+* Numerous adapters that are based on the supported chipsets
+>>>>>>> a0bfa6ab86d5feefafc9fc53781ca5da122bc4c3
 
 Note: Please read "supported-device-IDs" for information about how to confirm the correct driver for your adapter.
 
