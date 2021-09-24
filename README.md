@@ -54,7 +54,7 @@
 
 - Manjaro 20.1 (kernel 5.9)
 
-- Raspberry Pi OS (2021-01-11) (ARM 32 bit) (kernel 5.10)
+- Raspberry Pi OS (2021-05-07) (ARM 32 bit) (kernel 5.10)
 - Raspberry Pi Desktop (x86 32 bit) (kernel 4.19)
 
 - Ubuntu 21.04 (kernel 5.11)
