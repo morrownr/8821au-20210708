@@ -181,7 +181,7 @@ Step 7: Move to the newly created driver directory
 ```bash
 $ cd ~/src/8821au-20210708
 ```
-Step 8: Warning: this step only applies if you are installing to Raspberry Pi *hardware*.
+Step 8: Warning: this step only applies if you are installing to Raspberry Pi *hardware*. You can skip this step if installing to x86 or amd64 based systems.
 
 Run a preparation script
 ```
@@ -199,7 +199,7 @@ Run a preparation script
 ```
 Step 9: Run the installation script (For automated builds, use _NoPrompt_ as an option)
 ```bash
-$ sudo ./install-driver.sh [NoPrompt]
+$ sudo ./install-driver.sh
 ```
 Step 10: Reboot
 ```bash
