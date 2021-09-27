@@ -111,7 +111,7 @@ Step 1: Open a terminal (Ctrl+Alt+T)
 
 Step 2: Update system package information (select the option for the OS you are using)
 
-Note: If you do not regularly maintain your system by installing updated packages, it is a good idea to not only update system package information buy also to install the updated packages followed by a system reboot. The installation can then be continued with step 4.
+Note: If you do not regularly maintain your system by installing updated packages, it is a good idea to not only update system package information but also to install the updated packages followed by a system reboot. The installation can then be continued with step 3.
 ```
     Option for Debian based distributions such as Ubuntu, Linux Mint, Kali and Raspberry Pi OS
 
