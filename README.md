@@ -14,9 +14,9 @@
 - IEEE 802.11 b/g/n/ac WiFi compliant
 - 802.1x, WEP, WPA TKIP and WPA2 AES/Mixed mode for PSK and TLS (Radius)
 - IEEE 802.11b/g/n/ac Client mode
-  * Support wireless security for WEP, WPA TKIP and WPA2 AES PSK
-  * Support site survey scan and manual connect
-  * Support power saving mode
+  * Supports wireless security for WEP, WPA TKIP and WPA2 AES PSK
+  * Supports site survey scan and manual connect
+  * Supports power saving mode
 - Supported interface modes
   * IBSS
   * Managed
@@ -46,9 +46,9 @@
 
 - Fedora (kernel 5.11)
 
-- Debian 11 (kernel 5.10)
+- Debian 11 (kernels 5.10 and 5.15)
 
-- Linux Mint 20.2 (Linux Mint based on Ubuntu) (kernel 5.11)
+- Linux Mint 20.2 (Linux Mint based on Ubuntu) (kernels 5.4 and 5.11)
 
 - LMDE 4 (Linux Mint based on Debian) (kernel 4.19)
 
