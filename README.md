@@ -24,7 +24,6 @@
   * P2P-client
   * P2P-GO
 - Log level control
-- Power saving control
 - VHT control (allows 80 MHz channel width in AP mode)
 - SU Beamformee and MU Beamformee control
 - SU Beamformer control
@@ -206,13 +205,13 @@ Step 10: Reboot
 $ sudo reboot
 ```
 
-### Driver Options
+### Driver Options (changing driver settings)
 
 A file called `8821au.conf` will be installed in `/etc/modeprobe.d` by default.
 
 Location: `/etc/modprobe.d/8821au.conf`
 
-This file will be read and applied to the driver on each system boot.
+This file will be read and applied to the module (driver) on each system boot.
 
 To edit the driver options file, run the `edit-options.sh` script.
 ```bash
