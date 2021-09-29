@@ -25,8 +25,12 @@
   * P2P-GO
 - Log level control
 - VHT control (allows 80 MHz channel width in AP mode)
-- SU Beamformee and MU Beamformee control
-- SU Beamformer control
+
+Note: WPA3-SAE support is in this driver but currently, almost all Linux distros will require you to download, compile and install the current master of wpa_supplicant at the following site:
+
+https://w1.fi/cgit/
+
+If there is interest, I will develop and post a guide.
 
 ### Compatible CPUs
 
@@ -37,6 +41,8 @@
 
 - Kernels: 4.15 - 5.11 (Realtek)
 - Kernels: 5.12 - 5.15 (community support)
+
+Note: Yes, i am aware that kernel 5.15 has not been released yet.
 
 ### Tested Linux Distributions
 
@@ -205,13 +211,13 @@ Step 10: Reboot
 $ sudo reboot
 ```
 
-### Driver Options (changing driver settings)
+### Driver Options (to change driver settings)
 
 A file called `8821au.conf` will be installed in `/etc/modeprobe.d` by default.
 
 Location: `/etc/modprobe.d/8821au.conf`
 
-This file will be read and applied to the module (driver) on each system boot.
+This file will be read and applied to the driver (module) on each system boot.
 
 To edit the driver options file, run the `edit-options.sh` script.
 ```bash
@@ -252,19 +258,19 @@ Note: These are general recommendations, some of which may not apply to your spe
 
 Security: Set WPA2-AES. Do not set WPA2 mixed mode or WPA or TKIP.
 
-Channel width for 2.4G: Set 20 MHz fixed width. Do not use 40 MHz or 20/40 automatic.
+Channel width for 2.4 GHz: Set 20 MHz fixed width. Do not use 40 MHz or 20/40 automatic.
 
-Channels for 2.4G: Set channel 1 or 6 or 11 depending on the congestion at your location. Do not set automatic channel selection.
+Channels for 2.4 GHz: Set channel 1 or 6 or 11 depending on the congestion at your location. Do not set automatic channel selection. As time passes, if you notice poor performance, recheck congestion and set channel appropriately. The environment around you can and does change over time.
 
-Mode for 2.4G: For best performance, set "N only" if you no longer use B or G capable devices.
+Mode for 2.4 GHz: For best performance, set "N only" if you no longer use B or G capable devices.
 
-Network names: Do not set the 2.4G Network and the 5G Network to the same name. Note: Unfortunately many routers come with both networks set to the same name.
+Network names: Do not set the 2.4 GHz Network and the 5 GHz Network to the same name. Note: Unfortunately many routers come with both networks set to the same name. You need to be able to control which network that is in use.
 
-Channels for 5G: Not all devices are capable of using DFS channels. It may be necessary to set a fixed channel in the range of 36 to 48 or 149 to 161 in order for all of your devices to work on 5g. (for US, other countries may vary)
+Channels for 5 GHz: Not all devices are capable of using DFS channels. It may be necessary to set a fixed channel in the range of 36 to 48 or 149 to 161 in order for all of your devices to work on 5 GHzg. (for US, other countries may vary)
 
-Best location for the wifi router/ access point: Near center of apartment or house, at least a couple of feet away from walls, in an elevated location.
+Best location for the wifi router/ access point: Near center of apartment or house, at least a couple of feet away from walls, in an elevated location. You may have to test to see what the best location is in your environment.
 
-Check congestion: There are apps available for smart phones that allow you to check the congestion levels on wifi channels. The apps generally go by the name of WiFi Analyzer or something similar.
+Check congestion: There are apps available for smart phones that allow you to check the congestion levels on wifi channels. The apps generally go by the name of ```WiFi Analyzer``` or something similar.
 
 After making and saving changes, reboot the router.
 
