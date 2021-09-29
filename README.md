@@ -32,6 +32,8 @@ https://w1.fi/cgit/
 
 If there is interest, I will develop and post a guide.
 
+Note: A FAQ is available at the end of this document.
+
 ### Compatible CPUs
 
 - x86, amd64
@@ -157,10 +159,10 @@ Step 3: Install the required packages (select the option for the OS you are usin
 
     Note: If you are asked to choose a provider, make sure to choose the one that
     corresponds to your version of the linux kernel (for example, "linux510-headers"
-    for Linux kernel version 5.10) if you install the incorrect version, you'll have
+    for Linux kernel version 5.10). If you install the incorrect version, you'll have
     to uninstall it and reinstall the correct version.
 
-    if using other methods, please follow the instructions provided by those methods
+    If using other methods, please follow the instructions provided by those methods.
 
 ```
 
@@ -211,13 +213,13 @@ Step 10: Reboot
 $ sudo reboot
 ```
 
-### Driver Options (to change driver settings)
+### Driver Options
 
 A file called `8821au.conf` will be installed in `/etc/modeprobe.d` by default.
 
 Location: `/etc/modprobe.d/8821au.conf`
 
-This file will be read and applied to the driver (module) on each system boot.
+This file will be read and applied to the driver on each system boot.
 
 To edit the driver options file, run the `edit-options.sh` script.
 ```bash
@@ -334,3 +336,33 @@ $ sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
 3. Press ctrl-x followed by 'y' and enter to save the file.
 
 4. Reboot
+
+-----
+
+### FAQ:
+
+Question: What interface combinations does this driver support?
+
+Answer: None. Realtek out-of-kernel drivers, including this driver, do not
+support interface combinations. If you need support for interface combinations,
+I suggest adapters based on the Mediatek chipsets.
+
+
+Question: What extended features does this driver support?
+
+Answer: None. For extended features, you need an adapter that uses Mediatek or
+Atheros drivers.
+
+
+Question: I bought two rtl8811au based adapters and am planning to run one of them as an AP and another as a WiFi client. How do I set that up?
+
+Answer: You can't. Realtek drivers do not support more than one adapter with the same chipset in the same computer. However, testing has shown that the Mediatek drivers do support more than one adapter with the same chipset in the same computer.
+
+
+Question: Why do you recommend Mediatek based adapters when you maintain this repo for a Realtek driver?
+
+Answer: Many new Linux users already have adapters based on Realtek chipsets. This repo is for Linux users to support their existing adapters but my STRONG recommendation is for Linux users to seek out WiFi solutions based on Mediatek, Intel or Atheros chipsets and drivers. If users are looking at a USB solution, Mediatek and Atheros based adapters are the best solution. Realtek based USB adapters are not a good solution because Realtek does not follow Linux Wireless standards for USB WiFi adapters. Realtek drivers are problematic in many ways. You have been WARNED. For information about usb wifi adapters:
+
+https://github.com/morrownr/USB-WiFi
+
+-----
