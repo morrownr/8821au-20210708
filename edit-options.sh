@@ -3,7 +3,7 @@
 OPTIONS_FILE="8821au.conf"
 SCRIPT_NAME="edit-options.sh"
 #
-# Purpose: Make it easier to edit the driver (module) options file.
+# Purpose: Make it easier to edit the driver options file.
 #
 # To make this file executable:
 #
