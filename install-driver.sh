@@ -87,6 +87,8 @@ fi
 
 echo "The driver was installed successfully."
 
+rfkill unblock wlan
+
 if [ $NO_PROMPT -ne 1 ]
 then
 	read -p "Do you want to edit the driver options file now? [y/N] " -n 1 -r
