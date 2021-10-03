@@ -1745,6 +1745,22 @@ void BlinkHandler(PLED_USB pLed)
 		return;
 	}
 
+	#ifdef CONFIG_SW_LED
+	// led_enable 1 is blinking so don't cause always on/off
+	if (padapter->registrypriv.led_ctrl != 1) {
+		if (padapter->registrypriv.led_ctrl == 0)
+		{
+			// always off
+			pLed->BlinkingLedState = RTW_LED_OFF;
+		} else {
+			// always on for led_ctrl 2 or greater
+			pLed->BlinkingLedState = RTW_LED_ON;
+		}
+		// skip various switch cases where SwLedBlink*() called below
+		pLed->CurrLedState = LED_UNKNOWN;
+	}
+	#endif
+
 	switch (ledpriv->LedStrategy) {
 	#if CONFIG_RTW_SW_LED_TRX_DA_CLASSIFY
 	case SW_LED_MODE_UC_TRX_ONLY:

@@ -21,12 +21,14 @@
   * IBSS
   * Managed
   * AP
+  * Monitor
   * P2P-client
   * P2P-GO
 - Log level control
+- LED control
 - VHT control (allows 80 MHz channel width in AP mode)
 
-Note: WPA3-SAE support is in this driver but currently, almost all Linux distros will require you to download, compile and install the current master of wpa_supplicant at the following site:
+Note: WPA3-SAE support is in this driver, but almost all Linux distros will currently require you to download, compile and install the current master of wpa_supplicant at the following site:
 
 https://w1.fi/cgit/
 
@@ -44,12 +46,9 @@ Note: A FAQ is available at the end of this document.
 - Kernels: 4.15 - 5.11 (Realtek)
 - Kernels: 5.12 - 5.15 (community support)
 
-Note: Yes, i am aware that kernel 5.15 has not been released yet.
-
 ### Tested Linux Distributions
 
-- Arch Linux (kernel 5.4)
-- Arch Linux (kernel 5.9)
+- Arch Linux (kernels 5.4 and 5.11)
 
 - Fedora (kernel 5.11)
 
@@ -65,8 +64,7 @@ Note: Yes, i am aware that kernel 5.15 has not been released yet.
 - Raspberry Pi Desktop (x86 32 bit) (kernel 4.19)
 
 - Ubuntu 21.04 (kernel 5.11)
-- Ubuntu 20.10 (kernel 5.8)
-- Ubuntu 20.04 (kernel 5.4)
+- Ubuntu 20.xx (kernels 5.4 and 5.8)
 
 ### Download Locations for Tested Linux Distributions
 

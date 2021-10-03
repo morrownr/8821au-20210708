@@ -65,6 +65,7 @@
 		#define CONFIG_80211N_HT
 	#endif
 #endif
+
 #ifdef CONFIG_80211AC_VHT
 	#define CONFIG_BEAMFORMING
 #endif
@@ -162,7 +163,7 @@
 
 #define CONFIG_RTW_LED
 #ifdef CONFIG_RTW_LED
-	#define CONFIG_RTW_SW_LED
+//	#define CONFIG_RTW_SW_LED
 	#ifdef CONFIG_RTW_SW_LED
 		/* #define CONFIG_RTW_LED_HANDLED_BY_CMD_THREAD */
 	#endif
