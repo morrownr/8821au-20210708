@@ -25,7 +25,6 @@
   * P2P-client
   * P2P-GO
 - Log level control
-- LED control
 - VHT control (allows 80 MHz channel width in AP mode)
 
 Note: WPA3-SAE support is in this driver, but almost all Linux distros will currently require you to download, compile and install the current master of wpa_supplicant at the following site:
