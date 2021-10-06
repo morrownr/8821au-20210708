@@ -39,12 +39,10 @@ Note: A FAQ is available at the end of this document.
 
 Problem reports go in ```Issues```.
 
-Problem reports should include (copy and paste) the information obtained
-with the following commands:
+Problem reports should include the information obtained with the following command:
 ```
 $ sudo uname -a && iw dev && lsusb && rfkill list all && mokutil --sb-state
 ```
-
 ### Compatible CPUs
 
 - x86, amd64
@@ -172,7 +170,6 @@ Step 3: Install the required packages (select the option for the OS you are usin
     If using other methods, please follow the instructions provided by those methods.
 
 ```
-
 ```
     Option for Fedora
 
