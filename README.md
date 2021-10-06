@@ -35,6 +35,16 @@ If there is interest, I will develop and post a guide.
 
 Note: A FAQ is available at the end of this document.
 
+### Problem Reporting
+
+Problem reports go in ```Issues```.
+
+Problem reports should include (copy and paste) the information obtained
+with the following commands:
+```
+$ sudo uname -a && iw dev && lsusb && rfkill list all && mokutil --sb-state
+```
+
 ### Compatible CPUs
 
 - x86, amd64
