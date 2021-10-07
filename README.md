@@ -41,7 +41,7 @@ Problem reports go in ```Issues```.
 
 Problem reports should include the information obtained with the following command:
 ```
-$ sudo uname -a && iw dev && lsusb && rfkill list all && mokutil --sb-state
+$ sudo uname -a && iw dev && lsusb && rfkill list all && mokutil --sb-state && dkms status
 ```
 ### Compatible CPUs
 
@@ -168,7 +168,6 @@ Step 3: Install the required packages (select the option for the OS you are usin
     to uninstall it and reinstall the correct version.
 
     If using other methods, please follow the instructions provided by those methods.
-
 ```
 ```
     Option for Fedora
