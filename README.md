@@ -40,7 +40,7 @@ Note: A FAQ is available at the end of this document.
 Problem reports go in ```Issues```.
 
 Problem reports should include the information obtained with the following command:
-```
+```bash
 $ sudo uname -a && iw dev && lsusb && rfkill list all && mokutil --sb-state && dkms status
 ```
 ### Compatible CPUs
@@ -175,7 +175,6 @@ Step 3: Install the required packages (select the option for the OS you are usin
     # sudo dnf -y install git dkms kernel-devel kernel-debug-devel
 ```
 Step 4: Create a directory to hold the downloaded driver
-
 ```bash
 $ mkdir ~/src
 ```
