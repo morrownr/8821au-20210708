@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SCRIPT_NAME="install-driver.sh"
-SCRIPT_VERSION="20210917"
+SCRIPT_VERSION="20211002"
 
 DRV_NAME="rtl8821au"
 DRV_VERSION="5.12.5.2"
