@@ -75,10 +75,10 @@ sudo nano /etc/NetworkManager/NetworkManager.conf
 add
 ```
 [keyfile]
-unmanaged-devices=interface-name:wlan0mon;interface-name:mon0
+unmanaged-devices=interface-name:<wlan0>;interface-name:mon0
 ```
-Note: The above tells Network Manager to leave the wlan0mon and mon0 interfaces
-alone. The examples below will use wlan0mon.
+Note: The above tells Network Manager to leave the <wlan0> and mon0 interfaces
+alone. The examples below will use <wlan0>.
 
 ```
 sudo reboot
@@ -88,11 +88,11 @@ sudo reboot
 
 ### Change to monitor mode
 
-Note: I have provided a script called to ```start-mon.sh``` to automate this process.
-
-Option 1.
+Option 1. Note: This option is seriously broken currently.
 ```
 sudo airmon-ng start <wlan0>
+
+Note: I have provided a script called to ```start-mon.sh``` to automate this process.
 ```
 
 Option 2.
@@ -105,11 +105,6 @@ iw dev
 Take the interface down
 ```
 sudo ip link set <wlan0> down
-```
-
-Rename the interface to wlan0mon
-```
-sudo ip link set <wlan0> name wlan0mon
 ```
 
 Set monitor mode
@@ -133,22 +128,22 @@ iw dev
 
 Option for 5 GHz and 2.4 GHz
 ```
-sudo airodump-ng wlan0mon --band ag
+sudo airodump-ng <wlan0> --band ag
 ```
 Option for 5 GHz only
 ```
-sudo airodump-ng wlan0mon --band a
+sudo airodump-ng <wlan0> --band a
 ```
 Option for 2.4 GHz only
 ```
-sudo airodump-ng wlan0mon --band g
+sudo airodump-ng <wlan0> --band g
 ```
 Set the channel of your choice
 ```
-sudo iw dev wlan0mon set channel <channel> [NOHT|HT20]
+sudo iw dev <wlan0> set channel <channel> [NOHT|HT20]
 ```
 ```
-sudo aireplay-ng --test wlan0mon
+sudo aireplay-ng --test <wlan0>
 ```
 
 -----
@@ -157,7 +152,7 @@ sudo aireplay-ng --test wlan0mon
 
 Option for 5 GHz and 2.4 GHz
 ```
-sudo airodump-ng wlan0mon --band ag
+sudo airodump-ng <wlan0> --band ag
 ```
 Option for 5 GHz only
 ```
