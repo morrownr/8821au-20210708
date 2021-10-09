@@ -212,10 +212,6 @@ Step 9: Run the installation script (For automated builds, use _NoPrompt_ as an 
 ```bash
 $ sudo ./install-driver.sh
 ```
-Step 10: Reboot
-```bash
-$ sudo reboot
-```
 
 ### Driver Options
 
