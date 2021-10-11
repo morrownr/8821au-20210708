@@ -42,7 +42,7 @@ iface0=${1:-wlan0}
 ip link set $iface0 down
 if [ $? -eq 0 ]
 then
-# Do not rename the interface - this driver has a bug
+# Do not rename the interface - there is a bug somewhere
 #	ip link set $iface0 name $iface0mon
 
 	iw $iface0 set monitor control
@@ -51,12 +51,32 @@ then
 	iw dev
 
 	# airodump-ng will display a list of detected access points and clients
+	# https://www.aircrack-ng.org/doku.php?id=airodump-ng
+	# https://en.wikipedia.org/wiki/Regular_expression
 	echo    # move to a new line
-	read -p "Do you want to display a list of access points? [y/N] " -n 1 -r
+	echo -e "airodump-ng can receive and interpret key strokes while running"
+	echo    # move to a new line
+	echo -e "a - select active areas"
+	echo -e "s - change sort column"
+	echo -e "q - quit"
+	echo    # move to a new line
+	read -p "Do you want run airodump-ng to display a list of detected access points and clients? [y/N] " -n 1 -r
 	echo    # move to a new line
 	if [[ $REPLY =~ ^[Yy]$ ]]
 	then
-		airodump-ng $iface0 --band ag --cswitch 1
+		# usage: airodump-ng <options> <interface>[,<interface>,...]
+		#
+		#  -c <channels>        : Capture on specific channels
+		#  -a                   : Filter unassociated clients
+		# --ignore-negative-one : Removes the message that says fixed channel <interface>: -1
+		# --essid-regex <regex> : Filter APs by ESSID using a regular expression
+		#
+		# shows hidden ESSIDs
+		# airodump-ng -c 1-165 -a --ignore-negative-one $iface0
+		#
+		# does not show hidden ESSIDs
+		airodump-ng -c 1-165 -a --ignore-negative-one --essid-regex '^(?=.)^(?!.*CoxWiFi)' $iface0
+		#
 	else
 		exit 0
 	fi
