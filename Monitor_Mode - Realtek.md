@@ -65,8 +65,8 @@ Option 2, another way that works for me on Linux Mint and Ubuntu:
 
 Note: I use multiple wifi adapters in my system and I need to stay connected
 to the internet while testing. This option works well for me and allows
-me to stay connected by allowing Network Manager to continue managing wlan1
-while wlan0 is used for monitor mode.
+me to stay connected by allowing Network Manager to continue managing <wlan1>
+while <wlan0> is used for monitor mode.
 
 Ensure Network Manager doesn't cause problems
 ```
@@ -77,8 +77,18 @@ add
 [keyfile]
 unmanaged-devices=interface-name:<wlan0>;interface-name:mon0
 ```
-Note: The above tells Network Manager to leave the <wlan0> and mon0 interfaces
-alone. The examples below will use <wlan0>.
+
+Ensure wpa_supplicant doesn't cause problems
+```
+sudo nano /etc/dhcpcd.conf
+```
+add
+```
+interface <wlan0>
+        nohook wpa_supplicant
+```
+Note: The above tells Network Manager and wpa_supplicant to leave the <wlan0>
+interface alone.
 
 ```
 sudo reboot
@@ -109,12 +119,12 @@ sudo ip link set <wlan0> down
 
 Set monitor mode
 ```
-sudo iw wlan0mon set monitor control
+sudo iw <wlan0> set monitor control
 ```
 
 Bring the interface up
 ```
-sudo ip link set wlan0mon up
+sudo ip link set <wlan0> up
 ```
 
 Verify the mode has changed
@@ -245,6 +255,71 @@ sudo ip link set <wlan0> down
 sudo iw dev <wlan0> set txpower fixed 1600 (1600 = 16 dBm)
 sudo ip link set <wlan0> up
 ```
+
+-----
+
+### airodump-ng can receive and interpret key strokes while running.
+
+The following list describes the currently assigned keys and supposed actions:
+
+
+a
+
+Select active areas by cycling through these display options:
+ AP+STA; AP+STA+ACK; AP only; STA only
+
+
+d
+
+Reset sorting to defaults (Power)
+
+
+i
+
+Invert sorting algorithm
+
+
+m
+
+Mark the selected AP or cycle through different colors if the selected AP is already marked
+
+
+o
+
+Enable colored display of APs and their stations.
+
+
+p
+
+Disable colored display.
+
+
+q
+
+Quit program.
+
+
+r
+(De-)Activate realtime sorting -
+ applies sorting algorithm every time the display will be redrawn
+
+
+s
+
+Change column to sort by, which currently includes:
+ First seen;
+
+ BSSID;
+ PWR level;
+ Beacons;
+ Data packets;
+ Packet rate;
+ Channel;
+ Max. data rate;
+ Encryption;
+ Strongest Ciphersuite;
+ Strongest Authentication;
+ ESSID
 
 -----
 
