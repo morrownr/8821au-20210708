@@ -78,7 +78,9 @@ add
 unmanaged-devices=interface-name:<wlan0>;interface-name:wlan0mon
 ```
 
-Note: The above tells Network Manager to leave the <wlan0> interface alone.
+Note: The above tells Network Manager to leave the specified interfaces alone.
+Remember to replace <wlan0> with the name of the wifi interface that you intend
+to use in monitor mode.
 
 ```
 sudo reboot
@@ -244,12 +246,13 @@ iw dev
 ```
 sudo iw dev <wlan0> set txpower fixed 1600
 ```
+
 Note:  1600 = 16 dBm
+
 -----
 
-```
 ### airodump-ng can receive and interpret key strokes while running.
-
+```
 The following list describes the currently assigned keys and supported actions:
 
 
