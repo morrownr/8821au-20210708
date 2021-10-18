@@ -1,13 +1,15 @@
 #!/bin/bash
 
 SCRIPT_NAME="start-mon.sh"
-SCRIPT_VERSION="20211010"
+SCRIPT_VERSION="20211017"
 
 # Simple script to start and test monitor mode on the provided wlan interface
 #
 # Some parts of this script require the installation of aircrack-ng
 #
 # $ sudo apt install aircrack-ng
+
+
 
 # Check to ensure sudo was used to start the script
 if [[ $EUID -ne 0 ]]
@@ -26,8 +28,8 @@ GREEN='\033[1;32m'
 CYAN='\033[1;36m'
 NC='\033[0m'
 
-# Changing the interface name is currently (2021-09-09) broken
-#iface0mon=wlan0mon
+# Changing the interface name is currently (2021-10-09) broken
+iface0mon=wlan0mon
 
 # Default channel
 chan=1
@@ -38,21 +40,40 @@ chan=1
 # Option 2: if you have more than one wlan interface (default wlan0)
 iface0=${1:-wlan0}
 
-# Check if iface0 exists
+# Set iface0 down
 ip link set $iface0 down
+# Check if iface0 exists and continue if true
 if [ $? -eq 0 ]
 then
-# Do not rename the interface - there is a bug somewhere
+# 	Rename the interface
+#	Option 1 - rename the interface
 #	ip link set $iface0 name $iface0mon
+#	Option 2 - do not rename the interface
+	$iface0mon=$iface0
 
-	iw $iface0 set monitor control
-	ip link set $iface0 up
+#	Set monitor mode
+#	iw dev <devname> set monitor <flag>*
+#		Set monitor flags. Valid flags are:
+#		none:     no special flags
+#		fcsfail:  show frames with FCS errors
+#		control:  show control frames
+#		otherbss: show frames from other BSSes
+#		cook:     use cooked mode
+#		active:   use active mode (ACK incoming unicast packets)
+#		mumimo-groupid <GROUP_ID>: use MUMIMO according to a group id
+#		mumimo-follow-mac <MAC_ADDRESS>: use MUMIMO according to a MAC address
+	iw dev $iface0mon set monitor control
 
+# 	Set iface0 up
+	ip link set $iface0mon up
+
+#	Display settings
 	iw dev
 
-	# airodump-ng will display a list of detected access points and clients
-	# https://www.aircrack-ng.org/doku.php?id=airodump-ng
-	# https://en.wikipedia.org/wiki/Regular_expression
+#	Run airodump-ng
+#	airodump-ng will display a list of detected access points and clients
+#	https://www.aircrack-ng.org/doku.php?id=airodump-ng
+#	https://en.wikipedia.org/wiki/Regular_expression
 	echo    # move to a new line
 	echo -e "airodump-ng can receive and interpret key strokes while running"
 	echo    # move to a new line
@@ -64,41 +85,42 @@ then
 	echo    # move to a new line
 	if [[ $REPLY =~ ^[Yy]$ ]]
 	then
-		# usage: airodump-ng <options> <interface>[,<interface>,...]
-		#
-		#  -c <channels>        : Capture on specific channels
-		#  -a                   : Filter unassociated clients
-		# --ignore-negative-one : Removes the message that says fixed channel <interface>: -1
-		# --essid-regex <regex> : Filter APs by ESSID using a regular expression
-		#
-		# shows hidden ESSIDs
-		# airodump-ng -c 1-165 -a --ignore-negative-one $iface0
-		#
-		# does not show hidden ESSIDs
-		airodump-ng -c 1-165 -a --ignore-negative-one --essid-regex '^(?=.)^(?!.*CoxWiFi)' $iface0
-		#
+
+#		 usage: airodump-ng <options> <interface>[,<interface>,...]
+#
+#		  -c <channels>        : Capture on specific channels
+#		  -a                   : Filter unassociated clients
+#		 --ignore-negative-one : Removes the message that says fixed channel <interface>: -1
+#		 --essid-regex <regex> : Filter APs by ESSID using a regular expression
+#
+#		shows hidden ESSIDs
+#		airodump-ng -c 1-165 -a --ignore-negative-one $iface0
+#
+#		does not show hidden ESSIDs
+		airodump-ng -c 1-165 -a --ignore-negative-one --essid-regex '^(?=.)^(?!.*CoxWiFi)' $iface0mon
+
 	else
 		exit 0
 	fi
 
-	# set channel
+#	Set channel
 	read -p "Do you want to set the channel? [y/N] " -n 1 -r
 	echo    # move to a new line
 	if [[ $REPLY =~ ^[Yy]$ ]]
 	then
 		echo -e "What channel do you want to set?"
 		read chan
-		iw dev $iface0 set channel $chan
+		iw dev $iface0mon set channel $chan
 	else
 		exit 0
 	fi
 
-	# aireplay-ng will test injection capability
+#	Test injection capability with aireplay-ng
 	read -p "Do you want to test injection capability? [y/N] " -n 1 -r
 	echo    # move to a new line
 	if [[ $REPLY =~ ^[Yy]$ ]]
 	then
-		aireplay-ng --test $iface0
+		aireplay-ng --test $iface0mon
 	else
 		exit 0
 	fi
