@@ -28,15 +28,17 @@ GREEN='\033[1;32m'
 CYAN='\033[1;36m'
 NC='\033[0m'
 
-# Changing the interface name is currently (2021-10-09) broken
+# Assign name to monitor mode interface
 iface0mon=wlan0mon
 
 # Default channel
 chan=1
 
+# Activate one of the options below to set automatic or manual interface mode
+#
 # Option 1: if you only have one wlan interface (automatic detection)
 #iface0=`iw dev | grep 'Interface' | sed 's/Interface //'`
-
+#
 # Option 2: if you have more than one wlan interface (default wlan0)
 iface0=${1:-wlan0}
 
@@ -47,9 +49,9 @@ if [ $? -eq 0 ]
 then
 # 	Rename the interface
 #	Option 1 - rename the interface
-#	ip link set $iface0 name $iface0mon
+	ip link set $iface0 name $iface0mon
 #	Option 2 - do not rename the interface
-	$iface0mon=$iface0
+#	$iface0mon=$iface0
 
 #	Set monitor mode
 #	iw dev <devname> set monitor <flag>*
@@ -124,6 +126,8 @@ then
 	else
 		exit 0
 	fi
+
+
 else
 	echo -e "${RED}ERROR: ${YELLOW}Please provide an existing interface as parameter! ${NC}"
 	echo -e "${NC}Usage: ${CYAN}$ sudo ./start-mon.sh [interface:wlan0] ${NC}"
