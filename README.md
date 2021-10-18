@@ -16,12 +16,13 @@
 - IEEE 802.11b/g/n/ac Client mode
   * Supports wireless security for WEP, WPA TKIP and WPA2 AES PSK
   * Supports site survey scan and manual connect
-  * Supports power saving mode
+- Power saving modes
+- Packet injection
 - Supported interface modes
   * IBSS
   * Managed
   * AP
-  * Monitor (supports packet injection) (see ```Monitor_Mode-Realtek```)
+  * Monitor (see ```Monitor_Mode.md```)
   * P2P-client
   * P2P-GO
 - Log level control
@@ -220,15 +221,16 @@ Step 9: Run the installation script (For automated builds, use _NoPrompt_ as an 
 $ sudo ./install-driver.sh
 
     Note: If you elect to skip the reboot at the end of the installation script,
-    the driver will not be loaded immediately. If you choose to load the driver
-    without rebooting (not recommended), settings might not be correctly applied.
+    the driver may not be loaded immediately and the driver options will not be
+    applied. Rebooting is strongly recommended.
 ```
 
 ### Driver Options
 
 A file called `8821au.conf` will be installed in `/etc/modprobe.d` by default.
-The installation script from the section above prompts to edit the
-settings before rebooting.
+
+Note: The installation script from the section above will prompt you to edit the
+options before rebooting.
 
 Location: `/etc/modprobe.d/8821au.conf`
 
@@ -238,7 +240,7 @@ To edit the driver options file, run the `edit-options.sh` script.
 ```bash
 $ sudo ./edit-options.sh
 ```
-Documentation for Driver Options is included in the file `8821au.conf`.
+Note: Documentation for Driver Options is included in the file `8821au.conf`.
 
 ### Removal of the Driver
 
@@ -358,6 +360,11 @@ $ sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
 -----
 
 ### FAQ:
+
+Question: Why won't DFS channels work in AP mode?
+
+Answer: I have looked at the source code for several USB WiFi adapters and I have found no evidence that any support DFS channels in AP mode. It appears that this is simply not a supported feature on USB WiFi adapters.
+
 
 Question: What interface combinations does this driver support?
 
