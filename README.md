@@ -65,6 +65,8 @@ $ sudo uname -a && mokutil --sb-state && lsusb && rfkill list all && dkms status
 
 - Debian 11 (kernels 5.10 and 5.15)
 
+- Kali Linux (kernel 5.10)
+
 - Linux Mint 20.2 (Linux Mint based on Ubuntu) (kernels 5.4 and 5.11)
 
 - LMDE 4 (Linux Mint based on Debian) (kernel 4.19)
@@ -82,6 +84,7 @@ $ sudo uname -a && mokutil --sb-state && lsusb && rfkill list all && dkms status
 - [Arch Linux](https://www.archlinux.org)
 - [Debian](https://www.debian.org/)
 - [Fedora](https://getfedora.org)
+- [Kali Linux](https://www.kali.org/)
 - [Linux Mint](https://www.linuxmint.com)
 - [Manjaro](https://manjaro.org)
 - [Raspberry Pi OS](https://www.raspberrypi.org)
@@ -229,8 +232,7 @@ $ sudo ./install-driver.sh
 
 A file called `8821au.conf` will be installed in `/etc/modprobe.d` by default.
 
-Note: The installation script from the section above will prompt you to edit the
-options before rebooting.
+Note: Step 9 of the installation script will prompt you to edit the options before rebooting.
 
 Location: `/etc/modprobe.d/8821au.conf`
 
