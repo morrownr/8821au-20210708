@@ -253,6 +253,7 @@ Note:  1600 = 16 dBm
 
 ### airodump-ng can receive and interpret key strokes while running.
 ```
+
 The following list describes the currently assigned keys and supported actions:
 
 
@@ -293,6 +294,7 @@ Quit program.
 
 
 r
+
 (De-)Activate realtime sorting -
  applies sorting algorithm every time the display will be redrawn
 
@@ -300,7 +302,6 @@ r
 s
 
 Change column to sort by, which currently includes:
- First seen;
 
  BSSID;
  PWR level;
