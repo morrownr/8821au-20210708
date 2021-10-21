@@ -1,15 +1,39 @@
 #!/bin/bash
 
 SCRIPT_NAME="start-mon.sh"
-SCRIPT_VERSION="20211017"
+SCRIPT_VERSION="20211019"
 
-# Simple script to start and test monitor mode on the provided wlan interface
-#
+# Purpose: Start and test monitor mode on the provided wlan interface
+
 # Some parts of this script require the installation of aircrack-ng
 #
 # $ sudo apt install aircrack-ng
 
-
+# Interfering processes must be disabled for the provided interface
+#
+# Option 1
+#```
+# $ sudo airmon-ng check kill
+#```
+#
+# Option 2, another way that works for me on Linux Mint:
+#
+# Note: I use multiple wifi adapters in my systems and I need to stay connected
+# to the internet while testing. This option works well for me and allows
+# me to stay connected by allowing Network Manager to continue managing interfaces
+# that are not marked as unmanaged.
+#
+# Ensure Network Manager doesn't cause problems
+#```
+# $ sudo nano /etc/NetworkManager/NetworkManager.conf
+#```
+# add
+#```
+# [keyfile]
+# unmanaged-devices=interface-name:<wlan0>;interface-name:wlan0mon
+#```
+#
+# Note: The above tells Network Manager to leave the specified interfaces alone.
 
 # Check to ensure sudo was used to start the script
 if [[ $EUID -ne 0 ]]
@@ -51,7 +75,7 @@ then
 #	Option 1 - rename the interface
 	ip link set $iface0 name $iface0mon
 #	Option 2 - do not rename the interface
-#	$iface0mon=$iface0
+#	iface0mon=$iface0
 
 #	Set monitor mode
 #	iw dev <devname> set monitor <flag>*
