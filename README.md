@@ -215,9 +215,6 @@ Run a preparation script
     Option for 64 bit operating systems to be installed to Raspberry Pi hardware
 
     $ ./raspi64.sh
-
-    Note: I will only address issues having to do with the 64 bit version of the
-    Raspberry Pi OS once it is out of beta and is released as generally available.
 ```
 Step 9: Run the installation script (For automated builds, use _NoPrompt_ as an option)
 ```bash
@@ -266,10 +263,6 @@ $ cd ~/src/8821au-20210708
 Step 3: Run the removal script
 ```bash
 $ sudo ./remove-driver.sh
-```
-Step 4: Reboot
-```bash
-$ sudo reboot
 ```
 ### Recommended WiFi Router/ Access Point Settings
 
