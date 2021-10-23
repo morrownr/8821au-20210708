@@ -53,7 +53,7 @@ CYAN='\033[1;36m'
 NC='\033[0m'
 
 # Assign name to monitor mode interface
-iface0mon=wlan0mon
+iface0mon='wlan0mon'
 
 # Default channel
 chan=1
@@ -72,10 +72,14 @@ ip link set $iface0 down
 if [ $? -eq 0 ]
 then
 # 	Rename the interface
-#	Option 1 - rename the interface
-	ip link set $iface0 name $iface0mon
-#	Option 2 - do not rename the interface
-#	iface0mon=$iface0
+	read -p "Do you want to rename $iface0 to wlan0mon? [y/N] " -n 1 -r
+	echo    # move to a new line
+	if [[ $REPLY =~ ^[Yy]$ ]]
+	then
+		ip link set $iface0 name $iface0mon
+	else
+		iface0mon=$iface0
+	fi
 
 #	Set monitor mode
 #	iw dev <devname> set monitor <flag>*
@@ -107,7 +111,7 @@ then
 	echo -e "s - change sort column"
 	echo -e "q - quit"
 	echo    # move to a new line
-	read -p "Do you want run airodump-ng to display a list of detected access points and clients? [y/N] " -n 1 -r
+	read -p "Do you want to run airodump-ng to display a list of detected access points and clients? [y/N] " -n 1 -r
 	echo    # move to a new line
 	if [[ $REPLY =~ ^[Yy]$ ]]
 	then
@@ -120,7 +124,7 @@ then
 #		 --essid-regex <regex> : Filter APs by ESSID using a regular expression
 #
 #		shows hidden ESSIDs
-#		airodump-ng -c 1-165 -a --ignore-negative-one $iface0
+#		airodump-ng -c 1-165 -a --ignore-negative-one $iface0mon
 #
 #		does not show hidden ESSIDs
 		airodump-ng -c 1-165 -a --ignore-negative-one --essid-regex '^(?=.)^(?!.*CoxWiFi)' $iface0mon
@@ -151,6 +155,19 @@ then
 		exit 0
 	fi
 
+#	Return the adapter to managed mode
+	read -p "Do you want to return the adapter to managed mode? [y/N] " -n 1 -r
+	echo    # move to a new line
+	if [[ $REPLY =~ ^[Yy]$ ]]
+	then
+		ip link set $iface0mon down
+		ip link set $iface0mon name $iface0
+		iw $iface0 set type managed
+		iw dev
+	else
+		iw dev
+		exit 0
+	fi
 
 else
 	echo -e "${RED}ERROR: ${YELLOW}Please provide an existing interface as parameter! ${NC}"
