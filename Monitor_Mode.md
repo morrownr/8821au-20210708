@@ -40,7 +40,7 @@ sudo apt install aircrack-ng
 ```
 
 -----
-Check wifi interface information
+### Check wifi interface information
 ```
 iw dev
 ```
@@ -79,8 +79,8 @@ unmanaged-devices=interface-name:<wlan0>;interface-name:wlan0mon
 ```
 
 Note: The above tells Network Manager to leave the specified interfaces alone.
-Remember to replace <wlan0> with the name of the wifi interface that you intend
-to use in monitor mode.
+Remember to replace ```wlan0``` with the name of the wifi interface that you
+intend to use in monitor mode.
 
 ```
 sudo reboot
@@ -90,15 +90,20 @@ sudo reboot
 
 ### Change to monitor mode
 
-Option 1. Note: This option is seriously broken currently.
+Option 1
+
+Note: This option may not work. If not, press on with option 2.
 ```
 sudo airmon-ng start <wlan0>
 ```
 
 Note: I have provided a script called ```start-mon.sh``` to automate the
 following option. Please give it a try and make suggestions to improve it.
+```
+Usage: $ sudo ./start-mon.sh <wlan0>
+```
 
-Option 2.
+Option 2
 
 Check the wifi interface name and mode
 ```

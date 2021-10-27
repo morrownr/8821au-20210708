@@ -30,8 +30,9 @@
 - VHT control (allows 80 MHz channel width in AP mode)
 - SU Beamformee and MU Beamformee control
 - SU Beamformer control
+- DFS Channel support and control for AP mode
 
-Note: WPA3-SAE support is in this driver, however, for it to work in almost all Linux distros, you will need to download, compile and install the current master of wpa_supplicant at the following site:
+Note: WPA3-SAE support is in this driver, however, for it to work with current Linux distros, you will need to download, compile and install the current master of wpa_supplicant at the following site:
 
 https://w1.fi/cgit/
 
@@ -73,7 +74,7 @@ $ sudo uname -a && mokutil --sb-state && lsusb && rfkill list all && dkms status
 
 - Manjaro 20.1 (kernel 5.9)
 - Manjaro 21.1 (kernel 5.13)
-- 
+
 - Raspberry Pi OS (2021-05-07) (ARM 32 bit) (kernel 5.10)
 - Raspberry Pi Desktop (x86 32 bit) (kernel 4.19)
 
@@ -93,8 +94,8 @@ $ sudo uname -a && mokutil --sb-state && lsusb && rfkill list all && dkms status
 
 ### Tested Hardware
 
-- [Alfa AWUS036ACS 802.11ac AC600 Wi-Fi Wireless Network Adapter](https://store.rokland.com/collections/wi-fi-usb-adapters/products/alfa-awus036acs-802-11ac-ac600-dual-band-wifi-usb-adapter-rp-sma)
-- [EDUP USB WiFi Adapter Wireless Network Adapters AC 600Mbps Dual Band 2.4G/5.8Ghz Wi-Fi Dongle ](https://www.amazon.com/gp/product/B01CCMUN8C/)
+- [Alfa AWUS036ACS](https://store.rokland.com/collections/wi-fi-usb-adapters/products/alfa-awus036acs-802-11ac-ac600-dual-band-wifi-usb-adapter-rp-sma)
+- [EDUP EP-1607](https://www.amazon.com/gp/product/B01CCMUN8C/)
 
 ### Compatible Devices
 
@@ -108,7 +109,7 @@ $ sudo uname -a && mokutil --sb-state && lsusb && rfkill list all && dkms status
 * Netgear A6100
 * Netis WF2180
 * Planex GW-450S
-* EDUP AC600
+* EDUP EP-1607
 * Numerous adapters that are based on the supported chipsets.
 
 Note: Please read "supported-device-IDs" for information about how to confirm the correct driver for your adapter.
@@ -221,7 +222,7 @@ Run a preparation script
 ```
 Step 9: Run the installation script (For automated builds, use _NoPrompt_ as an option)
 ```bash
-$ sudo ./install-driver.sh
+    $ sudo ./install-driver.sh
 
     Note: If you elect to skip the reboot at the end of the installation script,
     the driver may not be loaded immediately and the driver options will not be
@@ -281,7 +282,7 @@ Mode for 2.4 GHz: For best performance, set "N only" if you no longer use B or G
 
 Network names: Do not set the 2.4 GHz Network and the 5 GHz Network to the same name. Note: Unfortunately many routers come with both networks set to the same name. You need to be able to control which network that is in use.
 
-Channels for 5 GHz: Not all devices are capable of using DFS channels. It may be necessary to set a fixed channel in the range of 36 to 48 or 149 to 161 in order for all of your devices to work on 5 GHz. (For US, other countries may vary.)
+Channels for 5 GHz: Not all devices are capable of using DFS channels (I'm looking at you Roku.) It may be necessary to set a fixed channel in the range of 36 to 48 or 149 to 161 in order for all of your devices to work on 5 GHz. (For US, other countries may vary.)
 
 Best location for the WiFi router/access point: Near center of apartment or house, at least a couple of feet away from walls, in an elevated location. You may have to test to see what the best location is in your environment.
 
@@ -358,11 +359,6 @@ $ sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
 -----
 
 ### FAQ:
-
-Question: Why won't DFS channels work in AP mode?
-
-Answer: I have looked at the source code for several USB WiFi adapters and I have found no evidence that any support DFS channels in AP mode. It appears that this is simply not a supported feature on USB WiFi adapters.
-
 
 Question: What interface combinations does this driver support?
 
