@@ -142,6 +142,10 @@ int rtw_check_fw_ps = 1;
 int rtw_early_mode = 1;
 #endif
 
+#ifdef CONFIG_SW_LED
+int rtw_led_ctrl = 1; // default to normal blinking
+#endif
+
 int rtw_usb_rxagg_mode = 2;/* RX_AGG_DMA=1, RX_AGG_USB=2 */
 module_param(rtw_usb_rxagg_mode, int, 0644);
 
@@ -611,6 +615,11 @@ module_param(rtw_pci_aspm_enable, int, 0644);
 
 #ifdef CONFIG_TX_EARLY_MODE
 module_param(rtw_early_mode, int, 0644);
+#endif
+
+#ifdef CONFIG_SW_LED
+module_param(rtw_led_ctrl, int, 0644);
+MODULE_PARM_DESC(rtw_led_ctrl,"Led Control: 0=Always off, 1=Normal blink, 2=Always on");
 #endif
 
 #ifdef CONFIG_ADAPTOR_INFO_CACHING_FILE
@@ -1308,6 +1317,9 @@ uint loadparam(_adapter *padapter)
 
 #ifdef CONFIG_TX_EARLY_MODE
 	registry_par->early_mode = (u8)rtw_early_mode;
+#endif
+#ifdef CONFIG_SW_LED
+	registry_par->led_ctrl = (u8)rtw_led_ctrl;
 #endif
 	registry_par->trx_path_bmp = (u8)rtw_trx_path_bmp;
 	registry_par->tx_path_lmt = (u8)rtw_tx_path_lmt;

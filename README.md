@@ -26,6 +26,7 @@
   * P2P-client
   * P2P-GO
 - Log level control
+- LED control
 - Power saving control
 - VHT control (allows 80 MHz channel width in AP mode)
 - SU Beamformee and MU Beamformee control
@@ -72,14 +73,12 @@ $ sudo uname -a && mokutil --sb-state && lsusb && rfkill list all && dkms status
 
 - LMDE 4 (Linux Mint based on Debian) (kernel 4.19)
 
-- Manjaro 20.1 (kernel 5.9)
-- Manjaro 21.1 (kernel 5.13)
+- Manjaro 20.1 (kernel 5.9) and 21.1 (kernel 5.13)
 
 - Raspberry Pi OS (2021-05-07) (ARM 32 bit) (kernel 5.10)
 - Raspberry Pi Desktop (x86 32 bit) (kernel 4.19)
 
-- Ubuntu 21.04 (kernel 5.11)
-- Ubuntu 20.xx (kernels 5.4 and 5.8)
+- Ubuntu 20.xx (kernels 5.4 and 5.8) and 21.xx (kernels 5.11 and 5.14)
 
 ### Download Locations for Tested Linux Distributions
 
