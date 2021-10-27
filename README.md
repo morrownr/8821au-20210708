@@ -72,7 +72,8 @@ $ sudo uname -a && mokutil --sb-state && lsusb && rfkill list all && dkms status
 - LMDE 4 (Linux Mint based on Debian) (kernel 4.19)
 
 - Manjaro 20.1 (kernel 5.9)
-
+- Manjaro 21.1 (kernel 5.13)
+- 
 - Raspberry Pi OS (2021-05-07) (ARM 32 bit) (kernel 5.10)
 - Raspberry Pi Desktop (x86 32 bit) (kernel 4.19)
 
@@ -93,6 +94,7 @@ $ sudo uname -a && mokutil --sb-state && lsusb && rfkill list all && dkms status
 ### Tested Hardware
 
 - [Alfa AWUS036ACS 802.11ac AC600 Wi-Fi Wireless Network Adapter](https://store.rokland.com/collections/wi-fi-usb-adapters/products/alfa-awus036acs-802-11ac-ac600-dual-band-wifi-usb-adapter-rp-sma)
+- [EDUP USB WiFi Adapter Wireless Network Adapters AC 600Mbps Dual Band 2.4G/5.8Ghz Wi-Fi Dongle ](https://www.amazon.com/gp/product/B01CCMUN8C/)
 
 ### Compatible Devices
 
@@ -106,6 +108,7 @@ $ sudo uname -a && mokutil --sb-state && lsusb && rfkill list all && dkms status
 * Netgear A6100
 * Netis WF2180
 * Planex GW-450S
+* EDUP AC600
 * Numerous adapters that are based on the supported chipsets.
 
 Note: Please read "supported-device-IDs" for information about how to confirm the correct driver for your adapter.
