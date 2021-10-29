@@ -79,7 +79,7 @@ unmanaged-devices=interface-name:<wlan0>;interface-name:wlan0mon
 ```
 
 Note: The above tells Network Manager to leave the specified interfaces alone.
-Remember to replace ```wlan0``` with the name of the wifi interface that you
+Remember to replace ```<wlan0>``` with the name of the wifi interface that you
 intend to use in monitor mode.
 
 ```
