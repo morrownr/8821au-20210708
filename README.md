@@ -133,7 +133,7 @@ There is no need to disable Secure Mode to install this driver. If Secure Mode i
 
 ### Installation Steps
 
-Step 1: Open a terminal (e.g.: Ctrl+Alt+T)
+Step 1: Open a terminal (e.g. Ctrl+Alt+T)
 
 Step 2: Update system package information (select the option for the OS you are using)
 
@@ -204,7 +204,7 @@ Step 7: Move to the newly created driver directory
 ```bash
 $ cd ~/src/8821au-20210708
 ```
-Step 8: **Only for Raspberry Pi systems**
+Step 8: **Only for Raspberry Pi systems (based on ARM or ARM64 CPUs)**
 
 Warning: This step only applies if you are installing to Raspberry Pi *hardware*. You should skip this step if installing to x86 or amd64 based systems.
 
@@ -218,6 +218,12 @@ Run a preparation script
     Option for 64 bit operating systems to be installed to Raspberry Pi hardware
 
     $ ./raspi64.sh
+
+    Note: Other ARM or ARM64 based systems will require modifications
+    similar to those provided in the above scripts for Raspberry Pi hardware but
+    the number and variety of different ARM and ARM64 based systems makes
+    supporting each system unpractical so you will need to research the needs of
+    your system and make the appropriate modifications. 
 ```
 Step 9: Run the installation script (For automated builds, use _NoPrompt_ as an option)
 ```bash
@@ -257,7 +263,7 @@ Note: This script removes everything that has been installed, with the exception
 of the packages installed in Step 3 and the driver directory. The driver directory
 can and probably should be deleted in most cases after running the script.
 
-Step 1: Open a terminal (e.g.: Ctrl+Alt+T)
+Step 1: Open a terminal (e.g. Ctrl+Alt+T)
 
 Step 2: Move to the driver directory
 ```bash
