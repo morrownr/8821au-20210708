@@ -65,7 +65,6 @@
 		#define CONFIG_80211N_HT
 	#endif
 #endif
-
 #ifdef CONFIG_80211AC_VHT
 	#define CONFIG_BEAMFORMING
 #endif
@@ -95,9 +94,6 @@
 	#endif
 #endif /*CONFIG_POWER_SAVING*/
 	/*#define CONFIG_ANTENNA_DIVERSITY*/
-
-
-
 	/* #define CONFIG_CONCURRENT_MODE 1 */
 	#ifdef CONFIG_CONCURRENT_MODE
 		#define CONFIG_RUNTIME_PORT_SWITCH
