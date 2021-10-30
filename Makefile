@@ -56,7 +56,7 @@ CONFIG_LED_ENABLE = y
 ######################### Features ############################
 CONFIG_AP_MODE = y
 CONFIG_P2P = y
-CONFIG_MP_INCLUDED = y
+CONFIG_MP_INCLUDED = n
 CONFIG_POWER_SAVING = y
 CONFIG_IPS_MODE = default
 CONFIG_LPS_MODE = default
@@ -1299,7 +1299,7 @@ endif
 
 ifeq ($(CONFIG_LED_CONTROL), y)
 EXTRA_CFLAGS += -DCONFIG_LED_CONTROL
-ifeq ($(CONFIG_RTL8812A), y)
+ifeq ($(CONFIG_RTL8821A), y)
 EXTRA_CFLAGS += -DCONFIG_SW_LED -DCONFIG_RTW_SW_LED
 endif
 ifeq ($(CONFIG_LED_ENABLE), y)
