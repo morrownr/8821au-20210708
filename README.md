@@ -30,7 +30,6 @@
 - Power saving control
 - VHT control (allows 80 MHz channel width in AP mode)
 - SU Beamformee and MU Beamformee control
-- SU Beamformer control
 - DFS Channel support and control for AP mode
 
 Note: WPA3-SAE support is in this driver, however, for it to work with current Linux distros, you will need to download, compile and install the current master of wpa_supplicant at the following site:
