@@ -1,15 +1,19 @@
 #!/bin/bash
 
 SCRIPT_NAME="start-mon.sh"
-SCRIPT_VERSION="20211019"
+SCRIPT_VERSION="20211108"
 
 # Purpose: Start and test monitor mode on the provided wlan interface
-
-# Some parts of this script require the installation of aircrack-ng
 #
-# $ sudo apt install aircrack-ng
-
-# Interfering processes must be disabled for the provided interface
+# Please feel free to help make this script better.
+#
+# Some parts of this script require the installation of the following:
+#	aircrack-ng
+#	wireshark
+#
+# $ sudo apt install -y aircrack-ng wireshark
+#
+# Interfering processes must be disabled prior to running this script:
 #
 # Option 1
 #```
@@ -18,10 +22,10 @@ SCRIPT_VERSION="20211019"
 #
 # Option 2, another way that works for me on Linux Mint:
 #
-# Note: I use multiple wifi adapters in my systems and I need to stay connected
-# to the internet while testing. This option works well for me and allows
-# me to stay connected by allowing Network Manager to continue managing interfaces
-# that are not marked as unmanaged.
+# Note: I use multiple wifi adapters in my systems and I need to stay
+# connected to the internet while testing. This option works well for
+# me and allows me to stay connected by allowing Network Manager to
+# continue managing interfaces that are not marked as unmanaged.
 #
 # Ensure Network Manager doesn't cause problems
 #```
@@ -33,9 +37,17 @@ SCRIPT_VERSION="20211019"
 # unmanaged-devices=interface-name:<wlan0>;interface-name:wlan0mon
 #```
 #
-# Note: The above tells Network Manager to leave the specified interfaces alone.
+# Note: Tells Network Manager to leave the specified interfaces alone.
 
-# Check to ensure sudo was used to start the script
+# Set color definitions (https://en.wikipedia.org/wiki/ANSI_escape_code)
+RED='\033[1;31m'
+YELLOW='\033[0;33;1m'
+GREEN='\033[1;32m'
+CYAN='\033[1;36m'
+NoColor='\033[0m'
+
+
+# Check that sudo was used to start the script
 if [[ $EUID -ne 0 ]]
 then
 	echo "You must run this script with superuser (root) privileges."
@@ -43,22 +55,13 @@ then
 	exit 1
 fi
 
-echo "Running ${SCRIPT_NAME} version ${SCRIPT_VERSION}"
-
-# Set color definitions (https://en.wikipedia.org/wiki/ANSI_escape_code)
-RED='\033[1;31m'
-YELLOW='\033[0;33;1m'
-GREEN='\033[1;32m'
-CYAN='\033[1;36m'
-NC='\033[0m'
-
-# Assign name to monitor mode interface
+# Assign default monitor mode interface name
 iface0mon='wlan0mon'
 
-# Default channel
-chan=1
+# Assign default channel
+chan=6
 
-# Activate one of the options below to set automatic or manual interface mode
+# Activate option to set automatic or manual interface mode
 #
 # Option 1: if you only have one wlan interface (automatic detection)
 #iface0=`iw dev | grep 'Interface' | sed 's/Interface //'`
@@ -71,19 +74,41 @@ ip link set $iface0 down
 # Check if iface0 exists and continue if true
 if [ $? -eq 0 ]
 then
-# 	Rename the interface
-	read -p "Do you want to rename $iface0 to wlan0mon? [y/N] " -n 1 -r
-	echo    # move to a new line
-	if [[ $REPLY =~ ^[Yy]$ ]]
-	then
-		ip link set $iface0 name $iface0mon
-	else
-		iface0mon=$iface0
-	fi
+#	Display settings
+#	clear
+#	echo "Running ${SCRIPT_NAME} version ${SCRIPT_VERSION}"
+#	echo
+#	echo ' ----------------------------'
+#	echo '    WiFi Interface Status'
+#	echo '    '$iface0
+#	echo ' ----------------------------'
+#	Display interface settings
+#	iface_name=$(iw dev $iface0 info | grep 'Interface' | sed 's/Interface //' | sed -e 's/^[ \t]*//')
+#	echo '    name - ' $iface_name
+#	iface_addr=$(iw dev $iface0 info | grep 'addr' | sed 's/addr //' | sed -e 's/^[ \t]*//')
+#	echo '    addr - ' $iface_addr
+#	iface_type=$(iw dev $iface0 info | grep 'type' | sed 's/type //' | sed -e 's/^[ \t]*//')
+#	echo '    type - ' $iface_type
+#	iface_chan=$(iw dev $iface0 info | grep 'channel' | sed 's/channel //' | sed -e 's/^[ \t]*//')
+#	echo '    chan - ' $chan
+#	iface_txpw=$(iw dev $iface0 info | grep 'txpower' | sed 's/txpower //' | sed -e 's/^[ \t]*//')
+#	echo '    txpw - ' $iface_txpw
+#	echo ' ----------------------------'
 
+# 	Rename the interface
+#	echo
+#	read -p " Do you want to rename $iface0 to wlan0mon? [y/N] " -n 1 -r
+#	echo
+#	if [[ $REPLY =~ ^[Yy]$ ]]
+#	then
+	ip link set $iface0 name $iface0mon
+#	else
+#		iface0mon=$iface0
+#	fi
+	
 #	Set monitor mode
-#	iw dev <devname> set monitor <flag>*
-#		Set monitor flags. Valid flags are:
+#	iw dev <devname> set monitor <flag>
+#		Valid monitor flags are:
 #		none:     no special flags
 #		fcsfail:  show frames with FCS errors
 #		control:  show control frames
@@ -93,29 +118,71 @@ then
 #		mumimo-groupid <GROUP_ID>: use MUMIMO according to a group id
 #		mumimo-follow-mac <MAC_ADDRESS>: use MUMIMO according to a MAC address
 	iw dev $iface0mon set monitor control
-
 # 	Set iface0 up
 	ip link set $iface0mon up
-
-#	Display settings
-	iw dev
+#	Display interface settings
+	clear
+	echo -e "${GREEN}"
+	echo ' ----------------------------'
+	echo '    WiFi Interface Status'
+	echo '    '$iface0
+	echo ' ----------------------------'
+	iface_name=$(iw dev $iface0mon info | grep 'Interface' | sed 's/Interface //' | sed -e 's/^[ \t]*//')
+	echo '    name - ' $iface_name
+	iface_type=$(iw dev $iface0mon info | grep 'type' | sed 's/type //' | sed -e 's/^[ \t]*//')
+	echo '    type - ' $iface_type
+	iface_addr=$(iw dev $iface0mon info | grep 'addr' | sed 's/addr //' | sed -e 's/^[ \t]*//')
+	echo '    addr - ' $iface_addr
+	echo ' ----------------------------'
+	echo -e "${NoColor}"
+	
+#	Set addr
+	read -p " Do you want to set a new addr? [y/N] " -n 1 -r
+	if [[ $REPLY =~ ^[Yy]$ ]]
+	then
+		iface_addr_orig=$iface_addr
+		echo
+		read -p " What addr do you want? ( 00:00:00:00:00:00 ) " iface_addr
+		ip link set dev $iface0mon down
+		ip link set dev $iface0mon address $iface_addr
+		ip link set dev $iface0mon up
+#		Display interface settings
+		clear
+		echo -e "${GREEN}"
+		echo ' ----------------------------'
+		echo '    WiFi Interface Status'
+		echo '    '$iface0
+		echo ' ----------------------------'
+		iface_name=$(iw dev $iface0mon info | grep 'Interface' | sed 's/Interface //' | sed -e 's/^[ \t]*//')
+		echo '    name - ' $iface_name
+		iface_type=$(iw dev $iface0mon info | grep 'type' | sed 's/type //' | sed -e 's/^[ \t]*//')
+		echo '    type - ' $iface_type
+		iface_addr=$(iw dev $iface0mon info | grep 'addr' | sed 's/addr //' | sed -e 's/^[ \t]*//')
+		echo '    addr - ' $iface_addr
+#		iface_chan=$(iw dev $iface0mon info | grep 'channel' | sed 's/channel //' | sed -e 's/^[ \t]*//')
+#		echo '    chan - ' $chan
+#		iface_txpw=$(iw dev $iface0mon info | grep 'txpower' | sed 's/txpower //' | sed -e 's/^[ \t]*//')
+#		echo '    txpw - ' $iface_txpw
+		echo ' ----------------------------'
+		echo -e "${NoColor}"
+	fi
 
 #	Run airodump-ng
 #	airodump-ng will display a list of detected access points and clients
 #	https://www.aircrack-ng.org/doku.php?id=airodump-ng
 #	https://en.wikipedia.org/wiki/Regular_expression
-	echo    # move to a new line
-	echo -e "airodump-ng can receive and interpret key strokes while running"
-	echo    # move to a new line
-	echo -e "a - select active areas"
-	echo -e "s - change sort column"
-	echo -e "q - quit"
-	echo    # move to a new line
-	read -p "Do you want to run airodump-ng to display a list of detected access points and clients? [y/N] " -n 1 -r
-	echo    # move to a new line
+	echo
+	echo -e " airodump-ng can receive and interpret key strokes while running..."
+	echo
+	echo -e " a - select active area"
+	echo -e " i - invert sorting order"
+	echo -e " s - change sort column"
+	echo -e " q - quit"
+	echo ' ----------------------------'
+	echo
+	read -p " Do you want run airodump-ng to display a list of detected access points and clients? [y/N] " -n 1 -r
 	if [[ $REPLY =~ ^[Yy]$ ]]
 	then
-
 #		 usage: airodump-ng <options> <interface>[,<interface>,...]
 #
 #		  -c <channels>        : Capture on specific channels
@@ -123,57 +190,142 @@ then
 #		 --ignore-negative-one : Removes the message that says fixed channel <interface>: -1
 #		 --essid-regex <regex> : Filter APs by ESSID using a regular expression
 #
-#		shows hidden ESSIDs
+#		Select option
+#
+#		1) shows hidden ESSIDs
 #		airodump-ng -c 1-165 -a --ignore-negative-one $iface0mon
 #
-#		does not show hidden ESSIDs
+#		2) does not show hidden ESSIDs
 		airodump-ng -c 1-165 -a --ignore-negative-one --essid-regex '^(?=.)^(?!.*CoxWiFi)' $iface0mon
-
-	else
-		exit 0
 	fi
 
 #	Set channel
-	read -p "Do you want to set the channel? [y/N] " -n 1 -r
-	echo    # move to a new line
+	read -p " Do you want to set the channel? [y/N] " -n 1 -r
 	if [[ $REPLY =~ ^[Yy]$ ]]
 	then
-		echo -e "What channel do you want to set?"
-		read chan
+		echo
+		read -p " What channel do you want to set? " chan
+#		ip link set dev $iface0mon down
 		iw dev $iface0mon set channel $chan
-	else
-		exit 0
+#		ip link set dev $iface0mon up
+#		Display interface settings
+		clear
+		echo -e "${GREEN}"
+		echo ' ----------------------------'
+		echo '    WiFi Interface Status'
+		echo '    '$iface0
+		echo ' ----------------------------'
+		iface_name=$(iw dev $iface0mon info | grep 'Interface' | sed 's/Interface //' | sed -e 's/^[ \t]*//')
+		echo '    name - ' $iface_name
+		iface_type=$(iw dev $iface0mon info | grep 'type' | sed 's/type //' | sed -e 's/^[ \t]*//')
+		echo '    type - ' $iface_type
+		iface_addr=$(iw dev $iface0mon info | grep 'addr' | sed 's/addr //' | sed -e 's/^[ \t]*//')
+		echo '    addr - ' $iface_addr
+		iface_chan=$(iw dev $iface0mon info | grep 'channel' | sed 's/channel //' | sed -e 's/^[ \t]*//')
+		echo '    chan - ' $chan
+#		iface_txpw=$(iw dev $iface0mon info | grep 'txpower' | sed 's/txpower //' | sed -e 's/^[ \t]*//')
+#		echo '    txpw - ' $iface_txpw
+		echo ' ----------------------------'
+		echo -e "${NoColor}"
 	fi
+
+#	Set txpw
+#	read -p " Do you want to set the txpower? [y/N] " -n 1 -r
+#	if [[ $REPLY =~ ^[Yy]$ ]]
+#	then
+#		echo
+#		read -p " What txpw setting do you want? ( 23 dBm = 2300 ) " iface_txpw
+#		ip link set dev $iface0mon down
+#		iw dev $iface0mon set txpower fixed $iface_txpw
+#		ip link set dev $iface0mon up
+#		Display settings
+#		clear
+#		echo "Running ${SCRIPT_NAME} version ${SCRIPT_VERSION}"
+#		echo
+#		echo ' ----------------------------'
+#		echo '    WiFi Interface Status'
+#		echo '    '$iface0
+#		echo ' ----------------------------'
+#		# Display interface settings
+#		iface_name=$(iw dev $iface0mon info | grep 'Interface' | sed 's/Interface //' | sed -e 's/^[ \t]*//')
+#		echo '    name - ' $iface_name
+#		iface_addr=$(iw dev $iface0mon info | grep 'addr' | sed 's/addr //' | sed -e 's/^[ \t]*//')
+#		echo '    addr - ' $iface_addr
+#		iface_type=$(iw dev $iface0mon info | grep 'type' | sed 's/type //' | sed -e 's/^[ \t]*//')
+#		echo '    type - ' $iface_type
+#		iface_chan=$(iw dev $iface0mon info | grep 'channel' | sed 's/channel //' | sed -e 's/^[ \t]*//')
+#		echo '    chan - ' $chan
+#		iface_txpw=$(iw dev $iface0mon info | grep 'txpower' | sed 's/txpower //' | sed -e 's/^[ \t]*//')
+#		echo '    txpw - ' $iface_txpw
+#		echo ' ----------------------------'
+#	fi
 
 #	Test injection capability with aireplay-ng
-	read -p "Do you want to test injection capability? [y/N] " -n 1 -r
-	echo    # move to a new line
+	read -p " Do you want to test injection capability? [y/N] " -n 1 -r
 	if [[ $REPLY =~ ^[Yy]$ ]]
 	then
+		echo
 		aireplay-ng --test $iface0mon
-	else
-		exit 0
 	fi
 
-#	Return the adapter to managed mode
-	read -p "Do you want to return the adapter to managed mode? [y/N] " -n 1 -r
-	echo    # move to a new line
+#	Start wireshark
+	read -p " Do you want to start Wireshark? [y/N] " -n 1 -r
 	if [[ $REPLY =~ ^[Yy]$ ]]
 	then
+		wireshark --interface wlan0mon
+#		filter: wlan.fc.type_subtype == 29		
+	fi
+
+#	Return the adapter to original settings
+	read -p " Do you want to return the adapter to original settings? [Y/n] " -n 1 -r
+	if [[ $REPLY =~ ^[Yy]$ ]]
+	then
+#		Display interface settings
+		clear
+		echo -e "${GREEN}"
+		echo ' ----------------------------'
+		echo '    WiFi Interface Status'
+		echo '    '$iface0
+		echo ' ----------------------------'
+		iface_name=$(iw dev $iface0mon info | grep 'Interface' | sed 's/Interface //' | sed -e 's/^[ \t]*//')
+		echo '    name - ' $iface_name
+		iface_type=$(iw dev $iface0mon info | grep 'type' | sed 's/type //' | sed -e 's/^[ \t]*//')
+		echo '    type - ' $iface_type
+		iface_addr=$(iw dev $iface0mon info | grep 'addr' | sed 's/addr //' | sed -e 's/^[ \t]*//')
+		echo '    addr - ' $iface_addr
+		echo ' ----------------------------'
+		echo -e "${NoColor}"
+	else
 		ip link set $iface0mon down
 		ip link set $iface0mon name $iface0
 		iw $iface0 set type managed
-		iw dev
-	else
-		iw dev
-		exit 0
+		ip link set dev $iface0 address $iface_addr_orig
+		ip link set $iface0 up
+#		Display interface settings
+		clear
+		echo -e "${GREEN}"
+		echo ' ----------------------------'
+		echo '    WiFi Interface Status'
+		echo '    '$iface0
+		echo ' ----------------------------'
+		iface_name=$(iw dev $iface0 info | grep 'Interface' | sed 's/Interface //' | sed -e 's/^[ \t]*//')
+		echo '    name - ' $iface_name
+		iface_type=$(iw dev $iface0 info | grep 'type' | sed 's/type //' | sed -e 's/^[ \t]*//')
+		echo '    type - ' $iface_type
+		iface_addr=$(iw dev $iface0 info | grep 'addr' | sed 's/addr //' | sed -e 's/^[ \t]*//')
+		echo '    addr - ' $iface_addr
+		echo ' ----------------------------'
+		echo -e "${NoColor}"
 	fi
-
+	exit 0
 else
-	echo -e "${RED}ERROR: ${YELLOW}Please provide an existing interface as parameter! ${NC}"
-	echo -e "${NC}Usage: ${CYAN}$ sudo ./start-mon.sh [interface:wlan0] ${NC}"
-	echo -e "${NC}Tip:   ${CYAN}$ iw dev ${NC}(displays available interfaces) ${NC}"
+	echo -e "${YELLOW}ERROR: Please provide an existing interface as parameter! ${NoColor}"
+	echo -e "${NoColor}Usage: $ ${CYAN}sudo ./start-mon.sh [interface:wlan0] ${NoColor}"
+	echo -e "${NoColor}Tip:   $ ${CYAN}iw dev ${NoColor}(displays available interfaces)"
 	exit 1
 fi
 
-exit 0
+# addr
+# sudo ip link set dev <your device here> down
+# sudo ip link set dev <your device here> address <your new mac address>
+# sudo ip link set dev <your device here> up
