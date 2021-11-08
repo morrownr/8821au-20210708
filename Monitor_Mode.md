@@ -3,12 +3,7 @@
 Purpose: Provide information and tools for testing and using monitor mode with
 this driver.
 
-Notes: 
-
-```$ sudo iw dev``` may not display channel and txpower information correctly.
-This appears to be a cosmetic problem.
-
-### For Debian based Linux Distros such as:
+Note: This document and the start-mon.sh script have been tested on the following::
 ```
 Kali Linux
 Raspberry Pi OS
@@ -17,7 +12,10 @@ Ubuntu
 ```
 -----
 
-### Update system
+## Steps to test monitor mode
+
+
+#### Update system
 ```
 sudo apt update
 ```
@@ -27,34 +25,34 @@ sudo apt full-upgrade
 
 -----
 
-### Ensure WiFi radio is not blocked
+#### Ensure WiFi radio is not blocked
 ```
 sudo rfkill unblock wlan
 ```
 
 -----
 
-### Install the aircrack-ng package
+#### Install the aircrack-ng and wireshark packages
 ```
-sudo apt install aircrack-ng
+sudo apt install aircrack-ng wireshark
 ```
 
 -----
-### Check wifi interface information
+#### Check wifi interface information
 ```
 iw dev
 ```
 
 -----
 
-### Information
+#### Information
 
 The wifi interface name ```wlan0``` is used in this document but you will need
 to substitute the name of your wifi interface while using this document.
 
 -----
 
-### Disable interfering processes
+#### Disable interfering processes
 
 Option 1
 ```
@@ -88,7 +86,7 @@ sudo reboot
 
 -----
 
-### Change to monitor mode
+#### Change to monitor mode
 
 Option 1
 
@@ -97,8 +95,8 @@ Note: This option may not work. If not, press on with option 2.
 sudo airmon-ng start <wlan0>
 ```
 
-Note: I have provided a script called ```start-mon.sh``` to automate the
-following option. Please give it a try and make suggestions to improve it.
+Note: I have provided a script called ```start-mon.sh``` to automate most
+of the following option. Please give it a try and make suggestions to improve it.
 ```
 Usage: $ sudo ./start-mon.sh <wlan0>
 ```
