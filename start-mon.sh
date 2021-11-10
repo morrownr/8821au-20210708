@@ -1,9 +1,11 @@
 #!/bin/bash
 
 SCRIPT_NAME="start-mon.sh"
-SCRIPT_VERSION="20211108"
+SCRIPT_VERSION="20211109"
 
 # Purpose: Start and test monitor mode on the provided wlan interface
+#
+# Usage: $ sudo ./start-mon.sh [interface:wlan0]
 #
 # Please feel free to help make this script better.
 #
@@ -85,10 +87,10 @@ then
 #	Display interface settings
 #	iface_name=$(iw dev $iface0 info | grep 'Interface' | sed 's/Interface //' | sed -e 's/^[ \t]*//')
 #	echo '    name - ' $iface_name
-#	iface_addr=$(iw dev $iface0 info | grep 'addr' | sed 's/addr //' | sed -e 's/^[ \t]*//')
-#	echo '    addr - ' $iface_addr
 #	iface_type=$(iw dev $iface0 info | grep 'type' | sed 's/type //' | sed -e 's/^[ \t]*//')
 #	echo '    type - ' $iface_type
+#	iface_addr=$(iw dev $iface0 info | grep 'addr' | sed 's/addr //' | sed -e 's/^[ \t]*//')
+#	echo '    addr - ' $iface_addr
 #	iface_chan=$(iw dev $iface0 info | grep 'channel' | sed 's/channel //' | sed -e 's/^[ \t]*//')
 #	echo '    chan - ' $chan
 #	iface_txpw=$(iw dev $iface0 info | grep 'txpower' | sed 's/txpower //' | sed -e 's/^[ \t]*//')
@@ -117,23 +119,24 @@ then
 #		active:   use active mode (ACK incoming unicast packets)
 #		mumimo-groupid <GROUP_ID>: use MUMIMO according to a group id
 #		mumimo-follow-mac <MAC_ADDRESS>: use MUMIMO according to a MAC address
-	iw dev $iface0mon set monitor control
+	iw dev $iface0mon set monitor none
 # 	Set iface0 up
 	ip link set $iface0mon up
 #	Display interface settings
 	clear
 	echo -e "${GREEN}"
-	echo ' ----------------------------'
-	echo '    WiFi Interface Status'
-	echo '    '$iface0
-	echo ' ----------------------------'
+	echo ' -----------------------------'
+	echo -e "    ${SCRIPT_NAME} ${SCRIPT_VERSION}"
+	echo '    WiFi Interface:'
+	echo '            '$iface0
+	echo ' -----------------------------'
 	iface_name=$(iw dev $iface0mon info | grep 'Interface' | sed 's/Interface //' | sed -e 's/^[ \t]*//')
 	echo '    name - ' $iface_name
 	iface_type=$(iw dev $iface0mon info | grep 'type' | sed 's/type //' | sed -e 's/^[ \t]*//')
 	echo '    type - ' $iface_type
 	iface_addr=$(iw dev $iface0mon info | grep 'addr' | sed 's/addr //' | sed -e 's/^[ \t]*//')
 	echo '    addr - ' $iface_addr
-	echo ' ----------------------------'
+	echo ' -----------------------------'
 	echo -e "${NoColor}"
 	
 #	Set addr
@@ -142,17 +145,18 @@ then
 	then
 		iface_addr_orig=$iface_addr
 		echo
-		read -p " What addr do you want? ( 00:00:00:00:00:00 ) " iface_addr
+		read -p " What addr do you want? ( 12:34:56:78:90:ab ) " iface_addr
 		ip link set dev $iface0mon down
 		ip link set dev $iface0mon address $iface_addr
 		ip link set dev $iface0mon up
 #		Display interface settings
 		clear
 		echo -e "${GREEN}"
-		echo ' ----------------------------'
-		echo '    WiFi Interface Status'
-		echo '    '$iface0
-		echo ' ----------------------------'
+		echo ' -----------------------------'
+		echo -e "    ${SCRIPT_NAME} ${SCRIPT_VERSION}"
+		echo '    WiFi Interface:'
+		echo '            '$iface0
+		echo ' -----------------------------'
 		iface_name=$(iw dev $iface0mon info | grep 'Interface' | sed 's/Interface //' | sed -e 's/^[ \t]*//')
 		echo '    name - ' $iface_name
 		iface_type=$(iw dev $iface0mon info | grep 'type' | sed 's/type //' | sed -e 's/^[ \t]*//')
@@ -163,7 +167,7 @@ then
 #		echo '    chan - ' $chan
 #		iface_txpw=$(iw dev $iface0mon info | grep 'txpower' | sed 's/txpower //' | sed -e 's/^[ \t]*//')
 #		echo '    txpw - ' $iface_txpw
-		echo ' ----------------------------'
+		echo ' -----------------------------'
 		echo -e "${NoColor}"
 	fi
 
@@ -171,7 +175,6 @@ then
 #	airodump-ng will display a list of detected access points and clients
 #	https://www.aircrack-ng.org/doku.php?id=airodump-ng
 #	https://en.wikipedia.org/wiki/Regular_expression
-	echo
 	echo -e " airodump-ng can receive and interpret key strokes while running..."
 	echo
 	echo -e " a - select active area"
@@ -205,16 +208,48 @@ then
 	then
 		echo
 		read -p " What channel do you want to set? " chan
+	fi
+#	ip link set dev $iface0mon down
+	iw dev $iface0mon set channel $chan
+#	ip link set dev $iface0mon up
+#	Display interface settings
+	clear
+	echo -e "${GREEN}"
+	echo ' -----------------------------'
+	echo -e "    ${SCRIPT_NAME} ${SCRIPT_VERSION}"
+	echo '    WiFi Interface:'
+	echo '            '$iface0
+	echo ' -----------------------------'
+	iface_name=$(iw dev $iface0mon info | grep 'Interface' | sed 's/Interface //' | sed -e 's/^[ \t]*//')
+	echo '    name - ' $iface_name
+	iface_type=$(iw dev $iface0mon info | grep 'type' | sed 's/type //' | sed -e 's/^[ \t]*//')
+	echo '    type - ' $iface_type
+	iface_addr=$(iw dev $iface0mon info | grep 'addr' | sed 's/addr //' | sed -e 's/^[ \t]*//')
+	echo '    addr - ' $iface_addr
+	iface_chan=$(iw dev $iface0mon info | grep 'channel' | sed 's/channel //' | sed -e 's/^[ \t]*//')
+	echo '    chan - ' $chan
+	iface_txpw=$(iw dev $iface0mon info | grep 'txpower' | sed 's/txpower //' | sed -e 's/^[ \t]*//')
+	echo '    txpw - ' $iface_txpw
+	echo ' -----------------------------'
+	echo -e "${NoColor}"
+
+#	Set txpw
+	read -p " Do you want to set the txpower? [y/N] " -n 1 -r
+	if [[ $REPLY =~ ^[Yy]$ ]]
+	then
+		echo
+		read -p " What txpw setting do you want? ( 2300 = 23 dBm ) " iface_txpw
 #		ip link set dev $iface0mon down
-		iw dev $iface0mon set channel $chan
+		iw dev $iface0mon set txpower fixed $iface_txpw
 #		ip link set dev $iface0mon up
 #		Display interface settings
 		clear
 		echo -e "${GREEN}"
-		echo ' ----------------------------'
-		echo '    WiFi Interface Status'
-		echo '    '$iface0
-		echo ' ----------------------------'
+		echo ' -----------------------------'
+		echo -e "    ${SCRIPT_NAME} ${SCRIPT_VERSION}"
+		echo '    WiFi Interface:'
+		echo '            '$iface0
+		echo ' -----------------------------'
 		iface_name=$(iw dev $iface0mon info | grep 'Interface' | sed 's/Interface //' | sed -e 's/^[ \t]*//')
 		echo '    name - ' $iface_name
 		iface_type=$(iw dev $iface0mon info | grep 'type' | sed 's/type //' | sed -e 's/^[ \t]*//')
@@ -223,42 +258,11 @@ then
 		echo '    addr - ' $iface_addr
 		iface_chan=$(iw dev $iface0mon info | grep 'channel' | sed 's/channel //' | sed -e 's/^[ \t]*//')
 		echo '    chan - ' $chan
-#		iface_txpw=$(iw dev $iface0mon info | grep 'txpower' | sed 's/txpower //' | sed -e 's/^[ \t]*//')
-#		echo '    txpw - ' $iface_txpw
-		echo ' ----------------------------'
+		iface_txpw=$(iw dev $iface0mon info | grep 'txpower' | sed 's/txpower //' | sed -e 's/^[ \t]*//')
+		echo '    txpw - ' $iface_txpw
+		echo ' -----------------------------'
 		echo -e "${NoColor}"
 	fi
-
-#	Set txpw
-#	read -p " Do you want to set the txpower? [y/N] " -n 1 -r
-#	if [[ $REPLY =~ ^[Yy]$ ]]
-#	then
-#		echo
-#		read -p " What txpw setting do you want? ( 23 dBm = 2300 ) " iface_txpw
-#		ip link set dev $iface0mon down
-#		iw dev $iface0mon set txpower fixed $iface_txpw
-#		ip link set dev $iface0mon up
-#		Display settings
-#		clear
-#		echo "Running ${SCRIPT_NAME} version ${SCRIPT_VERSION}"
-#		echo
-#		echo ' ----------------------------'
-#		echo '    WiFi Interface Status'
-#		echo '    '$iface0
-#		echo ' ----------------------------'
-#		# Display interface settings
-#		iface_name=$(iw dev $iface0mon info | grep 'Interface' | sed 's/Interface //' | sed -e 's/^[ \t]*//')
-#		echo '    name - ' $iface_name
-#		iface_addr=$(iw dev $iface0mon info | grep 'addr' | sed 's/addr //' | sed -e 's/^[ \t]*//')
-#		echo '    addr - ' $iface_addr
-#		iface_type=$(iw dev $iface0mon info | grep 'type' | sed 's/type //' | sed -e 's/^[ \t]*//')
-#		echo '    type - ' $iface_type
-#		iface_chan=$(iw dev $iface0mon info | grep 'channel' | sed 's/channel //' | sed -e 's/^[ \t]*//')
-#		echo '    chan - ' $chan
-#		iface_txpw=$(iw dev $iface0mon info | grep 'txpower' | sed 's/txpower //' | sed -e 's/^[ \t]*//')
-#		echo '    txpw - ' $iface_txpw
-#		echo ' ----------------------------'
-#	fi
 
 #	Test injection capability with aireplay-ng
 	read -p " Do you want to test injection capability? [y/N] " -n 1 -r
@@ -283,17 +287,18 @@ then
 #		Display interface settings
 		clear
 		echo -e "${GREEN}"
-		echo ' ----------------------------'
-		echo '    WiFi Interface Status'
-		echo '    '$iface0
-		echo ' ----------------------------'
+		echo ' -----------------------------'
+		echo -e "    ${SCRIPT_NAME} ${SCRIPT_VERSION}"
+		echo '    WiFi Interface:'
+		echo '            '$iface0
+		echo ' -----------------------------'
 		iface_name=$(iw dev $iface0mon info | grep 'Interface' | sed 's/Interface //' | sed -e 's/^[ \t]*//')
 		echo '    name - ' $iface_name
 		iface_type=$(iw dev $iface0mon info | grep 'type' | sed 's/type //' | sed -e 's/^[ \t]*//')
 		echo '    type - ' $iface_type
 		iface_addr=$(iw dev $iface0mon info | grep 'addr' | sed 's/addr //' | sed -e 's/^[ \t]*//')
 		echo '    addr - ' $iface_addr
-		echo ' ----------------------------'
+		echo ' -----------------------------'
 		echo -e "${NoColor}"
 	else
 		ip link set $iface0mon down
@@ -304,17 +309,18 @@ then
 #		Display interface settings
 		clear
 		echo -e "${GREEN}"
-		echo ' ----------------------------'
-		echo '    WiFi Interface Status'
-		echo '    '$iface0
-		echo ' ----------------------------'
+		echo ' -----------------------------'
+		echo -e "    ${SCRIPT_NAME} ${SCRIPT_VERSION}"
+		echo '    WiFi Interface:'
+		echo '            '$iface0
+		echo ' -----------------------------'
 		iface_name=$(iw dev $iface0 info | grep 'Interface' | sed 's/Interface //' | sed -e 's/^[ \t]*//')
 		echo '    name - ' $iface_name
 		iface_type=$(iw dev $iface0 info | grep 'type' | sed 's/type //' | sed -e 's/^[ \t]*//')
 		echo '    type - ' $iface_type
 		iface_addr=$(iw dev $iface0 info | grep 'addr' | sed 's/addr //' | sed -e 's/^[ \t]*//')
 		echo '    addr - ' $iface_addr
-		echo ' ----------------------------'
+		echo ' -----------------------------'
 		echo -e "${NoColor}"
 	fi
 	exit 0
@@ -324,8 +330,3 @@ else
 	echo -e "${NoColor}Tip:   $ ${CYAN}iw dev ${NoColor}(displays available interfaces)"
 	exit 1
 fi
-
-# addr
-# sudo ip link set dev <your device here> down
-# sudo ip link set dev <your device here> address <your new mac address>
-# sudo ip link set dev <your device here> up

@@ -1,9 +1,18 @@
 ## Monitor Mode
 
-Purpose: Provide information and tools for testing and using monitor mode with
-this driver.
+Purpose: Provide information and tools for testing and using monitor mode.
 
-Note: This document and the start-mon.sh script have been tested on the following::
+Monitor mode, or RFMON (Radio Frequency MONitor) mode, allows a computer with a
+wireless network interface controller (WNIC) to monitor all traffic received on
+a wireless channel. Monitor mode allows packets to be captured without having to
+associate with an access point or ad hoc network first. Monitor mode only
+applies to wireless networks, while promiscuous mode can be used on both wired
+and wireless networks. Monitor mode is one of the eight modes that 802.11
+wireless cards and adapters can operate in: Master (acting as an access point),
+Managed (client, also known as station), Ad hoc, Repeater, Mesh, Wi-Fi Direct,
+TDLS and Monitor mode.
+
+Note: This document and the start-mon.sh script have been tested on the following:
 ```
 Kali Linux
 Raspberry Pi OS
@@ -90,7 +99,8 @@ sudo reboot
 
 Option 1
 
-Note: This option may not work. If not, press on with option 2.
+Note: This option may not work with some driver/adapter combinations. If not,
+press on with ```start-mon.sh``` or option 2.
 ```
 sudo airmon-ng start <wlan0>
 ```
@@ -278,7 +288,8 @@ Invert sorting algorithm
 
 m
 
-Mark the selected AP or cycle through different colors if the selected AP is already marked
+Mark the selected AP or cycle through different colors if the selected AP is
+already marked
 
 
 o
