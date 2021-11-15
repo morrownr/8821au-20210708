@@ -724,6 +724,10 @@ WantedBy=multi-user.target
 ```
 sudo systemctl enable iperf3
 ```
+```
+sudo reboot
+```
+
 Check iperf3 status
 ```
 sudo systemctl status iperf3
