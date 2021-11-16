@@ -7,6 +7,15 @@ ethernet network to add WiFi capability where it does not exist or to
 extend the network to WiFi capable computers and devices in areas where
 the WiFi signal is weak or otherwise does not meet expectations.
 
+INTERNET >>> modem/router >>> RasPi (br0) >>> USB Wifi >>>  laptop
+            (cable)       ╱                               ╲
+            (fiber)   CAT 5e, 6                             phone
+            (dsl)
+
+Note: The connection from the modem to the RasPi is begging for alternative
+solutions to meet different needs. I am exploring a wifi (fallback repeater)
+setup as well as Powerline AV solutions. Please feel free to make suggestions.
+
 #### Single Band or Dual Band - Your Choice
 
 This document outlines single band and dual band WiFi setups using a Raspberry
@@ -40,7 +49,7 @@ Netplan.
 
 [Raspberry Pi 4B (4gb)](https://www.raspberrypi.org/products/raspberry-pi-4-model-b/)
 
-[Raspberry Pi OS (2021-05-07) (32 bit) (kernel 5.10.17-v7l+)](https://www.raspberrypi.org/software/operating-systems/#raspberry-pi-os-32-bit)
+[Raspberry Pi OS (2021-10-30) (32 bit) (kernel 5.10)](https://www.raspberrypi.org/software/operating-systems/#raspberry-pi-os-32-bit)
 
 Ethernet connection providing internet
 
@@ -72,7 +81,8 @@ Note: The Alfa AWUS036ACM adapter, a mt7612u based adapter, requests a maximum
 of 400 mA from the USB subsystem during initialization. Testing with a meter
 shows actual usage of 360 mA during heavy load and usage of 180 mA during
 light loads. This is much lower power usage than most AC1200 class adapters
-which makes this adapter a good choice for a Raspberry Pi based access point.
+which makes this adapter a good choice for a Raspberry Pi based access point. 
+Other mt7612u and mt7610u chipset based adapters also show low power usage.
 
 -----
 
@@ -156,8 +166,8 @@ users forget to upgrade their system on a regular basis, maybe it is a good idea
 
 Reduce overall power consumption and overclock the CPU a modest amount.
 
-Note: All items in this step are optional and some items are specific to
-the Raspberry Pi 4B. If installing to a Raspberry Pi 3b or 3b+ you will
+Note: All items in this step are optional and some items are specific to the
+Raspberry Pi 4B. If installing to a Raspberry Pi 3B or 3B+ or other Pi you will
 need to use the appropriate settings for that hardward.
 
 ```
@@ -168,7 +178,7 @@ Change:
 
 ```
 # turn off onboard audio
-dtparam=audio=off
+#dtparam=audio=on
 
 # disable DRM VC4 V3D driver on top of the dispmanx display stack
 #dtoverlay=vc4-fkms-v3d
@@ -207,8 +217,8 @@ arm_freq=1600
 Enable predictable network interface names
 
 Note: While this step is optional, problems can arise without it on dual band
-setups. Some operating systems have this capability enabled by default but not
-the Raspberry Pi OS.
+setups. Some Linux distros have this capability enabled by default but not the
+Raspberry Pi OS.
 
 ```
 sudo raspi-config
@@ -665,7 +675,6 @@ Check status of the services.
 
 ```
 systemctl status hostapd
-
 ```
 ```
 systemctl status systemd-networkd
@@ -703,7 +712,7 @@ sudo systemctl enable iperf3
 sudo reboot
 ```
 
-Check iperf3 status
+Check iperf3 status.
 ```
 sudo systemctl status iperf3
 ```
