@@ -7,10 +7,12 @@ ethernet network to add WiFi capability where it does not exist or to
 extend the network to WiFi capable computers and devices in areas where
 the WiFi signal is weak or otherwise does not meet expectations.
 
+```
 INTERNET >>> modem/router >>> RasPi (br0) >>> USB Wifi >>>  laptop
             (cable)       ╱                               ╲
             (fiber)   CAT 5e, 6                             phone
             (dsl)
+```
 
 Note: The connection from the modem to the RasPi is begging for alternative
 solutions to meet different needs. I am exploring a wifi (fallback repeater)
