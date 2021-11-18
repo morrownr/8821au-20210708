@@ -100,7 +100,7 @@ $ sudo uname -a && mokutil --sb-state && lsusb && rfkill list all && dkms status
 * Alfa AWUS036ACS
 * Buffalo WI-U2-433DHP
 * Edimax EW-7811UTC
-* Edimax EW-7811UAC
+* Edimax EW-[7811UAC](https://www.amazon.com/Edimax-EW-7811UAC-Extension-Reception-Transmission/dp/B00LGN8I40)
 * Edimax EW-7811UCB
 * ELECOM WDC-433DU2H
 * GMYLE - AC450
