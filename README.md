@@ -27,7 +27,7 @@
   * IBSS
   * Managed
   * AP (see ```Bridged_Wireless_Access_Point.md```)
-  * Monitor (see ```Monitor_Mode.md```)
+  * Monitor (see ```Monitor_Mode.md and start-mon.sh```)
   * P2P-client
   * P2P-GO
 - Concurrent mode (coming soon)
@@ -92,15 +92,15 @@ $ sudo uname -a && mokutil --sb-state && lsusb && rfkill list all && dkms status
 
 ## Tested Hardware
 
-- [Alfa AWUS036ACS](https://store.rokland.com/collections/wi-fi-usb-adapters/products/alfa-awus036acs-802-11ac-ac600-dual-band-wifi-usb-adapter-rp-sma)
+- [ALFA AWUS036ACS](https://store.rokland.com/collections/wi-fi-usb-adapters/products/alfa-awus036acs-802-11ac-ac600-dual-band-wifi-usb-adapter-rp-sma)
 - [EDUP EP-1607](https://www.amazon.com/gp/product/B01CCMUN8C/)
 
 ## Compatible Devices
 
-* Alfa AWUS036ACS
+* [ALFA AWUS036ACS](https://store.rokland.com/collections/wi-fi-usb-adapters/products/alfa-awus036acs-802-11ac-ac600-dual-band-wifi-usb-adapter-rp-sma)
 * Buffalo WI-U2-433DHP
 * Edimax EW-7811UTC
-* Edimax EW-[7811UAC](https://www.amazon.com/Edimax-EW-7811UAC-Extension-Reception-Transmission/dp/B00LGN8I40)
+* [Edimax EW-7811UAC](https://www.amazon.com/Edimax-EW-7811UAC-Extension-Reception-Transmission/dp/B00LGN8I40)
 * Edimax EW-7811UCB
 * ELECOM WDC-433DU2H
 * GMYLE - AC450
@@ -274,7 +274,7 @@ To edit the driver options file, run the `edit-options.sh` script
 sudo ./edit-options.sh
 ```
 
-Note: Documentation for Driver Options is included in the file `88x2bu.conf`.
+Note: Documentation for Driver Options is included in the file `8821au.conf`.
 
 ## Removal of the Driver
 
