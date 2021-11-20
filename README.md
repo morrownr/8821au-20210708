@@ -74,6 +74,8 @@ $ sudo uname -a && mokutil --sb-state && lsusb && rfkill list all && dkms status
 
 - Manjaro 20.1 (kernel 5.9) and 21.1 (kernel 5.13)
 
+- openSUSE (rolling) (kernel 5.15)
+
 - Raspberry Pi OS (2021-05-07) (ARM 32 bit) (kernel 5.10)
 - Raspberry Pi Desktop (x86 32 bit) (kernel 4.19)
 
