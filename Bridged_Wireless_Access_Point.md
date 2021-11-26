@@ -8,15 +8,14 @@ extend the network to WiFi capable computers and devices in areas where
 the WiFi signal is weak or otherwise does not meet expectations.
 
 ```
-INTERNET >>> modem/router >>> RasPi (br0) >>> USB Wifi >>>  laptop
-            (cable)       ╱                               ╲
-            (fiber)   CAT 5e, 6                             phone
+INTERNET >>> modem/router >>> RasPi (br0) >>> USB Wifi ))) ((( laptop
+            (cable)       ╱               ╱               ╲
+            (fiber)   CAT 5e, 6       CAT 5e, 6            ((( phone
             (dsl)
 ```
 
-Note: The connection from the modem to the RasPi is begging for alternative
-solutions to meet different needs. I am exploring a wifi (fallback repeater)
-setup as well as Powerline AV solutions. Please feel free to make suggestions.
+Note: The connection from the router to the RasPi is begging for alternative
+solutions to meet different needs. Please feel free to make suggestions.
 
 #### Single Band or Dual Band - Your Choice
 
@@ -470,8 +469,8 @@ wmm_enabled=1
 # Note: Only one ht_capab= line should be active. The content of these lines is
 # determined by the capabilities of your adapter.
 #
-# generic setting
-ht_capab=[HT40+][HT40-][SHORT-GI-20][SHORT-GI-40]
+# generic 20 NHz setting
+ht_capab=[SHORT-GI-20]
 #
 # RasPi4B internal wifi
 #ht_capab=[HT40+][HT40-][SHORT-GI-20][SHORT-GI-40][DSSS_CCK-40]
@@ -635,6 +634,10 @@ Name=br0
 
 [Network]
 DHCP=yes
+#Address=192.168.1.100/24
+#Gateway=192.168.1.1
+#DNS=8.8.8.8
+
 ```
 
 -----
