@@ -1,4 +1,4 @@
-2021-11-15
+2021-11-25
 
 ## Bridged Wireless Access Point
 
@@ -8,14 +8,13 @@ extend the network to WiFi capable computers and devices in areas where
 the WiFi signal is weak or otherwise does not meet expectations.
 
 ```
-INTERNET >>> modem/router >>> RasPi (br0) >>> USB Wifi ))) ((( laptop
-            (cable)       ╱               ╱               ╲
-            (fiber)   CAT 5e, 6       CAT 5e, 6            ((( phone
-            (dsl)
+INTERNET >>> modem/router >>> RasPi(USB Wifi) ))) ((( laptop
+            (cable)       ╱                      ╲
+            (fiber)   CAT 5e, 6 Cable             ((( phone
+            (dsl)     Powerline AV
 ```
 
-Note: The connection from the router to the RasPi is begging for alternative
-solutions to meet different needs. Please feel free to make suggestions.
+Note: Suggestions for alternate configurations are welcome.
 
 #### Single Band or Dual Band - Your Choice
 
