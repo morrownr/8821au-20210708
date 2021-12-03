@@ -56,7 +56,7 @@ $ sudo uname -a && mokutil --sb-state && lsusb && rfkill list all && dkms status
 ## Compatible Kernels
 
 - Kernels: 4.15 - 5.11 (Realtek)
-- Kernels: 5.12 - 5.15 (community support)
+- Kernels: 5.12 - 5.16 (community support)
 
 ## Tested Linux Distributions
 
@@ -77,6 +77,7 @@ $ sudo uname -a && mokutil --sb-state && lsusb && rfkill list all && dkms status
 - openSUSE Tumbleweed (rolling) (kernel 5.15)
 
 - Raspberry Pi OS (2021-05-07) (ARM 32 bit) (kernel 5.10)
+
 - Raspberry Pi Desktop (x86 32 bit) (kernel 4.19)
 
 - Ubuntu 20.xx (kernels 5.4 and 5.8) and 21.xx (kernels 5.11 and 5.14)
