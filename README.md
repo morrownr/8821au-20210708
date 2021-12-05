@@ -23,11 +23,11 @@ $ sudo uname -a && mokutil --sb-state && lsusb && rfkill list all && dkms status
 - v5.12.5.2 (Realtek) (20210708)
 - Plus updates from the Linux community
 
-## Features
+### Features
 
 - IEEE 802.11 b/g/n/ac WiFi compliant
 - 802.1x, WEP, WPA TKIP and WPA2 AES/Mixed mode for PSK and TLS (Radius)
-- WPA3 (see issue with title `How to Enable WPA3 support`)
+- WPA3 (see pinned issue with title `How to Enable WPA3 support`)
 - IEEE 802.11b/g/n/ac Client mode
   * Supports wireless security for WEP, WPA TKIP and WPA2 AES PSK
   * Supports site survey scan and manual connect
@@ -42,8 +42,8 @@ $ sudo uname -a && mokutil --sb-state && lsusb && rfkill list all && dkms status
 - Supported interface modes
   * IBSS
   * Managed
+  * Monitor
   * AP      (see `Bridged_Wireless_Access_Point.md` the `docs` folder.)
-  * Monitor (see `Monitor_Mode.md` in the `docs` folder.)
   * P2P-client
   * P2P-GO
   * Concurrent (see `Concurrent_Mode.md` in the `docs` folder.)
@@ -54,18 +54,27 @@ $ sudo uname -a && mokutil --sb-state && lsusb && rfkill list all && dkms status
 - SU Beamformee and MU Beamformee control
 - AP mode DFS channel control
 
-## Compatible CPUs
+### Compatible CPUs
 
 - x86, amd64
 - ARM, ARM64
 - MIPS
 
-## Compatible Kernels
+### Compatible Kernels
 
 - Kernels: 4.15 - 5.11 (Realtek)
 - Kernels: 5.12 - 5.16 (community support)
 
-## Tested Linux Distributions
+### Tested Linux Distributions
+
+Note: One of the goals of this project is to provide driver support that
+is easy to install and works reliably on many distros. Meeting this goal
+depends on you to report your recommendations and updated information. 
+If you see information that needs to be updated, please report the
+updated information and if you do not see adequate support for
+items such as Installation Steps 2, 3 and 9, and you know what updates 
+need to added or you can get that information, please provide it so that
+the Installation Steps can be improved.
 
 - Arch Linux (kernels 5.4 and 5.11)
 
@@ -89,7 +98,7 @@ $ sudo uname -a && mokutil --sb-state && lsusb && rfkill list all && dkms status
 
 - Ubuntu 20.xx (kernels 5.4 and 5.8) and 21.xx (kernels 5.11 and 5.13)
 
-## Download Locations for Tested Linux Distributions
+### Download Locations for Tested Linux Distributions
 
 - [Arch Linux](https://www.archlinux.org)
 - [Debian](https://www.debian.org/)
@@ -101,12 +110,12 @@ $ sudo uname -a && mokutil --sb-state && lsusb && rfkill list all && dkms status
 - [Raspberry Pi OS](https://www.raspberrypi.org)
 - [Ubuntu](https://www.ubuntu.com)
 
-## Tested Hardware
+### Tested Hardware
 
 - [ALFA AWUS036ACS](https://store.rokland.com/collections/wi-fi-usb-adapters/products/alfa-awus036acs-802-11ac-ac600-dual-band-wifi-usb-adapter-rp-sma)
 - [EDUP EP-1607](https://www.amazon.com/gp/product/B01CCMUN8C/)
 
-## Compatible Devices
+### Compatible Devices
 
 * [ALFA AWUS036ACS](https://store.rokland.com/collections/wi-fi-usb-adapters/products/alfa-awus036acs-802-11ac-ac600-dual-band-wifi-usb-adapter-rp-sma)
 * Buffalo WI-U2-433DHP
@@ -123,7 +132,7 @@ $ sudo uname -a && mokutil --sb-state && lsusb && rfkill list all && dkms status
 
 Note: Please read "supported-device-IDs" for information about how to confirm the correct driver for your adapter.
 
-## Installation Information
+### Installation Information
 
 The installation instructions are for the novice user. Experienced users are welcome to alter the installation to meet their needs.
 
@@ -135,19 +144,19 @@ An alternative terminal is to use SSH (Secure Shell) from the same or from anoth
 
 You will need to have sufficient access rights to use `sudo`, so that arbitrary commands can be executed as the `root` user. (If the command `sudo echo Yes` returns "Yes", with or without having to enter your password, you do have sufficient access rights.)
 
-DKMS is used for the installation. DKMS is a system utility which will automatically recompile and install this driver when a new kernel is installed. DKMS is provided by and maintained by Dell.
+DKMS is used for the installation. DKMS is a system utility which will automatically recompile and reinstall this driver when a new kernel is installed. DKMS is provided by and maintained by Dell.
 
 It is recommended that you do not delete the driver directory after installation as the directory contains information and scripts that you may need in the future.
 
 There is no need to disable Secure Mode to install this driver. If Secure Mode is properly setup on your system, this installation will support it.
 
-## Installation Steps
+### Installation Steps
 
 #### Step 1: Open a terminal (e.g. Ctrl+Alt+T)
 
 #### Step 2: Update the system package information (select the option for the OS you are using)
 
-- Option for Debian based distributions such as Ubuntu, Linux Mint, and Raspberry Pi OS
+- Option for Debian based distributions such as Ubuntu, Linux Mint, Kali and Raspberry Pi OS
 
 ```
 sudo apt update
@@ -175,7 +184,7 @@ Note: If you do not regularly maintain your system by installing updated package
 sudo apt install -y raspberrypi-kernel-headers bc build-essential dkms git
 ```
 
-- Option for Debian and Linux Mint Debian Edition (LMDE)
+- Option for Debian, Kali and Linux Mint Debian Edition (LMDE)
 
 ```
 sudo apt install -y linux-headers-$(uname -r) build-essential dkms git libelf-dev
@@ -232,7 +241,7 @@ git clone https://github.com/morrownr/8821au-20210708.git
 cd ~/src/8821au-20210708
 ```
 
-#### Step 8:  Enable Concurrent Mode (optional)
+#### Step 8:  Enable Concurrent Mode ( cmode-on.sh ) (optional)
 
 Note: see `Concurrent_Mode.md` in the `docs` folder.
 
@@ -258,17 +267,22 @@ Warning: You should skip this step if installing to x86 or amd64 based systems.
 ./raspiOS-64.sh
 ```
 
-Note: Use the 64 bit option for other 64 bit operating systems to be
-installed to Raspberry Pi hardware. An example is Ubuntu for Raspberry
-Pi.
+Note: The best option for other 64 bit operating systems to be
+installed to Raspberry Pi hardware is to use the 64 bit option. An
+example is Ubuntu for Raspberry Pi.
 
 Note: Other ARM or ARM64 based systems will likely require modifications
 similar to those provided in the above scripts for Raspberry Pi hardware
 but the number and variety of different ARM and ARM64 based systems
 makes supporting each system unpractical so you will need to research
-the needs of your system and make the appropriate modifications. 
+the needs of your system and make the appropriate modifications. If you
+discover the settings and make a new script that works with your ARM or
+ARM64 based system, you are welcome to submit the script and information
+to be included here.
 
-#### Step 10: Run the installation script (For automated builds, use _NoPrompt_ as an option)
+#### Step 10: Run the installation script ( install-driver.sh )
+
+Note: For automated builds, use _NoPrompt_ as an option.
 
 ```
 sudo ./install-driver.sh
@@ -278,7 +292,7 @@ Note: If you elect to skip the reboot at the end of the installation
 script, the driver may not load immediately and the driver options will
 not be applied. Rebooting is strongly recommended.
 
-## Driver Options
+### Driver Options ( edit-options.sh )
 
 A file called `8821au.conf` will be installed in `/etc/modprobe.d` by default.
 
@@ -296,7 +310,7 @@ sudo ./edit-options.sh
 
 Note: Documentation for Driver Options is included in the file `8821au.conf`.
 
-## Removal of the Driver
+### Removal of the Driver ( remove-driver.sh )
 
 Note: This script should be used in the following situations:
 
@@ -325,7 +339,7 @@ cd ~/src/8821au-20210708
 sudo ./remove-driver.sh
 ```
 
-## Recommended WiFi Router/ Access Point Settings
+### Recommended WiFi Router/ Access Point Settings
 
 Note: These are general recommendations, some of which may not apply to your specific situation.
 
@@ -348,7 +362,7 @@ Note: These are general recommendations, some of which may not apply to your spe
 After making and saving changes, reboot the router.
 
 
-## Set regulatory domain to correct setting in OS
+### Check and set regulatory domain to correct setting
 
 Check the current setting
 
@@ -380,7 +394,7 @@ Change the last line to read:
 REGDOMAIN=US
 ```
 
-## Recommendations regarding USB
+### Recommendations regarding USB
 
 - Moving your USB WiFi adapter to a different USB port has been known to fix a variety of problems.
 
@@ -395,7 +409,7 @@ REGDOMAIN=US
 - Some USB WiFi adapters require considerable electrical current and push the capabilities of the power available via USB port. One example is adapters that use the Realtek 8814au chipset. Using a powered multiport USB extension can be a good idea in cases like this.
 
 
-## How to disable onboard WiFi on Raspberry Pi 3B, 3B+, 3A+, 4B and Zero W
+### How to disable onboard WiFi on Raspberry Pi 3B, 3B+, 3A+, 4B and Zero W
 
 Add the following line to /boot/config.txt
 
@@ -403,12 +417,7 @@ Add the following line to /boot/config.txt
 dtoverlay=disable-wifi
 ```
 
-## How to disable WiFi on most systems
-
-The `rfkill` utility can disable WiFi and Bluetooth (internal or external) on several systems, including but not limited to the Raspberry Pi.
-
-
-## How to forget a saved WiFi network on a Raspberry Pi
+### How to forget a saved WiFi network on a Raspberry Pi
 
 #### Step 1: Edit wpa_supplicant.conf
 
@@ -424,7 +433,7 @@ sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
 
 -----
 
-## FAQ:
+### FAQ:
 
 Question: Is WPA3 supported?
 
@@ -457,10 +466,6 @@ Answer: Yes. Post a message in `Issues` or `Discussions` if interested.
 
 Question: I am having problems with my adapter and I use Virtualbox?
 
-Answer: The following article may help:
-
-```
-https://null-byte.wonderhowto.com/forum/wifi-hacking-attach-usb-wireless-adapter-with-virtual-box-0324433/
-```
+Answer: This [article](https://null-byte.wonderhowto.com/forum/wifi-hacking-attach-usb-wireless-adapter-with-virtual-box-0324433/) may help.
 
 -----
