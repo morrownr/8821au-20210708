@@ -136,17 +136,15 @@ Note: Please read "supported-device-IDs" for information about how to confirm th
 
 ### Installation Information
 
-Warning: Installing multiple drivers for the same hardware
-usually does not end well. If a previous attempt to install
-this driver failed or if you have previously installed
-another driver for chipsets supported by this driver, you
-MUST remove anything the previous attempt installed BEFORE
-attempting to install this driver. This driver can be
-removed with the script called `./remove-driver.sh`.
-Information is available below the section called
-`Removal of the Driver.` You can get a  good idea as to
-whether you need to remove a previously installed driver
-by running:
+Warning: Installing multiple drivers for the same hardware usually does
+not end well. If a previous attempt to install this driver failed or if
+you have previously installed another driver for chipsets supported by
+this driver, you MUST remove anything that the previous attempt
+installed BEFORE attempting to install this driver. This driver can be
+removed with the script called `./remove-driver.sh`. Information is
+available below the section called `Removal of the Driver.` You can get
+a  good idea as to whether you need to remove a previously installed
+driver by running the following:
 
 ```
 sudo dkms status
@@ -339,35 +337,6 @@ sudo ./edit-options.sh
 ```
 
 Note: Documentation for Driver Options is included in the file `8821au.conf`.
-
-# Installing on openSUSE using the package manager (Preferred Installation Method)
-
-openSUSE Leap 15.2
-```
-sudo zypper ar -f https://download.opensuse.org/repositories/home:Sauerland/openSUSE_Leap_15.2/home:Sauerland.repo
-```
-
-openSUSE Leap 15.3
-```
-sudo zypper ar -f https://download.opensuse.org/repositories/home:Sauerland/openSUSE_Leap_15.3/home:Sauerland.repo
-```
-
-openSUSE Leap 15.4
-```
-sudo zypper ar -f https://download.opensuse.org/repositories/home:Sauerland/15.4/home:Sauerland.repo
-```
-
-openSUSE Tumbleweed and for those who have a running stable kernel installed
-
-```
-sudo zypper ar -f https://download.opensuse.org/repositories/home:Sauerland/Kernel_stable/home:Sauerland.repo
-```
-
-Installing
-
-```
-sudo zypper ref && sudo zypper install rtl8812AU_8821AU-kmp-default rtl8812AU_8821AU-ueficert
-```
 
 ### Removal of the Driver ( remove-driver.sh )
 
