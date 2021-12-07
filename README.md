@@ -1,3 +1,5 @@
+-----
+
 #### [Click for USB WiFi Adapter Information for Linux](https://github.com/morrownr/USB-WiFi)
 
 -----
@@ -43,7 +45,7 @@ $ sudo uname -a && mokutil --sb-state && lsusb && rfkill list all && dkms status
   * IBSS
   * Managed
   * Monitor
-  * AP      (see `Bridged_Wireless_Access_Point.md` the `docs` folder.)
+  * AP      (see `Bridged_Wireless_Access_Point.md` in the `docs` folder.)
   * P2P-client
   * P2P-GO
   * Concurrent (see `Concurrent_Mode.md` in the `docs` folder.)
@@ -92,7 +94,7 @@ the Installation Steps can be improved.
 
 - openSUSE Tumbleweed (rolling) (kernel 5.15)
 
-- Raspberry Pi OS (2021-05-07) (ARM 32 bit) (kernel 5.10)
+- Raspberry Pi OS (2021-10-30) (ARM 32 bit) (kernel 5.10)
 
 - Raspberry Pi Desktop (x86 32 bit) (kernel 4.19)
 
@@ -133,6 +135,22 @@ the Installation Steps can be improved.
 Note: Please read "supported-device-IDs" for information about how to confirm the correct driver for your adapter.
 
 ### Installation Information
+
+Warning: Installing multiple drivers for the same hardware
+usually does not end well. If a previous attempt to install
+this driver failed or if you have previously installed
+another driver for chipsets supported by this driver, you
+MUST remove anything the previous attempt installed BEFORE
+attempting to install this driver. This driver can be
+removed with the script called `./remove-driver.sh`.
+Information is available below the section called
+`Removal of the Driver.` You can get a  good idea as to
+whether you need to remove a previously installed driver
+by running:
+
+```
+sudo dkms status
+```
 
 The installation instructions are for the novice user. Experienced users are welcome to alter the installation to meet their needs.
 
@@ -362,7 +380,7 @@ Note: These are general recommendations, some of which may not apply to your spe
 After making and saving changes, reboot the router.
 
 
-### Check and set regulatory domain to correct setting
+### Check and set regulatory domain
 
 Check the current setting
 
