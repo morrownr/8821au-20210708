@@ -174,6 +174,12 @@ sudo pacman -Syu
 sudo dnf -y update
 ```
 
+- Option for openSUSE based distributions
+
+```
+sudo zypper update
+```
+
 Note: If you do not regularly maintain your system by installing updated packages, it is a good idea to not only update system package information but also to install the updated packages followed by a system reboot. The installation can then be continued with step 3.
 
 #### Step 3: Install the required packages (select the option for the OS you are using)
@@ -200,6 +206,12 @@ sudo apt install -y dkms git build-essential
 
 ```
 sudo dnf -y install git dkms kernel-devel kernel-debug-devel
+```
+
+- Option for openSUSE
+
+```
+sudo zypper install -t pattern devel_kernel dkms
 ```
 
 - Options for Arch and Manjaro
@@ -309,6 +321,35 @@ sudo ./edit-options.sh
 ```
 
 Note: Documentation for Driver Options is included in the file `8821au.conf`.
+
+# Installing on openSUSE using the package manager (Preferred Installation Method)
+
+openSUSE Leap 15.2
+```
+sudo zypper ar -f https://download.opensuse.org/repositories/home:Sauerland/openSUSE_Leap_15.2/home:Sauerland.repo
+```
+
+openSUSE Leap 15.3
+```
+sudo zypper ar -f https://download.opensuse.org/repositories/home:Sauerland/openSUSE_Leap_15.3/home:Sauerland.repo
+```
+
+openSUSE Leap 15.4
+```
+sudo zypper ar -f https://download.opensuse.org/repositories/home:Sauerland/15.4/home:Sauerland.repo
+```
+
+openSUSE Tumbleweed and for those who have a running stable kernel installed
+
+```
+sudo zypper ar -f https://download.opensuse.org/repositories/home:Sauerland/Kernel_stable/home:Sauerland.repo
+```
+
+Installing
+
+```
+sudo zypper ref && sudo zypper install rtl8812AU_8821AU-kmp-default rtl8812AU_8821AU-ueficert
+```
 
 ### Removal of the Driver ( remove-driver.sh )
 
