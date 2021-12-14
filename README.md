@@ -13,7 +13,7 @@
 #### Problem reports should include the information obtained with the following command:
 
 ```
-$ sudo uname -a && mokutil --sb-state && lsusb && rfkill list all && dkms status && iw dev
+$ sudo uname -a; mokutil --sb-state; lsusb; rfkill list all; dkms status; iw dev
 ```
 
 -----
@@ -147,7 +147,7 @@ a  good idea as to whether you need to remove a previously installed
 driver by running the following:
 
 ```
-sudo dkms status
+dkms status
 ```
 
 The installation instructions are for the novice user. Experienced users are welcome to alter the installation to meet their needs.
