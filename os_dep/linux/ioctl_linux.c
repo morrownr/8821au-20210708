@@ -1249,6 +1249,23 @@ static int rtw_wx_get_name(struct net_device *dev,
 	return 0;
 }
 
+/* Check if specified channel is valid */
+static int check_if_ch_valid(u8 ch)
+{
+	if (ch > 0 && ch <= 14) {
+		return 1;
+	} else {
+		int i;
+		for (i = 0; i < CENTER_CH_5G_ALL_NUM; ++i) {
+			if (center_ch_5g_all[i] == ch) {
+				return 1;
+			}
+		}
+	}
+	return 0;
+}
+
+
 static int rtw_wx_set_freq(struct net_device *dev,
 			   struct iw_request_info *info,
 			   union iwreq_data *wrqu, char *extra)
@@ -1270,8 +1287,14 @@ static int rtw_wx_set_freq(struct net_device *dev,
 				RTW_INFO("%s: channel is auto, Channel Plan don't match just set to channel 1\n", __func__);
 			}
 		} else {
+			/* Avoid accepting unsupported channels */
+			if (!check_if_ch_valid(wrqu->freq.m)) {
+				RTW_INFO("%s: unsupported channel %d, setting to channel 1\n", __func__, wrqu->freq.m);
+				padapter->mlmeextpriv.cur_channel = 1;
+			} else {
 			padapter->mlmeextpriv.cur_channel = wrqu->freq.m;
 			RTW_INFO("%s: set to channel %d\n", __func__, padapter->mlmeextpriv.cur_channel);
+		}
 		}
 	} else {
 		while (wrqu->freq.e) {
