@@ -138,7 +138,7 @@ static const u32 rtw_cipher_suites[] = {
 		.hw_value		= (_channel),			\
 		.flags			= (_flags),			\
 		.max_antenna_gain	= 0,				\
-		.max_power		= 0,				\
+		.max_power		= 30,				\
 	}
 
 #define CHAN5G(_channel, _flags) {				\
@@ -147,7 +147,7 @@ static const u32 rtw_cipher_suites[] = {
 		.hw_value		= (_channel),			\
 		.flags			= (_flags),			\
 		.max_antenna_gain	= 0,				\
-		.max_power		= 0,				\
+		.max_power		= 30,				\
 	}
 
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 0, 0))
