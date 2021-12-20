@@ -2648,8 +2648,11 @@ struct dvobj_priv *devobj_init(void)
 	#endif
 #endif
 
+#ifdef PLATFORM_LINUX
+	// (note: Passing NULL as 2nd parameter is ONLY supported by linux)
 	rtw_init_timer(&(pdvobj->dynamic_chk_timer), NULL, rtw_dynamic_check_timer_handlder, pdvobj);
 	rtw_init_timer(&(pdvobj->periodic_tsf_update_end_timer), NULL, rtw_hal_periodic_tsf_update_end_timer_hdl, pdvobj);
+#endif
 
 #ifdef CONFIG_MCC_MODE
 	_rtw_mutex_init(&(pdvobj->mcc_objpriv.mcc_mutex));
