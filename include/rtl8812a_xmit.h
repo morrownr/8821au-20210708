@@ -331,7 +331,7 @@ s32 rtl8812au_hal_mgmt_xmitframe_enqueue(_adapter *padapter, struct xmit_frame *
 #endif
 s32	 rtl8812au_hal_xmitframe_enqueue(_adapter *padapter, struct xmit_frame *pxmitframe);
 s32 rtl8812au_xmit_buf_handler(PADAPTER padapter);
-void rtl8812au_xmit_tasklet(unsigned long priv);
+void rtl8812au_xmit_tasklet(void *priv);
 s32 rtl8812au_xmitframe_complete(_adapter *padapter, struct xmit_priv *pxmitpriv, struct xmit_buf *pxmitbuf);
 #endif
 
