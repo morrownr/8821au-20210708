@@ -2778,12 +2778,7 @@ static int cfg80211_rtw_change_iface(struct wiphy *wiphy,
 #ifdef CONFIG_WIFI_MONITOR
 	case NL80211_IFTYPE_MONITOR:
 		networkType = Ndis802_11Monitor;
-
-#ifdef CONFIG_CUSTOMER_ALIBABA_GENERAL
-		ndev->type = ARPHRD_IEEE80211; /* IEEE 802.11 : 801 */
-#else
 		ndev->type = ARPHRD_IEEE80211_RADIOTAP; /* IEEE 802.11 + radiotap header : 803 */
-#endif
 		break;
 #endif /* CONFIG_WIFI_MONITOR */
 	default:
