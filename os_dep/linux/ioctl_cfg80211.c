@@ -207,9 +207,14 @@ static struct ieee80211_channel rtw_2ghz_channels[MAX_CHANNEL_NUM_2G] = {
 
 /* from center_ch_5g_20m */
 static struct ieee80211_channel rtw_5ghz_a_channels[MAX_CHANNEL_NUM_5G] = {
+	CHAN5G(15, 0),  CHAN5G(16, 0),  CHAN5G(17, 0),  CHAN5G(18, 0),
+	CHAN5G(20, 0),  CHAN5G(24, 0),  CHAN5G(28, 0),  CHAN5G(32, 0),
+
 	CHAN5G(36, 0),	CHAN5G(40, 0),	CHAN5G(44, 0),	CHAN5G(48, 0),
 
 	CHAN5G(52, 0),	CHAN5G(56, 0),	CHAN5G(60, 0),	CHAN5G(64, 0),
+	CHAN5G(68, 0),  CHAN5G(72, 0),  CHAN5G(76, 0),  CHAN5G(80, 0),
+	CHAN5G(84, 0),  CHAN5G(88, 0),  CHAN5G(92, 0),  CHAN5G(96, 0),
 
 	CHAN5G(100, 0),	CHAN5G(104, 0),	CHAN5G(108, 0),	CHAN5G(112, 0),
 	CHAN5G(116, 0),	CHAN5G(120, 0),	CHAN5G(124, 0),	CHAN5G(128, 0),

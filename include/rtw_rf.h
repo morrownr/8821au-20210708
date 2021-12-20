@@ -25,7 +25,7 @@
 
 #define CENTER_CH_2G_40M_NUM	9
 #define CENTER_CH_2G_NUM		14
-#define CENTER_CH_5G_20M_NUM	28	/* 20M center channels */
+#define CENTER_CH_5G_20M_NUM	(28+16)	/* 20M center channels */
 #define CENTER_CH_5G_40M_NUM	14	/* 40M center channels */
 #define CENTER_CH_5G_80M_NUM	7	/* 80M center channels */
 #define CENTER_CH_5G_160M_NUM	3	/* 160M center channels */
