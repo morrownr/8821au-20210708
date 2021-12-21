@@ -24,7 +24,8 @@ s32	rtl8812au_init_xmit_priv(_adapter *padapter)
 	HAL_DATA_TYPE	*pHalData = GET_HAL_DATA(padapter);
 
 #ifdef PLATFORM_LINUX
-	tasklet_init(&pxmitpriv->xmit_tasklet, rtl8812au_xmit_tasklet,
+	tasklet_init(&pxmitpriv->xmit_tasklet,
+		     (void(*)(unsigned long))rtl8812au_xmit_tasklet,
 		     (unsigned long)padapter);
 #endif
 #ifdef CONFIG_TX_EARLY_MODE
@@ -59,6 +60,7 @@ static s32 update_txdesc(struct xmit_frame *pxmitframe, u8 *pmem, s32 sz , u8 ba
 #endif/*CONFIG_80211N_HT*/
 	u8 vht_max_ampdu_size = 0;
 	struct dvobj_priv	*pdvobjpriv = adapter_to_dvobj(padapter);
+	struct registry_priv	*pregpriv = &(padapter->registrypriv);
 
 #ifndef CONFIG_USE_USB_BUFFER_ALLOC_TX
 	if (padapter->registrypriv.mp_mode == 0) {
@@ -114,10 +116,16 @@ static s32 update_txdesc(struct xmit_frame *pxmitframe, u8 *pmem, s32 sz , u8 ba
 
 	/* offset 12 */
 
-	if (!pattrib->qos_en) {
+	if (pattrib->injected == _TRUE && !pregpriv->monitor_overwrite_seqnum) {
+		/* Prevent sequence number from being overwritten */
+		SET_TX_DESC_HWSEQ_EN_8812(ptxdesc, 0); /* Hw do not set sequence number */
+		SET_TX_DESC_SEQ_8812(ptxdesc, pattrib->seqnum); /* Copy inject sequence number to TxDesc */
+	}
+	else if (!pattrib->qos_en) {
 		SET_TX_DESC_HWSEQ_EN_8812(ptxdesc, 1); /* Hw set sequence number */
-	} else
+	} else {
 		SET_TX_DESC_SEQ_8812(ptxdesc, pattrib->seqnum);
+	}
 
 	if ((pxmitframe->frame_tag & 0x0f) == DATA_FRAMETAG) {
 		/* RTW_INFO("pxmitframe->frame_tag == DATA_FRAMETAG\n");		 */

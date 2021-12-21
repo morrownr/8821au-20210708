@@ -53,6 +53,8 @@ u8 op_chs_of_cch_2g_40m[CENTER_CH_2G_40M_NUM][2] = {
 };
 
 u8 center_ch_5g_all[CENTER_CH_5G_ALL_NUM] = {
+	15, 16, 17, 18,
+	20, 24, 28, 32,
 /* G00 */36, 38, 40,
 	42,
 /* G01 */44, 46, 48,
@@ -60,6 +62,8 @@ u8 center_ch_5g_all[CENTER_CH_5G_ALL_NUM] = {
 /* G02 */52, 54, 56,
 	58,
 /* G03 */60, 62, 64,
+	68, 72, 76, 80,
+	84, 88, 92, 96, 
 /* G04 */100, 102, 104,
 	106,
 /* G05 */108, 110, 112,
@@ -80,10 +84,14 @@ u8 center_ch_5g_all[CENTER_CH_5G_ALL_NUM] = {
 };
 
 u8 center_ch_5g_20m[CENTER_CH_5G_20M_NUM] = {
+	15, 16, 17, 18,
+	20, 24,	28, 32,
 /* G00 */36, 40,
 /* G01 */44, 48,
 /* G02 */52, 56,
 /* G03 */60, 64,
+	68, 72, 76, 80,
+	84, 88, 92, 96,
 /* G04 */100, 104,
 /* G05 */108, 112,
 /* G06 */116, 120,
@@ -98,9 +106,12 @@ u8 center_ch_5g_20m[CENTER_CH_5G_20M_NUM] = {
 
 #define ch_to_cch_5g_20m_idx(ch) \
 	( \
-		((ch) >= 36 && (ch) <= 64) ? (((ch) - 36) >> 2) : \
-		((ch) >= 100 && (ch) <= 144) ? 8 + (((ch) - 100) >> 2) : \
-		((ch) >= 149 && (ch) <= 177) ? 20 + (((ch) - 149) >> 2) : 255 \
+		((ch) >= 16 && (ch) <= 18) ? (((ch) - 16)) : \
+		((ch) >= 20 && (ch) <= 32) ? 4 + (((ch) - 20) >> 2) : \
+		((ch) >= 36 && (ch) <= 64) ? 8 + (((ch) - 36) >> 2) : \
+		((ch) >= 68 && (ch) <= 96) ? 16 + (((ch) - 36) >> 2) : \
+		((ch) >= 100 && (ch) <= 144) ? 24 + (((ch) - 100) >> 2) : \
+		((ch) >= 149 && (ch) <= 177) ? 36 + (((ch) - 149) >> 2) : 255 \
 	)
 
 u8 center_ch_5g_40m[CENTER_CH_5G_40M_NUM] = {
@@ -530,15 +541,15 @@ u8 rtw_get_ch_group(u8 ch, u8 *group, u8 *cck_group)
 	} else {
 		band = BAND_ON_5G;
 
-		if (36 <= ch && ch <= 42)
+		if (15 <= ch && ch <= 42)
 			gp = 0;
 		else if (44   <= ch && ch <=  48)
 			gp = 1;
 		else if (50   <= ch && ch <=  58)
 			gp = 2;
-		else if (60   <= ch && ch <=  64)
+		else if (60   <= ch && ch <=  80)
 			gp = 3;
-		else if (100  <= ch && ch <= 106)
+		else if (82  <= ch && ch <= 106)
 			gp = 4;
 		else if (108  <= ch && ch <= 114)
 			gp = 5;
@@ -595,7 +606,7 @@ int rtw_ch2freq(int chan)
 			return 2484;
 		else if (chan < 14)
 			return 2407 + chan * 5;
-	} else if (chan >= 36 && chan <= 177)
+	} else if (chan >= 15 && chan <= 177)
 		return 5000 + chan * 5;
 
 	return 0; /* not supported */
@@ -2267,11 +2278,11 @@ int rtw_ch_to_bb_gain_sel(int ch)
 	if (ch >= 1 && ch <= 14)
 		sel = BB_GAIN_2G;
 #if CONFIG_IEEE80211_BAND_5GHZ
-	else if (ch >= 36 && ch < 48)
+	else if (ch >= 15 && ch < 48)
 		sel = BB_GAIN_5GLB1;
 	else if (ch >= 52 && ch <= 64)
 		sel = BB_GAIN_5GLB2;
-	else if (ch >= 100 && ch <= 120)
+	else if (ch >= 68 && ch <= 120)
 		sel = BB_GAIN_5GMB1;
 	else if (ch >= 124 && ch <= 144)
 		sel = BB_GAIN_5GMB2;

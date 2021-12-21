@@ -1201,13 +1201,13 @@ void rtw_init_timer(_timer *ptimer, void *padapter, void *pfunc, void *ctx)
 	_adapter *adapter = (_adapter *)padapter;
 
 #ifdef PLATFORM_LINUX
-	_init_timer(ptimer, adapter->pnetdev, pfunc, ctx);
+	_init_timer(ptimer, adapter ? adapter->pnetdev : NULL, pfunc, ctx);
 #endif
 #ifdef PLATFORM_FREEBSD
-	_init_timer(ptimer, adapter->pifp, pfunc, ctx);
+	_init_timer(ptimer, adapter ? adapter->pifp : NULL, pfunc, ctx);
 #endif
 #ifdef PLATFORM_WINDOWS
-	_init_timer(ptimer, adapter->hndis_adapter, pfunc, ctx);
+	_init_timer(ptimer, adapter ? adapter->hndis_adapter : NULL, pfunc, ctx);
 #endif
 }
 

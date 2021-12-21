@@ -542,6 +542,9 @@ struct registry_priv {
 #ifdef CONFIG_RTW_MESH
 	u8 peer_alive_based_preq;
 #endif
+	u8 monitor_overwrite_seqnum;
+	u8 monitor_retransmit;
+	u8 monitor_disable_1m;
 
 #ifdef RTW_BUSY_DENY_SCAN
 	/*

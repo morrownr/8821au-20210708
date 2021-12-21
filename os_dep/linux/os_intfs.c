@@ -91,6 +91,17 @@ int rtw_nb_config = CONFIG_NB_VALUE;
 module_param(rtw_nb_config, int, 0644);
 MODULE_PARM_DESC(rtw_nb_config, "5M/10M/Normal bandwidth configuration");
 #endif
+int rtw_monitor_overwrite_seqnum = 0;
+module_param(rtw_monitor_overwrite_seqnum, int, 0644);
+MODULE_PARM_DESC(rtw_monitor_overwrite_seqnum, "Overwrite the sequence number of injected frames");
+
+int rtw_monitor_retransmit = 0;
+module_param(rtw_monitor_retransmit, int, 0644);
+MODULE_PARM_DESC(rtw_monitor_retransmit, "Retransmit injected frames");
+
+int rtw_monitor_disable_1m = 0;
+module_param(rtw_monitor_disable_1m, int, 0644);
+MODULE_PARM_DESC(rtw_monitor_disable_1m, "Disable default 1Mbps rate for monitor injected frames");
 
 module_param(rtw_ips_mode, int, 0644);
 MODULE_PARM_DESC(rtw_ips_mode, "The default IPS mode");
@@ -1581,6 +1592,10 @@ uint loadparam(_adapter *padapter)
 	rtw_regsty_init_unassoc_sta_param(registry_par);
 #endif
 
+	registry_par->monitor_overwrite_seqnum = (u8)rtw_monitor_overwrite_seqnum;
+	registry_par->monitor_retransmit = (u8)rtw_monitor_retransmit;
+	registry_par->monitor_disable_1m = (u8)rtw_monitor_disable_1m;
+
 	return status;
 }
 
@@ -2633,8 +2648,11 @@ struct dvobj_priv *devobj_init(void)
 	#endif
 #endif
 
+#ifdef PLATFORM_LINUX
+	// (note: Passing NULL as 2nd parameter is ONLY supported by linux)
 	rtw_init_timer(&(pdvobj->dynamic_chk_timer), NULL, rtw_dynamic_check_timer_handlder, pdvobj);
 	rtw_init_timer(&(pdvobj->periodic_tsf_update_end_timer), NULL, rtw_hal_periodic_tsf_update_end_timer_hdl, pdvobj);
+#endif
 
 #ifdef CONFIG_MCC_MODE
 	_rtw_mutex_init(&(pdvobj->mcc_objpriv.mcc_mutex));

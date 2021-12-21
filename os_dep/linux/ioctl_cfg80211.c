@@ -34,13 +34,27 @@
 #define STATION_INFO_PLINK_STATE	BIT(NL80211_STA_INFO_PLINK_STATE)
 #define STATION_INFO_SIGNAL			BIT(NL80211_STA_INFO_SIGNAL)
 #define STATION_INFO_TX_BITRATE		BIT(NL80211_STA_INFO_TX_BITRATE)
+#define STATION_INFO_TX_BITRATE_BW_5	BIT(RATE_INFO_BW_5)
+#define STATION_INFO_TX_BITRATE_BW_10	BIT(RATE_INFO_BW_10)
+#define STATION_INFO_TX_BITRATE_BW_20	BIT(RATE_INFO_BW_20)
+#define STATION_INFO_TX_BITRATE_BW_40	BIT(RATE_INFO_BW_40)
+#define STATION_INFO_TX_BITRATE_BW_80	BIT(RATE_INFO_BW_80)
+#define STATION_INFO_TX_BITRATE_BW_160	BIT(RATE_INFO_BW_160)
 #define STATION_INFO_RX_PACKETS		BIT(NL80211_STA_INFO_RX_PACKETS)
 #define STATION_INFO_TX_PACKETS		BIT(NL80211_STA_INFO_TX_PACKETS)
 #define STATION_INFO_TX_FAILED		BIT(NL80211_STA_INFO_TX_FAILED)
+#define STATION_INFO_RX_BYTES		BIT(NL80211_STA_INFO_RX_BYTES)
+#define STATION_INFO_TX_BYTES		BIT(NL80211_STA_INFO_TX_BYTES)
 #define STATION_INFO_LOCAL_PM		BIT(NL80211_STA_INFO_LOCAL_PM)
 #define STATION_INFO_PEER_PM		BIT(NL80211_STA_INFO_PEER_PM)
 #define STATION_INFO_NONPEER_PM		BIT(NL80211_STA_INFO_NONPEER_PM)
 #define STATION_INFO_ASSOC_REQ_IES	0
+#define STATION_INFO_BSS_PARAM			BIT(NL80211_STA_INFO_BSS_PARAM)
+#define STATION_INFO_BSS_PARAM_CTS_PROT		BIT(NL80211_STA_BSS_PARAM_CTS_PROT)
+#define STATION_INFO_BSS_PARAM_SHORT_PREAMBLE	BIT(NL80211_STA_BSS_PARAM_SHORT_PREAMBLE)
+#define STATION_INFO_BSS_PARAM_SHORT_SLOT_TIME	BIT(NL80211_STA_BSS_PARAM_SHORT_SLOT_TIME)
+#define STATION_INFO_BSS_PARAM_DTIM_PERIOD	BIT(NL80211_STA_BSS_PARAM_DTIM_PERIOD)
+#define STATION_INFO_BSS_PARAM_BEACON_INTERVAL	BIT(NL80211_STA_BSS_PARAM_BEACON_INTERVAL)
 #endif /* Linux kernel >= 4.0.0 */
 
 #define RTW_MAX_MGMT_TX_CNT (8)
@@ -124,7 +138,7 @@ static const u32 rtw_cipher_suites[] = {
 		.hw_value		= (_channel),			\
 		.flags			= (_flags),			\
 		.max_antenna_gain	= 0,				\
-		.max_power		= 0,				\
+		.max_power		= 30,				\
 	}
 
 #define CHAN5G(_channel, _flags) {				\
@@ -133,7 +147,7 @@ static const u32 rtw_cipher_suites[] = {
 		.hw_value		= (_channel),			\
 		.flags			= (_flags),			\
 		.max_antenna_gain	= 0,				\
-		.max_power		= 0,				\
+		.max_power		= 30,				\
 	}
 
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 0, 0))
@@ -193,9 +207,14 @@ static struct ieee80211_channel rtw_2ghz_channels[MAX_CHANNEL_NUM_2G] = {
 
 /* from center_ch_5g_20m */
 static struct ieee80211_channel rtw_5ghz_a_channels[MAX_CHANNEL_NUM_5G] = {
+	CHAN5G(15, 0),  CHAN5G(16, 0),  CHAN5G(17, 0),  CHAN5G(18, 0),
+	CHAN5G(20, 0),  CHAN5G(24, 0),  CHAN5G(28, 0),  CHAN5G(32, 0),
+
 	CHAN5G(36, 0),	CHAN5G(40, 0),	CHAN5G(44, 0),	CHAN5G(48, 0),
 
 	CHAN5G(52, 0),	CHAN5G(56, 0),	CHAN5G(60, 0),	CHAN5G(64, 0),
+	CHAN5G(68, 0),  CHAN5G(72, 0),  CHAN5G(76, 0),  CHAN5G(80, 0),
+	CHAN5G(84, 0),  CHAN5G(88, 0),  CHAN5G(92, 0),  CHAN5G(96, 0),
 
 	CHAN5G(100, 0),	CHAN5G(104, 0),	CHAN5G(108, 0),	CHAN5G(112, 0),
 	CHAN5G(116, 0),	CHAN5G(120, 0),	CHAN5G(124, 0),	CHAN5G(128, 0),
@@ -2518,6 +2537,7 @@ static int cfg80211_rtw_get_station(struct wiphy *wiphy,
 		&& check_fwstate(pmlmepriv, WIFI_ASOC_STATE)
 	) {
 		struct wlan_network  *cur_network = &(pmlmepriv->cur_network);
+		struct pwrctrl_priv *pwrctl = adapter_to_pwrctl(padapter);
 
 		if (_rtw_memcmp((u8 *)mac, cur_network->network.MacAddress, ETH_ALEN) == _FALSE) {
 			RTW_INFO("%s, mismatch bssid="MAC_FMT"\n", __func__, MAC_ARG(cur_network->network.MacAddress));
@@ -2530,6 +2550,52 @@ static int cfg80211_rtw_get_station(struct wiphy *wiphy,
 
 		sinfo->filled |= STATION_INFO_TX_BITRATE;
 		sinfo->txrate.legacy = rtw_get_cur_max_rate(padapter);
+
+	/* to-do set the txrate flags */
+	// for example something like:
+	//sinfo->txrate.flags |= NL80211_RATE_INFO_VHT_NSS;
+	//sinfo->txrate.nss = rtw_vht_mcsmap_to_nss(psta->vhtpriv.vht_mcs_map);
+
+	/* bw_mode is more delicate
+	   sinfo->txrate.bw is flagged
+	   psta->bw_mode */
+
+	/*
+	sinfo->txrate.bw = psta->bw_mode;
+	sinfo->txrate.flags |= psta->bw_mode;
+	printk("rtw_get_current_tx_sgi: %i", rtw_get_current_tx_sgi(padapter, mac));
+	printk("NSS: %i", rtw_vht_mcsmap_to_nss(psta->vhtpriv.vht_mcs_map));
+	printk("BW MODE: %i", psta->bw_mode);
+	printk("5 10 20 40 80 160: %i %i %i %i %i %i", STATION_INFO_TX_BITRATE_BW_5, STATION_INFO_TX_BITRATE_BW_10, STATION_INFO_TX_BITRATE_BW_20, STATION_INFO_TX_BITRATE_BW_40, STATION_INFO_TX_BITRATE_BW_80, STATION_INFO_TX_BITRATE_BW_160);
+	printk("5 10 20 40 80 160: %i %i %i %i %i %i", RATE_INFO_BW_5, RATE_INFO_BW_10, RATE_INFO_BW_20, RATE_INFO_BW_40, RATE_INFO_BW_80, RATE_INFO_BW_160);
+	*/
+
+	sinfo->filled |= STATION_INFO_RX_PACKETS;
+	sinfo->rx_packets = sta_rx_data_pkts(psta);
+
+	sinfo->filled |= STATION_INFO_TX_PACKETS;
+	sinfo->tx_packets = psta->sta_stats.tx_pkts;
+
+        sinfo->filled |= STATION_INFO_TX_FAILED;
+        sinfo->tx_failed = psta->sta_stats.tx_fail_cnt;
+
+	sinfo->filled |= STATION_INFO_BSS_PARAM;
+
+	if (!psta->no_short_preamble_set)
+	sinfo->bss_param.flags |= STATION_INFO_BSS_PARAM_SHORT_PREAMBLE;
+
+	if (!psta->no_short_slot_time_set)
+	  sinfo->bss_param.flags |= STATION_INFO_BSS_PARAM_SHORT_SLOT_TIME;
+
+	/* no idea how to check this yet */
+	if (0)
+	sinfo->bss_param.flags |= STATION_INFO_BSS_PARAM_CTS_PROT;
+
+	/* is this actually the dtim_period? */
+	sinfo->bss_param.flags |= STATION_INFO_BSS_PARAM_DTIM_PERIOD;
+	sinfo->bss_param.dtim_period = pwrctl->dtim;
+
+	sinfo->bss_param.beacon_interval = get_beacon_interval(&cur_network->network);
 	}
 
 	if (psta) {
@@ -2712,12 +2778,7 @@ static int cfg80211_rtw_change_iface(struct wiphy *wiphy,
 #ifdef CONFIG_WIFI_MONITOR
 	case NL80211_IFTYPE_MONITOR:
 		networkType = Ndis802_11Monitor;
-
-#ifdef CONFIG_CUSTOMER_ALIBABA_GENERAL
-		ndev->type = ARPHRD_IEEE80211; /* IEEE 802.11 : 801 */
-#else
 		ndev->type = ARPHRD_IEEE80211_RADIOTAP; /* IEEE 802.11 + radiotap header : 803 */
-#endif
 		break;
 #endif /* CONFIG_WIFI_MONITOR */
 	default:

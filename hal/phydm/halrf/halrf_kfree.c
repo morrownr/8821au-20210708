@@ -1722,11 +1722,11 @@ s8 phydm_get_tssi_trim_de_8812f(void *dm_void, u8 path)
 		group = 1;
 	else if (channel >= 10 && channel <= 14)
 		group = 2;
-	else if (channel >= 36 && channel <= 50)
+	else if (channel >= 16 && channel <= 50)
 		group = 3;
 	else if (channel >= 52 && channel <= 64)
 		group = 4;
-	else if (channel >= 100 && channel <= 118)
+	else if (channel >= 68 && channel <= 118)
 		group = 5;
 	else if (channel >= 120 && channel <= 144)
 		group = 6;
