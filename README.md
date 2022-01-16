@@ -173,11 +173,11 @@ There is no need to disable Secure Mode to install this driver. If Secure Mode i
 
 #### Step 2: Update the system package information (select the option for the OS you are using)
 
-- Option for Debian based distributions such as Ubuntu, Linux Mint, Kali and Raspberry Pi OS
-
 Note: If your Linux distro does not fall into one of options listed
 below, you will need to research how to update your system package
 information.
+
+- Option for Debian based distributions such as Ubuntu, Linux Mint, Kali and Raspberry Pi OS
 
 ```
 sudo apt update
