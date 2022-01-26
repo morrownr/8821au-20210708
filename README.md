@@ -58,7 +58,6 @@ sudo uname -a; mokutil --sb-state; lsusb; rfkill list all; dkms status; iw dev
 
 - x86, amd64
 - ARM, ARM64
-- MIPS
 
 ### Compatible Kernels
 
@@ -335,6 +334,10 @@ Note: For automated builds, use _NoPrompt_ as an option.
 sudo ./install-driver.sh
 ```
 
+Note: If you elect to skip the reboot at the end of the installation
+script, the driver may not load immediately and the driver options will
+not be applied. Rebooting is strongly recommended.
+
 Note: Solus Linux does not support dkms and will require a manual build.
 See `Manual build instructions` below.
 
@@ -351,10 +354,6 @@ sudo reboot
 
 Note: If you use the manual build instructions, you will need to repeat
 the process each time a new kernel is installed in your distro.
-
-Note: If you elect to skip the reboot at the end of the installation
-script, the driver may not load immediately and the driver options will
-not be applied. Rebooting is strongly recommended.
 
 -----
 
@@ -375,7 +374,7 @@ To edit the driver options file, run the `edit-options.sh` script
 sudo ./edit-options.sh
 ```
 
-Note: Documentation for Driver Options is included in the file `88x2bu.conf`.
+Note: Documentation for Driver Options is included in the file `8821au.conf`.
 
 -----
 
