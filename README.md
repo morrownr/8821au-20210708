@@ -415,8 +415,7 @@ Note: This script should be used in the following situations:
 
 Note: This script removes everything that has been installed, with the
 exception of the packages installed in Step 3 and the driver directory.
-The driver directory can and probably should be deleted in most cases
-after running this script.
+The driver directory can be deleted after running this script.
 
 #### Step 1: Open a terminal (e.g. Ctrl+Alt+T)
 
@@ -546,6 +545,9 @@ download, compile and install the current development version of wpa_supplicant
 from the following site:
 
 https://w1.fi/cgit/
+
+Note: There is a file in the `docs` folder called `Update_wpa_supplicant_v3a.md`
+that may help with updating wpa_supplicant.
 
 WPA3-SAE is working well in AP mode using hostapd with the Raspberry Pi OS. 
 
