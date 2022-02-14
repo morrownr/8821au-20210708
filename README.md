@@ -21,13 +21,12 @@ sudo uname -a; mokutil --sb-state; lsusb; rfkill list all; dkms status; iw dev
 ## Linux Driver for USB WiFi Adapters that are based on the RTL8811AU and RTL8821AU Chipsets
 
 - v5.12.5.2 (Realtek) (20210708) plus updates from the Linux community
-- 593 clones over the 2 weeks ended on 20211218
 
 ### Features
 
 - IEEE 802.11 b/g/n/ac WiFi compliant
 - 802.1x, WEP, WPA TKIP and WPA2 AES/Mixed mode for PSK and TLS (Radius)
-- WPA3 (see pinned issue with title `How to Enable WPA3 support`)
+- WPA3 (see FAQ)
 - IEEE 802.11b/g/n/ac Client mode
   * Supports wireless security for WEP, WPA TKIP and WPA2 AES PSK
   * Supports site survey scan and manual connect
@@ -62,7 +61,7 @@ sudo uname -a; mokutil --sb-state; lsusb; rfkill list all; dkms status; iw dev
 ### Compatible Kernels
 
 - Kernels: 4.15 - 5.11 (Realtek)
-- Kernels: 5.12 - 5.16 (community support)
+- Kernels: 5.12 - 5.17 (community support)
 
 ### Tested Linux Distributions
 
@@ -150,36 +149,51 @@ driver by running the following command:
 sudo dkms status
 ```
 
-The installation instructions are for the novice user. Experienced users are welcome to alter the installation to meet their needs.
+The installation instructions are for the novice user. Experienced users are
+welcome to alter the installation to meet their needs.
 
-Temporary internet access is required for installation. There are numerous ways to enable temporary internet access depending on your hardware and situation. [One method is to use tethering from a phone.](https://www.makeuseof.com/tag/how-to-tether-your-smartphone-in-linux) Another method is to keep a [WiFi adapter that uses an in-kernel driver](https://github.com/morrownr/USB-WiFi) in your toolkit.
+Temporary internet access is required for installation. There are numerous ways
+to enable temporary internet access depending on your hardware and situation.
+[One method is to use tethering from a phone.](https://www.makeuseof.com/tag/how-to-tether-your-smartphone-in-linux).
+Another method is to keep a [WiFi adapter that uses an in-kernel driver](https://github.com/morrownr/USB-WiFi) in your toolkit.
 
-You will need to use the terminal interface. The quick way to open a terminal: Ctrl+Alt+T (hold down on the Ctrl and Alt keys then press the T key).
+You will need to use the terminal interface. The quick way to open a terminal:
+Ctrl+Alt+T (hold down on the Ctrl and Alt keys then press the T key).
 
-An alternative terminal is to use SSH (Secure Shell) from the same or from another computer, in which case you will be in a suitable terminal after logging in, but this step requires that an SSH daemon/server has already been configured. (There are lots of SSH guides available, e.g., for the [Raspberry Pi](https://www.raspberrypi.com/documentation/computers/remote-access.html#setting-up-an-ssh-server) and for [Ubuntu](https://linuxconfig.org/ubuntu-20-04-ssh-server). Do not forget [to secure the SSH server](https://www.howtogeek.com/443156/the-best-ways-to-secure-your-ssh-server/).)
+An alternative terminal is to use SSH (Secure Shell) from the same or from
+another computer, in which case you will be in a suitable terminal after logging
+in, but this step requires that an SSH daemon/server has already been
+configured. (There are lots of SSH guides available, e.g., for the [Raspberry Pi](https://www.raspberrypi.com/documentation/computers/remote-access.html#setting-up-an-ssh-server) and for [Ubuntu](https://linuxconfig.org/ubuntu-20-04-ssh-server). Do not forget [to secure the SSH server](https://www.howtogeek.com/443156/the-best-ways-to-secure-your-ssh-server/).)
 
-You will need to have sufficient access rights to use `sudo` so that commands can be executed as the `root` user. (If the command `sudo echo Yes` returns "Yes", with or without having to enter your password, you do have sufficient access rights.)
+You will need to have sufficient access rights to use `sudo` so that commands
+can be executed as the `root` user. (If the command `sudo echo Yes` returns
+"Yes", with or without having to enter your password, you do have sufficient
+access rights.)
 
-DKMS is used for the installation. DKMS is a system utility which will automatically recompile and reinstall this driver when a new kernel is installed. DKMS is provided by and maintained by Dell.
+DKMS is used for the installation. DKMS is a system utility which will
+automatically recompile and reinstall this driver when a new kernel is
+installed. DKMS is provided by and maintained by Dell.
 
-It is recommended that you do not delete the driver directory after installation as the directory contains information and scripts that you may need in the future.
+It is recommended that you do not delete the driver directory after installation
+as the directory contains information and scripts that you may need in the future.
 
-There is no need to disable Secure Mode to install this driver. If Secure Mode is properly setup on your system, this installation will support it.
+There is no need to disable Secure Mode to install this driver. If Secure Mode
+is properly setup on your system, this installation will support it.
 
 ### Installation Steps
 
 #### Step 1: Open a terminal (e.g. Ctrl+Alt+T)
 
-#### Step 2: Update the system package information (select the option for the OS you are using)
+#### Step 2: Update and upgrade system packages (select the option for the OS you are using)
 
 Note: If your Linux distro does not fall into one of options listed
-below, you will need to research how to update your system package
-information.
+below, you will need to research how to update and upgrade your system
+packages.
 
 - Option for Debian based distributions such as Ubuntu, Linux Mint, Kali and Raspberry Pi OS
 
 ```
-sudo apt update
+sudo apt update && sudo apt upgrade
 ```
 
 - Option for Arch based distributions such as Manjaro
@@ -191,7 +205,7 @@ sudo pacman -Syu
 - Option for Fedora based distributions
 
 ```
-sudo dnf -y update
+sudo dnf upgrade
 ```
 
 - Option for openSUSE based distributions
@@ -200,20 +214,23 @@ sudo dnf -y update
 sudo zypper update
 ```
 
-Note: If you do not regularly maintain your system by installing updated
-packages, please do so now and then reboot. The rest of the installation
-will appreciate having a fully up to date system to work with. The
-installation can then be continued with Step 3.
+Note: It is recommended that you reboot your system at this point. The
+rest of the installation will appreciate having a fully up to date
+system to work with. The installation can then be continued with Step 3.
+
+```
+sudo reboot
+```
 
 #### Step 3: Install the required packages (select the option for the OS you are using)
 
-- Option for Raspberry Pi OS
+- Option for Raspberry Pi OS (ARM/ARM64), for Raspberry Pi Desktop (x86) see below
 
 ```
 sudo apt install -y raspberrypi-kernel-headers bc build-essential dkms git
 ```
 
-- Option for Debian, Kali and Linux Mint Debian Edition (LMDE)
+- Option for Debian, Kali, Linux Mint Debian Edition (LMDE) and Raspberry Pi Desktop (x86)
 
 ```
 sudo apt install -y linux-headers-$(uname -r) build-essential dkms git libelf-dev
@@ -293,35 +310,44 @@ whether you want to enable Concurrent Mode.
 ./cmode-on.sh
 ```
 
-#### Step 9: Run a script to reconfigure for Raspberry Pi hardware
+#### Step 9: Run a script to reconfigure for ARM or ARM64 based systems
 
-Warning: This step only applies if you are installing to Raspberry Pi
-*hardware*.
+Warning: This driver defaults to supporting x86 and amd64 based systems
+and this step should be `skipped` if your system is powered by an x86, 
+amd64 or compatible CPU.
 
-Warning: You should skip this step if installing to x86 or amd64 based
-systems.
+Note: If your system is powered by an ARM or ARM64 based Raspberry Pi,
+then one of the following scripts should be executed:
 
-- Option for the 32 bit Raspberry Pi OS to be installed to Raspberry Pi hardware
+- Option for the following listed operating systems to be installed to
+Raspberry Pi hardware
 
 ```
-./raspiOS-32.sh
+       * Raspberry Pi OS (32 bit)
 ```
 
-- Option for the 64 bit Raspberry Pi OS to be installed to Raspberry Pi hardware
-       
 ```
-./raspiOS-64.sh
+./ARM_RPI.sh
 ```
 
-Note: The best option for other 64 bit operating systems to be
-installed to Raspberry Pi hardware is to use the 64 bit option. An
-example is Ubuntu for Raspberry Pi.
+- Option for the following listed operating systems to be installed to
+Raspberry Pi hardware
 
-Note: Other ARM or ARM64 based systems will likely require modifications
-similar to those provided in the above scripts for Raspberry Pi hardware
-but the number and variety of different ARM and ARM64 based systems
-makes supporting each system unpractical so you will need to research
-the needs of your system and make the appropriate modifications. If you
+```
+       * Raspberry Pi OS (64 bit)
+       * Kali Linux RPI ARM64
+       * Ubuntu for Raspberry Pi
+```
+
+```
+./ARM64_RPI.sh
+```
+
+Note: ARM or ARM64 based systems not listed above will likely require
+modifications similar to those provided in the above scripts but the
+number and variety of different ARM and ARM64 based systems makes
+supporting each system unpractical so you will need to research the
+needs of your system and make the appropriate modifications. If you
 discover the settings and make a new script that works with your ARM or
 ARM64 based system, you are welcome to submit the script and information
 to be included here.
@@ -514,24 +540,32 @@ sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
 
 Question: Is WPA3 supported?
 
-Answer: WPA3-SAE support is in this driver according to Realtek,
-however, for it to work with some current Linux distros, you will need
-to download, compile and install the current development version of
-wpa_supplicant at the following site:
+Answer: WPA3-SAE support is in this driver according to Realtek, however, for it
+to work in client mode with some current Linux distros, you will need to
+download, compile and install the current development version of wpa_supplicant
+from the following site:
 
 https://w1.fi/cgit/
 
-See issue titled `How to Enable WPA3 support` for more information.
+WPA3-SAE is working well in AP mode using hostapd with the Raspberry Pi OS. 
 
 
-Question: I bought two rtl8811au based adapters and am planning to run one of them as an AP and another as a WiFi client. How do I set that up?
+Question: I bought two rtl8811au based adapters and am planning to run one of
+them as an AP and another as a WiFi client. How do I set that up?
 
-Answer: You can't without considerable technical skills.  Realtek drivers do not support more than one adapter with the same chipset in the same computer. You have multiple Realtek based adapters in the same computer as long as the adapters are based on different chipsets. Testing has shown that the Mediatek drivers do support more than one adapter with the same chipset in various configurations.
+Answer: You can't without considerable technical skills.  Realtek drivers do not
+support more than one adapter with the same chipset in the same computer. You
+can have multiple Realtek based adapters in the same computer as long as the
+adapters are based on different chipsets.
 
 
-Question: Why do you recommend Mediatek based adapters when you maintain this repo for a Realtek driver?
+Question: Why do you recommend Mediatek based adapters when you maintain this
+repo for a Realtek driver?
 
-Answer: Many new and existing Linux users already have adapters based on Realtek chipsets. This repo is for Linux users to support their existing adapters but my STRONG recommendation is for Linux users to seek out WiFi solutions based on Mediatek, Intel or Atheros chipsets and in-kernel drivers. If users are looking at a USB solution, Mediatek and Atheros based adapters are the best solution. Realtek based USB adapters are not a good solution because Realtek does not follow Linux Wireless standards (mac80211) for USB WiFi adapters and the drivers are not maintained in the Linux kernel. These issues make Realtek drivers problematic in many ways. You have been WARNED. For more information about USB WiFi adapters:
+Answer: Many new and existing Linux users already have adapters based on Realtek
+chipsets. This repo is for Linux users to support their existing adapters but my
+STRONG recommendation is for Linux users to seek out USB WiFi solutions based on
+Mediatek,
 
 https://github.com/morrownr/USB-WiFi
 
