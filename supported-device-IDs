@@ -49,8 +49,8 @@ IDs then this is the driver to use.
 
 Info: location of file that contains the IDs: /os_dep/linux/usb_intf.c
 
-If you are sure that your adapter contains either a rtl8811au
-or rtl8821au chipset and the ID is not shown above, please provide
+If you are sure that your adapter contains a rtl8811au or rtl8821au
+chipset and the ID is not shown above, please provide
 the follow information so that I can include your adapter in the
 driver source code so that the driver will work with your adapter:
 
