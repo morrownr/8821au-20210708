@@ -50,7 +50,6 @@ sudo uname -a; mokutil --sb-state; lsusb; rfkill list all; dkms status; iw dev
 - LED control
 - Power saving control
 - VHT control (allows 80 MHz channel width in AP mode)
-- SU Beamformee and MU Beamformee control
 - AP mode DFS channel control
 
 ### Compatible CPUs
@@ -61,7 +60,7 @@ sudo uname -a; mokutil --sb-state; lsusb; rfkill list all; dkms status; iw dev
 ### Compatible Kernels
 
 - Kernels: 4.15 - 5.11 (Realtek)
-- Kernels: 5.12 - 5.17 (community support)
+- Kernels: 5.12 - 5.18 (community support)
 
 ### Tested Linux Distributions
 
