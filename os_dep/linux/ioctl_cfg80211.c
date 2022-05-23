@@ -6796,7 +6796,7 @@ static void rtw_get_chbwoff_from_cfg80211_chan_def(
 	switch (chandef->width) {
 	case NL80211_CHAN_WIDTH_20_NOHT:
 		*ht = 0;
-		/* fall through */
+		fallthrough;
 	case NL80211_CHAN_WIDTH_20:
 		*bw = CHANNEL_WIDTH_20;
 		*offset = HAL_PRIME_CHNL_OFFSET_DONT_CARE;
