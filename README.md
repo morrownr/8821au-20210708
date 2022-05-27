@@ -21,6 +21,7 @@ sudo uname -a; mokutil --sb-state; lsusb; rfkill list all; dkms status; iw dev
 ## Linux Driver for USB WiFi Adapters that are based on the RTL8811AU and RTL8821AU Chipsets
 
 - v5.12.5.2 (Realtek) (20210708) plus updates from the Linux community
+- 1,600+ Views over the 2 weeks ended on 20220527 (Thank you!)
 
 ### Features
 
@@ -59,7 +60,7 @@ sudo uname -a; mokutil --sb-state; lsusb; rfkill list all; dkms status; iw dev
 
 ### Compatible Kernels
 
-- Kernels: 4.15 - 5.11 (Realtek)
+- Kernels: 4.19 - 5.11 (Realtek)
 - Kernels: 5.12 - 5.18 (community support)
 
 ### Tested Linux Distributions
@@ -89,13 +90,17 @@ the Installation Steps can be improved.
 
 - openSUSE Tumbleweed (rolling) (kernel 5.15)
 
-- Raspberry Pi OS (2021-10-30) (ARM 32 bit) (kernel 5.10)
+- Raspberry Pi OS (2022-04-04) (ARM 32 bit and 64 bit) (kernel 5.15)
 
 - Raspberry Pi Desktop (x86 32 bit) (kernel 4.19)
 
 - Solus
 
-- Ubuntu 20.xx (kernels 5.4 and 5.8) and 21.xx (kernels 5.11 and 5.13)
+- Ubuntu 20.xx (kernels 5.4 and 5.8)
+
+- Ubuntu 21.xx (kernels 5.11 and 5.13)
+
+- Ubuntu 22.04 (kernel 5.15)
 
 ### Download Locations for Tested Linux Distributions
 
@@ -351,24 +356,29 @@ discover the settings and make a new script that works with your ARM or
 ARM64 based system, you are welcome to submit the script and information
 to be included here.
 
-#### Step 10: Run the installation script ( install-driver.sh )
+#### Step 10: Run the installation script ( install-driver.sh or install-driver-no-dkms.sh )
 
-Note: For automated builds, use _NoPrompt_ as an option.
+Note: For automated builds (non-interactive), use _NoPrompt_ as an option.
+
+Option for distros that support `dkms` (almost all)
 
 ```
 sudo ./install-driver.sh
+```
+
+Option for distros that do not support `dkms`
+
+```
+sudo ./install-driver-no-dkms.sh
 ```
 
 Note: If you elect to skip the reboot at the end of the installation
 script, the driver may not load immediately and the driver options will
 not be applied. Rebooting is strongly recommended.
 
-Note: Solus Linux does not support dkms and will require a manual build.
-See `Manual build instructions` below.
-
-Manual build instructions: The script `install-driver.sh` automates the
-installation process, however, it may be necessary to build and install
-the driver manually with some Linux distros:
+Manual build instructions: The scripts automate the installation process,
+however, if you want to or need to do a command line installation, use
+the following:
 
 ```
 make clean
@@ -377,8 +387,9 @@ sudo make install
 sudo reboot
 ```
 
-Note: If you use the manual build instructions, you will need to repeat
-the process each time a new kernel is installed in your distro.
+Note: If you use the manual build instructions or the `install-driver-no-dkms.sh`
+script, you will need to repeat the process each time a new kernel is
+installed in your distro.
 
 -----
 
@@ -405,14 +416,14 @@ Note: Documentation for Driver Options is included in the file `8821au.conf`.
 
 ### Removal of the Driver ( remove-driver.sh )
 
-Note: This script should be used in the following situations:
+Note: Removing the driver is advised in the following situations:
 
 - if driver installation fails
 - if the driver is no longer needed
 - if a new or updated version of the driver needs to be installed
-- if a distro version upgrade is going to be installed
+- if a distro version upgrade is going to be installed (i.e. going from kernel 5.10 to kernel 5.15)
 
-Note: This script removes everything that has been installed, with the
+Note: The following removes everything that has been installed, with the
 exception of the packages installed in Step 3 and the driver directory.
 The driver directory can be deleted after running this script.
 
@@ -426,8 +437,18 @@ cd ~/src/8821au-20210708
 
 #### Step 3: Run the removal script
 
+Note: For automated builds (non-interactive), use _NoPrompt_ as an option.
+
+Option for distros that support `dkms` (almost all)
+
 ```
 sudo ./remove-driver.sh
+```
+
+Option for distros that do not support `dkms`
+
+```
+sudo ./remove-driver-no-dkms.sh
 ```
 
 -----
@@ -453,40 +474,6 @@ Note: These are general recommendations, some of which may not apply to your spe
 - Check congestion: There are apps available for smart phones that allow you to check the congestion levels on WiFi channels. The apps generally go by the name of ```WiFi Analyzer``` or something similar.
 
 After making and saving changes, reboot the router.
-
------
-
-### Check and set regulatory domain
-
-Check the current setting
-
-```
-sudo iw reg get
-```
-
-If you get 00, that is the default and may not provide optimal performance.
-
-Find the correct setting here: http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
-
-Set it temporarily
-
-```
-sudo iw reg set US
-```
-
-Note: Substitute your country code if you are not in the United States.
-
-Set it permanently
-
-```
-sudo nano /etc/default/crda
-```
-
-Change the last line to read:
-
-```
-REGDOMAIN=US
-```
 
 -----
 
@@ -548,17 +535,24 @@ https://w1.fi/cgit/
 Note: There is a file in the `docs` folder called `Update_wpa_supplicant_v3a.md`
 that may help with updating wpa_supplicant.
 
-WPA3-SAE is working well in AP mode using hostapd with the Raspberry Pi OS. 
+Note: Some distros appear to have versions of Network Manager that are not
+compatible with this driver. If that is the case, you may need to STOP or KILL
+Network Manager and connect using wpa_supplicant.
 
+WPA3-SAE is working well in AP mode using hostapd with current versions of the
+Raspberry Pi OS.
 
-Question: I bought two rtl8811au based adapters and am planning to run one of
-them as an AP and another as a WiFi client. How do I set that up?
+-----
+
+Question: I bought two rtl8811au based adapters and am planning to use both in
+the same computer. How do I set that up?
 
 Answer: You can't without considerable technical skills.  Realtek drivers do not
 support more than one adapter with the same chipset in the same computer. You
 can have multiple Realtek based adapters in the same computer as long as the
 adapters are based on different chipsets.
 
+-----
 
 Question: Why do you recommend Mediatek based adapters when you maintain this
 repo for a Realtek driver?
@@ -566,19 +560,62 @@ repo for a Realtek driver?
 Answer: Many new and existing Linux users already have adapters based on Realtek
 chipsets. This repo is for Linux users to support their existing adapters but my
 STRONG recommendation is for Linux users to seek out USB WiFi solutions based on
-Mediatek,
+Mediatek chipsets:
 
 https://github.com/morrownr/USB-WiFi
 
+-----
 
 Question: Will you put volunteers to work?
 
 Answer: Yes. Post a message in `Issues` or `Discussions` if interested.
 
+-----
 
 Question: I am having problems with my adapter and I use Virtualbox?
 
 Answer: This [article](https://null-byte.wonderhowto.com/forum/wifi-hacking-attach-usb-wireless-adapter-with-virtual-box-0324433/) may help.
+
+-----
+
+Question: The driver installation script completed successfully and the
+driver is installed but does not seem to be working. What is wrong?
+
+Answer: Turn secure boot off to see if that allows the driver to work.
+This driver is primarily tested on Debian based distros such as Linux
+Mint, Ubuntu, Raspberry Pi OS and Kali. In an attempt to make this
+driver work well on many Linux distros, other distros, including the Arch
+based Manjaro is used for testing. Currently I do not have installations
+of Fedora or OpenSUSE available for testing and reply on user reports of
+success or failure. I have two test systems with secure boot on so as to
+test secure boot. I have not seen any secure boot problems with Debian
+based systems and I don't remember problems with Manjaro.
+
+dkms is used in the installation script. It helps with a lot of issues that
+will come up if a simple manual installation is used. dkms has the
+capability to handle the needs of secure boot. dkms was written by and is
+maintained by Dell. Dell has been offering some Ubuntu pre-loaded systems
+for years so their devs likely test on Ubuntu. I suspect Fedora and
+OpenSUSE may be handing their secure boot support differently than Debian
+based systems and this is leading to problems. This and the other repos
+I have are VERY heavily used and I am sure there are plenty of non-Debian
+users that use this driver. Are they all turning off secure boot and not
+reporting the problem? I don't know. What I do know is that reports like
+this are rare.
+
+For the driver to compile and install correctly but not be available
+tells me there is likely a key issue. Here is an interesting link
+regarding Debian systems and secure boot:
+
+https://wiki.debian.org/SecureBoot
+
+That document contains a lot of information that can help an investigation
+into what the real problem is and I invite you and other Fedora, OpemSUSE
+and users of other distros that show this problem to investigate and
+present what you know to the devs of your distro via their problem
+reporting system. Turning off secure boot is NOT a fix. A real fix needs
+to happen.
+
 
 -----
 
