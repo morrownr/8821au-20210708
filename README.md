@@ -42,8 +42,8 @@ sudo uname -a; mokutil --sb-state; lsusb; rfkill list all; dkms status; iw dev
 - Supported interface modes
   * IBSS
   * Managed
-  * Monitor (see `Monitor_Mode.md` in the `docs` folder.)
-  * AP (see `AP_Mode-Bridged_Wireless_Access_Point.md` in the `docs` folder.)
+  * Monitor
+  * AP
   * P2P-client
   * P2P-GO
   * Concurrent (see `Concurrent_Mode.md` in the `docs` folder.)
@@ -96,9 +96,7 @@ the Installation Steps can be improved.
 
 - Solus
 
-- Ubuntu 20.xx (kernels 5.4 and 5.8)
-
-- Ubuntu 21.xx (kernels 5.11 and 5.13)
+- Ubuntu 20.xx (kernels 5.4 and 5.8 and 5.13)
 
 - Ubuntu 22.04 (kernel 5.15)
 
@@ -619,7 +617,3 @@ to happen.
 
 -----
 
-Credits:
-
-
------
