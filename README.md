@@ -174,12 +174,12 @@ as the directory contains information and scripts that you may need in the futur
 
 Secure mode: The primary installation script, `install-driver.sh`, will support
 secure mode... if your distro supports the method in use. I regularly test the installation
-script on systems with secure mode on. It works very well on Ubuntu and Linux Mint. Some
+script on systems with secure mode on. It works very well on Ubuntu based distros. Some
 distros, such as Raspberry Pi OS, do not support secure mode because the hardware they
 support does not support secure mode making it unnecessary. There are distros that do not
 work with the support currently in use with this driver. If you install this driver and,
 after a reboot, the driver is not working, you can go into the BIOS and tempoarily turn
-secure mode off to see if secure mode is the problem. I am currently investigatimg alternative
+secure mode off to see if secure mode is the problem. I am currently investigating alternative
 ways to support secure mode that will work on most or all distros that support secure mode.
 If you are interested in helping, please post a message in `Issues`.
 
@@ -239,7 +239,7 @@ sudo apt install -y raspberrypi-kernel-headers build-essential bc dkms git
 sudo apt install -y linux-headers-$(uname -r) build-essential bc dkms git libelf-dev
 ```
 
-- Option for Ubuntu (all flavors)
+- Option for Ubuntu (all official flavors) and the numerous Ubuntu based distros
 
 ```
 sudo apt install -y build-essential dkms git 
@@ -413,7 +413,7 @@ Note: Documentation for Driver Options is included in the file `8821au.conf`.
 
 -----
 
-### Removal of the Driver ( remove-driver.sh )
+### Removal of the Driver ( remove-driver.sh or remove-driver-no-dkms.sh )
 
 Note: Removing the driver is advised in the following situations:
 
@@ -581,14 +581,14 @@ Question: The driver installation script completed successfully and the
 driver is installed but does not seem to be working. What is wrong?
 
 Answer: Turn secure boot off to see if that allows the driver to work.
-This driver is primarily tested on Debian based distros such as Linux
-Mint, Ubuntu, Raspberry Pi OS and Kali. In an attempt to make this
-driver work well on many Linux distros, other distros, including the Arch
-based Manjaro is used for testing. Currently I do not have installations
-of Fedora or OpenSUSE available for testing and reply on user reports of
-success or failure. I have two test systems with secure boot on so as to
-test secure boot. I have not seen any secure boot problems with Debian
-based systems and I don't remember problems with Manjaro.
+This driver is primarily tested on Debian based distros such as Ubuntu,
+Raspberry Pi OS and Kali. In an attempt to make this driver work well on
+many Linux distros, other distros, including the Arch based Manjaro is
+used for testing. Currently I do not have installations of Fedora or
+OpenSUSE available for testing and reply on user reports of success or
+failure. I have two test systems with secure boot on so as to test secure
+boot. I have not seen any secure boot problems with Debian based systems
+and I don't remember problems with Manjaro.
 
 dkms is used in the installation script. It helps with a lot of issues that
 will come up if a simple manual installation is used. dkms has the
