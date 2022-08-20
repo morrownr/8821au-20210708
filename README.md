@@ -21,7 +21,6 @@ sudo uname -a; mokutil --sb-state; lsusb; rfkill list all; dkms status; iw dev
 ## Linux Driver for USB WiFi Adapters that are based on the RTL8811AU and RTL8821AU Chipsets
 
 - v5.12.5.2 (Realtek) (20210708) plus updates from the Linux community
-- 1,600+ Views over the 2 weeks ended on 20220527 (Thank you!)
 
 ### Features
 
@@ -76,13 +75,13 @@ the Installation Steps can be improved.
 
 - Arch Linux (kernels 5.4 and 5.11)
 
-- Fedora (kernel 5.11)
-
 - Debian 11 (kernels 5.10 and 5.15)
+
+- Fedora (kernel 5.11)
 
 - Kali Linux (kernel 5.10)
 
-- Manjaro 20.1 (kernel 5.9) and 21.1 (kernel 5.13)
+- Manjaro 21.1 (kernel 5.13)
 
 - openSUSE Tumbleweed (rolling) (kernel 5.15)
 
@@ -90,11 +89,9 @@ the Installation Steps can be improved.
 
 - Raspberry Pi Desktop (x86 32 bit) (kernel 4.19)
 
-- Void Linux (kernel 5.18)
-
-- Solus
-
 - Ubuntu 22.04 (kernel 5.15)
+
+- Void Linux (kernel 5.18)
 
 ### Download Locations for Tested Linux Distributions
 
@@ -105,9 +102,8 @@ the Installation Steps can be improved.
 - [Manjaro](https://manjaro.org)
 - [openSUSE](https://www.opensuse.org/)
 - [Raspberry Pi OS](https://www.raspberrypi.org)
-- [Void Linux](https://voidlinux.org/)
-- [Solus](https://getsol.us/home/)
 - [Ubuntu](https://www.ubuntu.com)
+- [Void Linux](https://voidlinux.org/)
 
 ### Tested Hardware
 
@@ -221,6 +217,7 @@ sudo zypper update
 ```
 
 - Option for Void Linux
+
 ```
 sudo xbps-install -Syu
 ```
@@ -263,12 +260,6 @@ sudo dnf -y install git dkms kernel-devel kernel-debug-devel
 
 ```
 sudo zypper install -t pattern devel_kernel dkms
-```
-
-- Option for Solus
-
-```
-sudo eopkg install gcc linux-current-headers make git binutils
 ```
 
 - Option for Void Linux
@@ -389,9 +380,9 @@ Note: If you elect to skip the reboot at the end of the installation
 script, the driver may not load immediately and the driver options will
 not be applied. Rebooting is strongly recommended.
 
-Manual build instructions: The scripts automate the installation process,
-however, if you want to or need to do a command line installation, use
-the following:
+Manual build instructions: The above scripts automate the installation
+process, however, if you want to or need to do a command line
+installation, use the following:
 
 ```
 make clean
