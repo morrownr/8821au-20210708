@@ -90,6 +90,8 @@ the Installation Steps can be improved.
 
 - Raspberry Pi Desktop (x86 32 bit) (kernel 4.19)
 
+- Void Linux (kernel 5.18)
+
 - Solus
 
 - Ubuntu 22.04 (kernel 5.15)
@@ -103,6 +105,7 @@ the Installation Steps can be improved.
 - [Manjaro](https://manjaro.org)
 - [openSUSE](https://www.opensuse.org/)
 - [Raspberry Pi OS](https://www.raspberrypi.org)
+- [Void Linux](https://voidlinux.org/)
 - [Solus](https://getsol.us/home/)
 - [Ubuntu](https://www.ubuntu.com)
 
@@ -217,6 +220,11 @@ sudo dnf upgrade
 sudo zypper update
 ```
 
+- Option for Void Linux
+```
+sudo xbps-install -Syu
+```
+
 Note: It is recommended that you reboot your system at this point. The
 rest of the installation will appreciate having a fully up to date
 system to work with. The installation can then be continued with Step 3.
@@ -261,6 +269,12 @@ sudo zypper install -t pattern devel_kernel dkms
 
 ```
 sudo eopkg install gcc linux-current-headers make git binutils
+```
+
+- Option for Void Linux
+
+```
+sudo xbps-install linux-headers dkms git make
 ```
 
 - Options for Arch and Manjaro
