@@ -11,7 +11,7 @@
 #### Problem reports go in `Issues`. Include the information obtained with:
 
 ```
-sudo uname -a; mokutil --sb-state; lsusb; rfkill list all; dkms status; iw dev
+sudo uname -mr;mokutil --sb-state; lsusb; rfkill list all; dkms status; iw dev; iw reg get
 ```
 
 -----
@@ -491,7 +491,7 @@ After making and saving changes, reboot the router.
 
 - Avoid USB 3.1 Gen 2 ports if possible as almost all currently available adapters have been tested with USB 3.1 Gen 1 (aka USB 3) and not with USB 3.1 Gen 2.
 
-- If you use an extension cable and your adapter is USB 3 capable, the cable needs to be USB 3 capable (if not, you will at best be limited to USB 2 speeds).
+- If you use an extension cable and your adapter is USB 3 capable, the cable needs to be USB 3 capable (if not, you will be limited to USB 2 speeds).
 
 - Extention cables can be problematic. A way to check if the extension cable is the problem is to plug the adapter temporarily into a USB port on the computer.
 
