@@ -11,7 +11,7 @@
 #### Problem reports go in `Issues`. Include the information obtained with:
 
 ```
-sudo uname -mr;mokutil --sb-state; lsusb; rfkill list all; dkms status; iw dev; iw reg get
+sudo uname -mr; mokutil --sb-state; lsusb; rfkill list all; dkms status; iw dev; iw reg get
 ```
 
 -----
@@ -112,6 +112,9 @@ the Installation Steps can be improved.
 
 ### Compatible Devices
 
+Warning: Adapters listed here are not recommended for purchase as I do not recommend Linux users buy Realtek based USB WiFi adapters due to the lack of mac80211 technology drivers that are supported in-kernel as called for by Linux Wireless Standards. This repo is supported for the benefit of Linux users who already have adapters based on the supported chipsets. If you are looking for information about what adapter to buy, click [here](https://github.com/morrownr/USB-WiFi) for information about and links to recommended adapters.
+
+
 * [ALFA AWUS036ACS](https://store.rokland.com/collections/wi-fi-usb-adapters/products/alfa-awus036acs-802-11ac-ac600-dual-band-wifi-usb-adapter-rp-sma)
 * Buffalo WI-U2-433DHP
 * Edimax EW-7811UTC
@@ -143,8 +146,15 @@ driver by running the following command:
 sudo dkms status
 ```
 
-The installation instructions are for the novice user. Experienced users are
-welcome to alter the installation to meet their needs.
+Warning: If you decide to upgrade to a new version of kernel such as 5.18 to 5.19, you
+need to remove the driver you have installed and install the newest available before
+installing the new kernel. Use the following commands in the driver directory:
+
+```
+$ sudo ./remove-driver.sh
+$ git pull
+$ sudo ./install-driver.sh
+```
 
 Temporary internet access is required for installation. There are numerous ways
 to enable temporary internet access depending on your hardware and situation.
@@ -172,17 +182,19 @@ It is recommended that you do not delete the driver directory after installation
 as the directory contains information and scripts that you may need in the future.
 
 Secure mode: The primary installation script, `install-driver.sh`, will support
-secure mode... if your distro supports the method in use. I regularly test the installation
-script on systems with secure mode on. It works very well on Ubuntu based distros. Some
-distros, such as Raspberry Pi OS, do not support secure mode because the hardware they
-support does not support secure mode making it unnecessary. There are distros that do not
-work with the support currently in use with this driver. If you install this driver and,
-after a reboot, the driver is not working, you can go into the BIOS and tempoarily turn
-secure mode off to see if secure mode is the problem. I am currently investigating alternative
-ways to support secure mode that will work on most or all distros that support secure mode.
-If you are interested in helping, please post a message in `Issues`.
+secure mode... if your distro supports the method dkms uses. I regularly test the
+installation script on systems with secure mode on. It works very well on Ubuntu based
+distros. Some distros, such as Raspberry Pi OS, do not support secure mode because the
+hardware they support does not support secure mode making it unnecessary. There are
+distros that do not work with the support currently in use. If you install this driver
+and, after a reboot, the driver is not working, you can go into the BIOS and temporarily
+turn secure mode off to see if secure mode is the problem.
 
 ### Installation Steps
+
+Note: The installation instructions are for the novice user. Experienced users are
+welcome to alter the installation to meet their needs. Support will be provided based
+on the steps below.
 
 #### Step 1: Open a terminal (e.g. Ctrl+Alt+T)
 
