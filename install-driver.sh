@@ -1,21 +1,33 @@
 #!/bin/bash
 
+# Purpose: Install Realtek out-of-kernel USB WiFi adapter drivers.
+#
+# Supports dkms and non-dkms installations.
+
 SCRIPT_NAME="install-driver.sh"
-SCRIPT_VERSION="20220705"
+SCRIPT_VERSION="20221007"
+OPTIONS_FILE="8821au.conf"
+
+MODULE_NAME="8821au"
+KVER="$(uname -r)"
+MODDESTDIR="/lib/modules/${KVER}/kernel/drivers/net/wireless/"
 
 DRV_NAME="rtl8821au"
 DRV_VERSION="5.12.5.2"
-OPTIONS_FILE="8821au.conf"
-
 DRV_DIR="$(pwd)"
-KRNL_VERSION="$(uname -r)"
 
-clear
+# check to ensure sudo was used
+if [[ $EUID -ne 0 ]]
+then
+	echo "You must run this script with superuser (root) privileges."
+	echo "Try: \"sudo ./${SCRIPT_NAME}\""
+	exit 1
+fi
 
-# support for NoPrompt allows non-interactive use of this script
+# support for the NoPrompt option allows non-interactive use of this script
 NO_PROMPT=0
 
-# get the options
+# get the script options
 while [ $# -gt 0 ]
 do
 	case $1 in
@@ -31,79 +43,120 @@ do
 	shift
 done
 
-# check to ensure sudo was used
-if [[ $EUID -ne 0 ]]
-then
-	echo "You must run this script with superuser (root) privileges."
-	echo "Try: \"sudo ./${SCRIPT_NAME}\""
-	exit 1
-fi
+# displays script name and version
+echo "Running ${SCRIPT_NAME} version ${SCRIPT_VERSION}"
 
-# check for previous installation
-if [[ -d "/usr/src/${DRV_NAME}-${DRV_VERSION}" ]]
+# check for and remove previously installed non-dkms installation
+if [[ -f "${MODDESTDIR}${MODULE_NAME}.ko" ]]
 then
-	echo "It appears that this driver may already be installed."
-	echo "You will need to run the following before reattempting installation."
-	echo "$ sudo ./remove-driver.sh"
-	exit 1
+	echo "Removing a non-dkms installation."
+	rm -f ${MODDESTDIR}${MODULE_NAME}.ko
+	/sbin/depmod -a ${KVER}
 fi
 
 # information that helps with bug reports
-# displays script name and version
-echo "Running ${SCRIPT_NAME} version ${SCRIPT_VERSION}"
-# distro (need to work on this)
-#hostnamectl | grep 'Operating System' | sed 's/  Operating System: //'
 # kernel
 uname -r
 # architecture - for ARM: aarch64 = 64 bit, armv7l = 32 bit
 uname -m
-#getconf LONG_BIT (need to work on this)
+#getconf LONG_BIT (may be handy in the future)
 
 echo "Starting installation..."
-# the add command requires source in /usr/src/${DRV_NAME}-${DRV_VERSION}
-echo "Copying source files to: /usr/src/${DRV_NAME}-${DRV_VERSION}"
-cp -rf "${DRV_DIR}" /usr/src/${DRV_NAME}-${DRV_VERSION}
+
+# sets module parameters (driver options)
 echo "Copying ${OPTIONS_FILE} to: /etc/modprobe.d"
 cp -f ${OPTIONS_FILE} /etc/modprobe.d
 
-dkms add -m ${DRV_NAME} -v ${DRV_VERSION}
-RESULT=$?
-
-if [[ "$RESULT" != "0" ]]
+# determine if dkms is installed and run the appropriate routines
+if ! command -v dkms >/dev/null 2>&1
 then
-	echo "An error occurred. dkms add error = ${RESULT}"
-	echo "Please report this error."
-	echo "You will need to run the following before reattempting installation."
-	echo "$ sudo ./remove-driver.sh"
-	exit $RESULT
+	echo "The non-dkms installation routines are in use."
+
+	make clean
+
+	make
+	RESULT=$?
+
+	if [[ "$RESULT" != "0" ]]
+	then
+		echo "An error occurred. Error = ${RESULT}"
+		echo "Please report this error."
+		echo "Please copy all screen output and paste it into the report."
+		echo "You will need to run the following before reattempting installation."
+		echo "$ sudo ./remove-driver-no-dkms.sh"
+		exit $RESULT
+	fi
+
+# 	As shown in Makefile
+# 	install:
+#		install -p -m 644 $(MODULE_NAME).ko  $(MODDESTDIR)
+#		/sbin/depmod -a ${KVER}
+	make install
+	RESULT=$?
+
+	if [[ "$RESULT" = "0" ]]
+	then
+		echo "The driver was installed successfully."
+	else
+		echo "An error occurred. Error = ${RESULT}"
+		echo "Please report this error."
+		echo "Please copy all screen output and paste it into the report."
+		echo "You will need to run the following before reattempting installation."
+		echo "$ sudo ./remove-driver-no-dkms.sh"
+		exit $RESULT
+	fi
+else
+	echo "The dkms installation routines are in use."
+
+# 	the dkms add command requires source in /usr/src/${DRV_NAME}-${DRV_VERSION}
+	echo "Copying source files to: /usr/src/${DRV_NAME}-${DRV_VERSION}"
+	cp -rf "${DRV_DIR}" /usr/src/${DRV_NAME}-${DRV_VERSION}
+	
+	dkms add -m ${DRV_NAME} -v ${DRV_VERSION}
+	RESULT=$?
+
+#	RESULT will be 3 if the DKMS tree already contains the same module/version
+#	combo. You cannot add the same module/version combo more than once.
+# I need to add logic to handle this.
+
+	if [[ "$RESULT" != "0" ]]
+	then
+		echo "An error occurred. dkms add error = ${RESULT}"
+		echo "Please report this error."
+		echo "Please copy all screen output and paste it into the report."
+		echo "Run the following before reattempting installation."
+		echo "$ sudo ./remove-driver.sh"
+		exit $RESULT
+	fi
+
+	dkms build -m ${DRV_NAME} -v ${DRV_VERSION}
+	RESULT=$?
+
+	if [[ "$RESULT" != "0" ]]
+	then
+		echo "An error occurred. dkms build error = ${RESULT}"
+		echo "Please report this error."
+		echo "Please copy all screen output and paste it into the report."
+		echo "Run the following before reattempting installation."
+		echo "$ sudo ./remove-driver.sh"
+		exit $RESULT
+	fi
+
+	dkms install -m ${DRV_NAME} -v ${DRV_VERSION}
+	RESULT=$?
+
+	if [[ "$RESULT" = "0" ]]
+	then
+		echo "The driver was installed successfully."
+	else
+		echo "An error occurred. dkms install error = ${RESULT}"
+		echo "Please report this error."
+		echo "Please copy all screen output and paste it into the report."
+		echo "Run the following before reattempting installation."
+		echo "$ sudo ./remove-driver.sh"
+		exit $RESULT
+	fi
 fi
-
-dkms build -m ${DRV_NAME} -v ${DRV_VERSION}
-RESULT=$?
-
-if [[ "$RESULT" != "0" ]]
-then
-	echo "An error occurred. dkms build error = ${RESULT}"
-	echo "Please report this error."
-	echo "You will need to run the following before reattempting installation."
-	echo "$ sudo ./remove-driver.sh"
-	exit $RESULT
-fi
-
-dkms install -m ${DRV_NAME} -v ${DRV_VERSION}
-RESULT=$?
-
-if [[ "$RESULT" != "0" ]]
-then
-	echo "An error occurred. dkms install error = ${RESULT}"
-	echo "Please report this error."
-	echo "Please copy all screen output and paste it into the report."
-	echo "You will need to run the following before reattempting installation."
-	echo "$ sudo ./remove-driver.sh"
-	exit $RESULT
-fi
-
-echo "The driver was installed successfully."
 
 # unblock wifi
 rfkill unblock wlan
