@@ -5,15 +5,15 @@
 # Supports dkms and non-dkms installations.
 
 SCRIPT_NAME="install-driver.sh"
-SCRIPT_VERSION="20221007"
-OPTIONS_FILE="8821au.conf"
-
+SCRIPT_VERSION="20221018"
 MODULE_NAME="8821au"
+DRV_VERSION="5.12.5.2"
+OPTIONS_FILE="${MODULE_NAME}.conf"
+
 KVER="$(uname -r)"
 MODDESTDIR="/lib/modules/${KVER}/kernel/drivers/net/wireless/"
 
-DRV_NAME="rtl8821au"
-DRV_VERSION="5.12.5.2"
+DRV_NAME="rtl${MODULE_NAME}"
 DRV_DIR="$(pwd)"
 
 # check to ensure sudo was used
@@ -46,7 +46,7 @@ done
 # displays script name and version
 echo "Running ${SCRIPT_NAME} version ${SCRIPT_VERSION}"
 
-# check for and remove previously installed non-dkms installation
+# check for and remove non-dkms installation
 if [[ -f "${MODDESTDIR}${MODULE_NAME}.ko" ]]
 then
 	echo "Removing a non-dkms installation."
@@ -61,10 +61,8 @@ uname -r
 uname -m
 #getconf LONG_BIT (may be handy in the future)
 
-echo "Starting installation..."
-
 # sets module parameters (driver options)
-echo "Copying ${OPTIONS_FILE} to: /etc/modprobe.d"
+echo "Installing ${OPTIONS_FILE} to: /etc/modprobe.d"
 cp -f ${OPTIONS_FILE} /etc/modprobe.d
 
 # determine if dkms is installed and run the appropriate routines
@@ -117,16 +115,21 @@ else
 
 #	RESULT will be 3 if the DKMS tree already contains the same module/version
 #	combo. You cannot add the same module/version combo more than once.
-# I need to add logic to handle this.
-
 	if [[ "$RESULT" != "0" ]]
 	then
-		echo "An error occurred. dkms add error = ${RESULT}"
-		echo "Please report this error."
-		echo "Please copy all screen output and paste it into the report."
-		echo "Run the following before reattempting installation."
-		echo "$ sudo ./remove-driver.sh"
-		exit $RESULT
+		if [[ "$RESULT" = "3" ]]
+		then
+			echo "Run the following and then reattempt installation."
+			echo "$ sudo ./remove-driver.sh"
+			exit $RESULT 
+		else
+			echo "An error occurred. dkms add error = ${RESULT}"
+			echo "Please report this error."
+			echo "Please copy all screen output and paste it into the report."
+			echo "Run the following before reattempting installation."
+			echo "$ sudo ./remove-driver.sh"
+			exit $RESULT
+		fi
 	fi
 
 	dkms build -m ${DRV_NAME} -v ${DRV_VERSION}
