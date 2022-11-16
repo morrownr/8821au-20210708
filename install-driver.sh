@@ -5,12 +5,14 @@
 # Supports dkms and non-dkms installations.
 
 SCRIPT_NAME="install-driver.sh"
-SCRIPT_VERSION="20221018"
+SCRIPT_VERSION="20221101"
 MODULE_NAME="8821au"
 DRV_VERSION="5.12.5.2"
 OPTIONS_FILE="${MODULE_NAME}.conf"
 
 KVER="$(uname -r)"
+KARCH="$(uname -m)"
+KSRC="/lib/modules/${KVER}/build"
 MODDESTDIR="/lib/modules/${KVER}/kernel/drivers/net/wireless/"
 
 DRV_NAME="rtl${MODULE_NAME}"
@@ -56,9 +58,9 @@ fi
 
 # information that helps with bug reports
 # kernel
-uname -r
+echo "Kernel=${KVER}"
 # architecture - for ARM: aarch64 = 64 bit, armv7l = 32 bit
-uname -m
+echo "Architecture=${KARCH}"
 #getconf LONG_BIT (may be handy in the future)
 
 # sets module parameters (driver options)
@@ -70,7 +72,7 @@ if ! command -v dkms >/dev/null 2>&1
 then
 	echo "The non-dkms installation routines are in use."
 
-	make clean
+	make clean >/dev/null 2>&1
 
 	make
 	RESULT=$?
@@ -130,6 +132,8 @@ else
 			echo "$ sudo ./remove-driver.sh"
 			exit $RESULT
 		fi
+	else
+		echo "The driver was added successfully."
 	fi
 
 	dkms build -m ${DRV_NAME} -v ${DRV_VERSION}
@@ -143,21 +147,23 @@ else
 		echo "Run the following before reattempting installation."
 		echo "$ sudo ./remove-driver.sh"
 		exit $RESULT
+	else
+		echo "The driver was built successfully."
 	fi
 
 	dkms install -m ${DRV_NAME} -v ${DRV_VERSION}
 	RESULT=$?
 
-	if [[ "$RESULT" = "0" ]]
+	if [[ "$RESULT" != "0" ]]
 	then
-		echo "The driver was installed successfully."
-	else
 		echo "An error occurred. dkms install error = ${RESULT}"
 		echo "Please report this error."
 		echo "Please copy all screen output and paste it into the report."
 		echo "Run the following before reattempting installation."
 		echo "$ sudo ./remove-driver.sh"
 		exit $RESULT
+	else
+		echo "The driver was installed successfully."
 	fi
 fi
 
