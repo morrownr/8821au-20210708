@@ -257,7 +257,7 @@ sudo apt install -y build-essential dkms git
 - Option for Fedora
 
 ```
-sudo dnf -y install git dkms kernel-devel kernel-debug-devel
+sudo dnf -y install git dkms kernel-devel openssl
 ```
 
 - Option for openSUSE
