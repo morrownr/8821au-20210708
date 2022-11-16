@@ -1,4 +1,4 @@
-2021-12-03
+2022-11-15
 
 What is Concurrent Mode?
 
@@ -20,14 +20,35 @@ Note: Only supports 3 combinations
 2. Station mode + AP mode
 3. Station mode + P2P mode
 
+Note: Monitor mode is not supported.
+
 -----
 
 How do I Enable Concurrent Mode?
 
-Run the following as instructed during the installation process:
+Edit the `Makefile` with a text editor:
 
 ```
-./cmode-on.sh
+nano Makefile
+```
+
+Change the following line:
+
+```
+CONFIG_CONCURRENT_MODE = n
+```
+
+to 
+
+```
+CONFIG_CONCURRENT_MODE = y
+```
+
+and then install the driver per the installation steps. If
+the driver is already installed, run the following first:
+
+```
+sudo ./reomve-driver.sh
 ```
 
 Once the driver is fully installed and you have rebooted the system, you
