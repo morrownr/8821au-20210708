@@ -48,7 +48,7 @@ and then install the driver per the installation steps. If
 the driver is already installed, run the following first:
 
 ```
-sudo ./reomve-driver.sh
+sudo ./remove-driver.sh
 ```
 
 Once the driver is fully installed and you have rebooted the system, you
