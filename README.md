@@ -2,10 +2,10 @@
 
 ## Linux Driver for USB WiFi Adapters that are based on the RTL8811AU and RTL8821AU Chipsets
 
+- v5.12.5.2 (Realtek) (20210708) plus updates from the Linux community
+
 Note: Please read "supported-device-IDs" for information about how to
 confirm that this is the correct driver for your adapter.
-
-- v5.12.5.2 (Realtek) (20210708) plus updates from the Linux community
 
 ### Features
 
@@ -38,10 +38,12 @@ confirm that this is the correct driver for your adapter.
 
 ### A FAQ is available at the end of this document.
 
-### Compatible CPUs
+### Compatible CPU Architectures
 
-- x86, amd64
-- ARM, ARM64
+- x86, i686
+- x86-64, amd64
+- armv7l (arm)
+- aarch64 (arm64)
 
 ### Compatible Kernels
 
@@ -55,9 +57,9 @@ is easy to install and works reliably on many distros. Meeting this goal
 depends on you to report your recommendations and updated information. 
 If you see information that needs to be updated, please report the
 updated information and if you do not see adequate support for
-items such as Installation Steps 2, 3 and 8, and you know what updates 
+items such as Installation Steps 2 and 3, and you know what updates 
 need to added or you can get that information, please provide it so that
-the Installation Steps can be improved.
+the installation steps can be improved.
 
 - Arch Linux (kernels 5.4 and 5.11)
 
@@ -75,9 +77,15 @@ the Installation Steps can be improved.
 
 - Raspberry Pi Desktop (2022-07-01) (x86 32 bit) (kernel 5.10)
 
-- Ubuntu 22.04 (kernel 5.15)
+- Ubuntu 22.04 (kernel 5.15) and 22.10 (kernel 5.19)
 
 - Void Linux (kernel 5.18)
+
+Note: Red Hat Enterprise Linux (RHEL) and distros based on RHEL are not
+supported due to the way kernel patches are handled.
+
+Note: Android is not supported due to the tremendous amount of changes
+that Google has made to the mainline Linux kernel.
 
 ### Download Locations for Tested Linux Distributions
 
@@ -138,7 +146,7 @@ sudo dkms status
 ```
 
 Warning: If you decide to upgrade to a new version of kernel such as
-5.18 to 5.19, you need to remove the driver you have installed and
+5.15 to 5.19, you need to remove the driver you have installed and
 install the newest available before installing the new kernel. Use the
 following commands in the driver directory:
 
@@ -170,17 +178,29 @@ DKMS is used for the installation. DKMS is a system utility which will
 automatically recompile and reinstall this driver when a new kernel is
 installed. DKMS is provided by and maintained by Dell.
 
-It is recommended that you do not delete the driver directory after installation
-as the directory contains information and scripts that you may need in the future.
+It is recommended that you do not delete the driver directory after
+installation as the directory contains information and scripts that you
+may need in the future.
 
-Secure mode: The primary installation script, `install-driver.sh`, will support
-secure mode... if your distro supports the method dkms uses. I regularly test the
-installation script on systems with secure mode on. It works very well on Ubuntu based
-distros. Some distros, such as Raspberry Pi OS, do not support secure mode because the
-hardware they support does not support secure mode making it unnecessary. There are
-distros that do not work with the support currently in use. If you install this driver
-and, after a reboot, the driver is not working, you can go into the BIOS and temporarily
-turn secure mode off to see if secure mode is the problem.
+Secure Boot: The installation script, `install-driver.sh`, will
+automatically support secure boot... if your distro supports the method
+dkms uses. I regularly test the installation script on systems with
+secure boot on. It works seemlessly on modern Ubuntu based distros as
+long as secure boot was set up properly during the installation of the
+operating system. Some distros, such as the Raspberry Pi OS, do not
+support secure boot because the hardware they support does not support
+secure boot making it unnecessary to attempt to support it. There are
+distros that may require additional steps to sign the driver for secure
+boot operation. Fedora is an example. In installation Step 3, note that
+`openssl` must be installed as Fedora does not install it by default.
+There will also be another step for Fedora after `install-driver.sh`
+script is completed. This will be explained in the instructions at the
+appropriate time. Overall, secure boot requires that
+`openssl` and `mokutil` be installed and that additional steps be
+performed if necessary. To test if secure boot is the problem:  If you
+install this driver and, after a reboot, the driver is not working, you
+can go into the BIOS and temporarily turn secure boot off to see if
+secure boot is the problem.
 
 ### Installation Steps
 
@@ -245,7 +265,7 @@ sudo apt install -y raspberrypi-kernel-headers build-essential bc dkms git
 - Option for Debian, Kali, and Raspberry Pi Desktop (x86)
 
 ```
-sudo apt install -y linux-headers-$(uname -r) build-essential bc dkms git libelf-dev
+sudo apt install -y linux-headers-$(uname -r) build-essential bc dkms git libelf-dev rfkill
 ```
 
 - Option for Ubuntu (all official flavors) and the numerous Ubuntu based distros
@@ -255,6 +275,8 @@ sudo apt install -y build-essential dkms git
 ```
 
 - Option for Fedora
+
+Note: Installing `openssl` is only necessary for secure boot support.
 
 ```
 sudo dnf -y install git dkms kernel-devel openssl
@@ -277,7 +299,7 @@ sudo xbps-install linux-headers dkms git make
 If using pacman
 
 ```
-sudo pacman -S --noconfirm linux-headers dkms git
+sudo pacman -S --noconfirm linux-headers dkms git bc
 ```
 
 Note: If you are asked to choose a provider, make sure to choose the one
@@ -366,6 +388,11 @@ sudo ./install-driver.sh
 Note: If you elect to skip the reboot at the end of the installation
 script, the driver may not load immediately and the driver options will
 not be applied. Rebooting is strongly recommended.
+
+Fedora users that have secure boot turned on should run the following to
+enroll the key:
+
+$ sudo mokutil --import /var/lib/dkms/mok.pub
 
 Manual build instructions: The above script automates the installation
 process, however, if you want to or need to do a command line

@@ -5,12 +5,13 @@
 # Supports dkms and non-dkms removals.
 
 SCRIPT_NAME="remove-driver.sh"
-SCRIPT_VERSION="20221018"
+SCRIPT_VERSION="20221101"
 MODULE_NAME="8821au"
 DRV_VERSION="5.12.5.2"
 OPTIONS_FILE="${MODULE_NAME}.conf"
 
 KVER="$(uname -r)"
+KARCH="$(uname -m)"
 KSRC="/lib/modules/${KVER}/build"
 MODDESTDIR="/lib/modules/${KVER}/kernel/drivers/net/wireless/"
 
@@ -57,19 +58,31 @@ fi
 
 # information that helps with bug reports
 # kernel
-uname -r
+echo "Kernel=${KVER}"
 # architecture - for ARM: aarch64 = 64 bit, armv7l = 32 bit
-uname -m
+echo "Architecture=${KARCH}"
 #getconf LONG_BIT (may be handy in the future)
 
-dkms remove -m ${DRV_NAME} -v ${DRV_VERSION} --all
+#  2>/dev/null suppresses the output of dkms
+dkms remove -m ${DRV_NAME} -v ${DRV_VERSION} --all 2>/dev/null
 RESULT=$?
+#echo "Result=${RESULT}"
 
 # RESULT will be 3 if there are no instances of module to remove
 # however we still need to remove various files or the install script
 # may complain.
 if [[ ("$RESULT" = "0")||("$RESULT" = "3") ]]
 then
+	if [[ ("$RESULT" = "0") ]]
+	then
+		echo "${DRV_NAME}/${DRV_VERSION} has been removed"
+		echo "If older versions of ${DRV_NAME} are installed, run:"
+		echo "$ sudo dkms remove ${DRV_NAME}/<version> --all"
+		echo "dkms shows the following drivers are still installed:"
+		dkms status
+	fi
+	echo "Removing ${BLACKLIST_FILE} from /etc/modprobe.d"
+	rm -f /etc/modprobe.d/${BLACKLIST_FILE}
 	echo "Removing ${OPTIONS_FILE} from /etc/modprobe.d"
 	rm -f /etc/modprobe.d/${OPTIONS_FILE}
 	echo "Removing source files from /usr/src/${DRV_NAME}-${DRV_VERSION}"
