@@ -17,6 +17,7 @@ EXTRA_CFLAGS += -Wno-unused-variable
 #EXTRA_CFLAGS += -Wno-vla
 #EXTRA_CFLAGS += -Wno-misleading-indentation
 EXTRA_CFLAGS += -Wno-implicit-fallthrough
+#EXTRA_CFLAGS += -DCONFIG_CONCURRENT_MODE
 
 # gcc-12
 EXTRA_CFLAGS += -Wno-address
