@@ -4,11 +4,21 @@
 #
 # Supports dkms and non-dkms removals.
 
+# Copyright(c) 2022 Nick Morrow
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of version 2 of the GNU General Public License as
+# published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+
 SCRIPT_NAME="remove-driver.sh"
-SCRIPT_VERSION="20221101"
+SCRIPT_VERSION="20221218"
 MODULE_NAME="8821au"
 DRV_VERSION="5.12.5.2"
-OPTIONS_FILE="${MODULE_NAME}.conf"
 
 KVER="$(uname -r)"
 KARCH="$(uname -m)"
@@ -17,6 +27,7 @@ MODDESTDIR="/lib/modules/${KVER}/kernel/drivers/net/wireless/"
 
 DRV_NAME="rtl${MODULE_NAME}"
 DRV_DIR="$(pwd)"
+OPTIONS_FILE="${MODULE_NAME}.conf"
 
 # check to ensure sudo was used
 if [[ $EUID -ne 0 ]]
@@ -57,43 +68,45 @@ then
 fi
 
 # information that helps with bug reports
-# kernel
-echo "Kernel=${KVER}"
-# architecture - for ARM: aarch64 = 64 bit, armv7l = 32 bit
-echo "Architecture=${KARCH}"
-#getconf LONG_BIT (may be handy in the future)
 
-#  2>/dev/null suppresses the output of dkms
-dkms remove -m ${DRV_NAME} -v ${DRV_VERSION} --all 2>/dev/null
-RESULT=$?
-#echo "Result=${RESULT}"
+# display kernel version
+echo "Linux Kernel=${KVER}"
 
-# RESULT will be 3 if there are no instances of module to remove
-# however we still need to remove various files or the install script
-# may complain.
-if [[ ("$RESULT" = "0")||("$RESULT" = "3") ]]
+# display architecture
+echo "CPU Architecture=${KARCH}"
+
+# determine if dkms is installed and run the appropriate routines
+if command -v dkms >/dev/null 2>&1
 then
-	if [[ ("$RESULT" = "0") ]]
+	echo "Removing a dkms installation."
+	#  2>/dev/null suppresses the output of dkms
+	dkms remove -m ${DRV_NAME} -v ${DRV_VERSION} --all 2>/dev/null
+	RESULT=$?
+	#echo "Result=${RESULT}"
+
+	# RESULT will be 3 if there are no instances of module to remove
+	# however we still need to remove various files or the install script
+	# may complain.
+	if [[ ("$RESULT" = "0")||("$RESULT" = "3") ]]
 	then
-		echo "${DRV_NAME}/${DRV_VERSION} has been removed"
-		echo "If older versions of ${DRV_NAME} are installed, run:"
-		echo "$ sudo dkms remove ${DRV_NAME}/<version> --all"
-		echo "dkms shows the following drivers are still installed:"
-		dkms status
+		if [[ ("$RESULT" = "0") ]]
+		then
+			echo "${DRV_NAME}/${DRV_VERSION} has been removed"
+		fi
+	else
+		echo "An error occurred. dkms remove error = ${RESULT}"
+		echo "Please report this error."
+		exit $RESULT
 	fi
-	echo "Removing ${BLACKLIST_FILE} from /etc/modprobe.d"
-	rm -f /etc/modprobe.d/${BLACKLIST_FILE}
-	echo "Removing ${OPTIONS_FILE} from /etc/modprobe.d"
-	rm -f /etc/modprobe.d/${OPTIONS_FILE}
-	echo "Removing source files from /usr/src/${DRV_NAME}-${DRV_VERSION}"
-	rm -rf /usr/src/${DRV_NAME}-${DRV_VERSION}
-	echo "The driver was removed successfully."
-	echo "You may now delete the driver directory if desired."
-else
-	echo "An error occurred. dkms remove error = ${RESULT}"
-	echo "Please report this error."
-	exit $RESULT
 fi
+
+echo "Removing ${OPTIONS_FILE} from /etc/modprobe.d"
+rm -f /etc/modprobe.d/${OPTIONS_FILE}
+echo "Removing source files from /usr/src/${DRV_NAME}-${DRV_VERSION}"
+rm -rf /usr/src/${DRV_NAME}-${DRV_VERSION}
+make clean >/dev/null 2>&1
+echo "The driver was removed successfully."
+echo "You may now delete the driver directory if desired."
 
 # if NoPrompt is not used, ask user some questions to complete removal
 if [ $NO_PROMPT -ne 1 ]
