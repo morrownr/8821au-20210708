@@ -24,7 +24,6 @@ confirm that this is the correct driver for your adapter.
 - AP mode DFS channel support
 - Miracast
 - Supported interface modes
-  * IBSS
   * Managed
   * Monitor (see FAQ)
   * AP (see FAQ)
@@ -42,7 +41,7 @@ confirm that this is the correct driver for your adapter.
 
 - x86, i686
 - x86-64, amd64
-- armv7l (arm)
+- armv7l, armv6l (arm)
 - aarch64 (arm64)
 
 ### Compatible Kernels
@@ -50,18 +49,18 @@ confirm that this is the correct driver for your adapter.
 - Kernels: 4.19 - 5.11 (Realtek)
 - Kernels: 5.12 - 6.1  (community support)
 
+### Tested Compilers
+
+- gcc 9, 10, 11 and 12
+
 ### Tested Linux Distributions
 
-Note: One of the goals of this project is to provide driver support that
-is easy to install and works reliably on many distros. Meeting this goal
-depends on you to report your recommendations and updated information. 
-If you see information that needs to be updated, please report the
-updated information and if you do not see adequate support for
-items such as Installation Steps 2 and 3, and you know what updates 
-need to added or you can get that information, please provide it so that
-the installation steps can be improved.
+Note: The information in this section depends largely on user reports which can
+be provided via PR or message in Issues.
 
 - Arch Linux (kernels 5.4 and 5.11)
+
+- Armbian_22.11.1 (kernel 5.15) (Rock 4 SE (Rock 4b image with xfce))
 
 - Debian 11 (kernels 5.10 and 5.15)
 
@@ -77,25 +76,34 @@ the installation steps can be improved.
 
 - Raspberry Pi Desktop (2022-07-01) (x86 32 bit) (kernel 5.10)
 
+- SkiffOS for Odroid XU4 (ARM 32 bit) (kernel 6.0.7)
+
 - Ubuntu 22.04 (kernel 5.15) and 22.10 (kernel 5.19)
 
 - Void Linux (kernel 5.18)
 
 Note: Red Hat Enterprise Linux (RHEL) and distros based on RHEL are not
-supported due to the way kernel patches are handled.
+supported due to the way kernel patches are handled. I will support
+knowledgable RHEL developers if they want to merge the required
+support and keep it current.
 
-Note: Android is not supported due to the tremendous amount of changes
-that Google has made to the mainline Linux kernel.
+Note: Android is not supported but I will support knowledgable Android
+developers if they want to merge and keep current the required support
+(most likely just instructions about how to compile and maybe a modification
+or two to the Makefile). 
+
 
 ### Download Locations for Tested Linux Distributions
 
 - [Arch Linux](https://www.archlinux.org)
+- [Armbian](https://www.armbian.com/)
 - [Debian](https://www.debian.org/)
 - [Fedora](https://getfedora.org)
 - [Kali Linux](https://www.kali.org/)
 - [Manjaro](https://manjaro.org)
 - [openSUSE](https://www.opensuse.org/)
 - [Raspberry Pi OS](https://www.raspberrypi.org)
+- [SkiffOS](https://github.com/skiffos/skiffos/)
 - [Ubuntu](https://www.ubuntu.com)
 - [Void Linux](https://voidlinux.org/)
 
@@ -106,12 +114,7 @@ that Google has made to the mainline Linux kernel.
 
 ### Compatible Devices
 
-Warning: Adapters listed here are not recommended for purchase as I do
-not recommend Linux users buy Realtek based USB WiFi adapters due to the
-lack of mac80211 technology drivers that are supported in-kernel as
-called for by Linux Wireless Standards. This repo is supported for the
-benefit of Linux users who already have adapters based on the supported
-chipsets. If you are looking for information about what adapter to buy,
+Warning: If you are looking for information about what adapter to buy,
 click [here](https://github.com/morrownr/USB-WiFi) and look for Main Menu
 item 2 which will show information about and links to recommended adapters.
 
@@ -151,8 +154,8 @@ install the newest available before installing the new kernel. Use the
 following commands in the driver directory:
 
 ```
-$ git pull
 $ sudo ./remove-driver.sh
+$ git pull
 $ sudo ./install-driver.sh
 ```
 
@@ -174,9 +177,9 @@ can be executed as the `root` user. (If the command `sudo echo Yes` returns
 "Yes", with or without having to enter your password, you do have sufficient
 access rights.)
 
-DKMS is used for the installation. DKMS is a system utility which will
-automatically recompile and reinstall this driver when a new kernel is
-installed. DKMS is provided by and maintained by Dell.
+DKMS is used for the installation if available. DKMS is a system utility
+which will automatically recompile and reinstall this driver when a new
+kernel is installed. DKMS is provided by and maintained by Dell.
 
 It is recommended that you do not delete the driver directory after
 installation as the directory contains information and scripts that you
@@ -202,11 +205,29 @@ install this driver and, after a reboot, the driver is not working, you
 can go into the BIOS and temporarily turn secure boot off to see if
 secure boot is the problem.
 
+Please ensure the ISO 3166-1 alpha-2 Country Code is set in your Linux distro.
+If it is not set, you will likely have problems accessing some channels, especially
+5 Ghz and 6 GHz channels. To set your Country Code:
+
+```
+iw reg set US
+```
+
+If you are not in the US, please use the country code for your country. See:
+
+ISO 3166-1 alpha-2 codes: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
+
+To check if your country code is properly set:
+
+```
+iw reg get
+```
+
 ### Installation Steps
 
 Note: The installation instructions are for the novice user. Experienced users are
-welcome to alter the installation to meet their needs. Support will be provided based
-on the steps below.
+welcome to alter the installation to meet their needs. Support will be provided,
+on a best effort basis, based on the steps below.
 
 #### Step 1: Open a terminal (e.g. Ctrl+Alt+T)
 
@@ -216,7 +237,7 @@ Note: If your Linux distro does not fall into one of options listed
 below, you will need to research how to update and upgrade your system
 packages.
 
-- Option for Debian based distributions such as Ubuntu, Kali and Raspberry Pi OS
+- Option for Debian based distributions such as Ubuntu, Kali, Armbian and Raspberry Pi OS
 
 ```
 sudo apt update && sudo apt upgrade
@@ -256,7 +277,17 @@ sudo reboot
 
 #### Step 3: Install the required packages (select the option for the OS you are using)
 
-- Option for Raspberry Pi OS (ARM/ARM64)
+Note: If your Linux distro does not fall into one of options listed
+below, you will need to research how to properly setup up the development
+environment for your system.
+
+- Option for Armbian (arm64)
+
+```
+sudo apt install -y build-essential
+```
+
+- Option for Raspberry Pi OS (arm/arm64)
 
 ```
 sudo apt install -y raspberrypi-kernel-headers build-essential bc dkms git
@@ -265,13 +296,13 @@ sudo apt install -y raspberrypi-kernel-headers build-essential bc dkms git
 - Option for Debian, Kali, and Raspberry Pi Desktop (x86)
 
 ```
-sudo apt install -y linux-headers-$(uname -r) build-essential bc dkms git libelf-dev rfkill
+sudo apt install -y linux-headers-$(uname -r) build-essential bc dkms git libelf-dev rfkill iw
 ```
 
 - Option for Ubuntu (all official flavors) and the numerous Ubuntu based distros
 
 ```
-sudo apt install -y build-essential dkms git 
+sudo apt install -y build-essential dkms git iw
 ```
 
 - Option for Fedora
@@ -288,18 +319,30 @@ sudo dnf -y install git dkms kernel-devel openssl
 sudo zypper install -t pattern devel_kernel dkms
 ```
 
+- Option for Alpine
+
+```
+sudo apk add linux-lts-dev make gcc
+```
+
 - Option for Void Linux
 
 ```
 sudo xbps-install linux-headers dkms git make
 ```
 
-- Options for Arch and Manjaro
+- Options for Arch and Manjaro (if using Manjaro for RasPi4B, see note)
 
 If using pacman
 
 ```
 sudo pacman -S --noconfirm linux-headers dkms git bc
+```
+
+Note: The following is needed if using Manjaro for RasPi4B.
+
+```
+sudo pacman -S --noconfirm linux-rpi4-headers dkms git bc
 ```
 
 Note: If you are asked to choose a provider, make sure to choose the one
@@ -335,49 +378,7 @@ git clone https://github.com/morrownr/8821au-20210708.git
 cd ~/src/8821au-20210708
 ```
 
-#### Step 8: Run a script to reconfigure for ARM or ARM64 based systems
-
-Warning: This driver defaults to supporting x86 and amd64 based systems
-and this step should be `skipped` if your system is powered by an x86, 
-amd64 or compatible CPU.
-
-Note: If your system is powered by an ARM or ARM64 based Raspberry Pi,
-then one of the following scripts should be executed:
-
-- Option for the following listed operating systems to be installed to
-Raspberry Pi hardware
-
-```
-       * Raspberry Pi OS (32 bit)
-```
-
-```
-./ARM_RPI.sh
-```
-
-- Option for the following listed operating systems to be installed to
-Raspberry Pi hardware
-
-```
-       * Raspberry Pi OS (64 bit)
-       * Kali Linux RPI ARM64
-       * Ubuntu for Raspberry Pi
-```
-
-```
-./ARM64_RPI.sh
-```
-
-Note: ARM or ARM64 based systems not listed above will likely require
-modifications similar to those provided in the above scripts but the
-number and variety of different ARM and ARM64 based systems makes
-supporting each system unpractical so you will need to research the
-needs of your system and make the appropriate modifications. If you
-discover the settings and make a new script that works with your ARM or
-ARM64 based system, you are welcome to submit the script and information
-to be included here.
-
-#### Step 9: Run the installation script ( install-driver.sh )
+#### Step 8: Run the installation script ( install-driver.sh )
 
 Note: For automated builds (non-interactive), use _NoPrompt_ as an option.
 
@@ -389,7 +390,7 @@ Note: If you elect to skip the reboot at the end of the installation
 script, the driver may not load immediately and the driver options will
 not be applied. Rebooting is strongly recommended.
 
-Fedora users that have secure boot turned on should run the following to
+Note: Fedora users that have secure boot turned on should run the following to
 enroll the key:
 
 $ sudo mokutil --import /var/lib/dkms/mok.pub
@@ -431,14 +432,46 @@ Note: Documentation for Driver Options is included in the file `8821au.conf`.
 
 -----
 
+### Upgrading the Driver
+
+Note: Linux development is continuous therefore work on this driver is continuous.
+
+Note: Upgrading the driver is advised in the following situations:
+
+- if a new or updated version of the driver needs to be installed
+- if a distro version upgrade is going to be installed (i.e. going from kernel 5.10 to kernel 5.15)
+
+#### Step 1: Move to the driver directory
+
+```
+cd ~/src/8821au-20210708
+```
+
+#### Step 2: Remove the currently installed driver
+
+```
+sudo ./remove-driver.sh
+```
+
+#### Step 3: Pull updated code from this repo
+
+```
+git pull
+```
+
+#### Step 4: Install the driver
+
+```
+sudo ./install-driver.sh
+```
+
+-----
 ### Removal of the Driver ( remove-driver.sh  )
 
 Note: Removing the driver is advised in the following situations:
 
 - if driver installation fails
 - if the driver is no longer needed
-- if a new or updated version of the driver needs to be installed
-- if a distro version upgrade is going to be installed (i.e. going from kernel 5.10 to kernel 5.15)
 
 Note: The following removes everything that has been installed, with the
 exception of the packages installed in Step 3 and the driver directory.
@@ -480,7 +513,7 @@ Note: These are general recommendations, some of which may not apply to your spe
 
 - Best location for the WiFi router/access point: Near center of apartment or house, at least a couple of feet away from walls, in an elevated location. You may have to test to see what the best location is in your environment.
 
-- Check congestion: There are apps available for smart phones that allow you to check the congestion levels on WiFi channels. The apps generally go by the name of ```WiFi Analyzer``` or something similar.
+- Check congestion: There are apps available for smart phones that allow you to get an idea of the congestion levels on WiFi channels. The apps generally go by the name of ```WiFi Analyzer``` or something similar.
 
 After making and saving changes, reboot the router.
 
