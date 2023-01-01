@@ -47,7 +47,7 @@ confirm that this is the correct driver for your adapter.
 ### Compatible Kernels
 
 - Kernels: 4.19 - 5.11 (Realtek)
-- Kernels: 5.12 - 6.1  (community support)
+- Kernels: 5.12 - 6.2  (community support)
 
 ### Tested Compilers
 
@@ -78,7 +78,7 @@ be provided via PR or message in Issues.
 
 - SkiffOS for Odroid XU4 (ARM 32 bit) (kernel 6.0.7)
 
-- Ubuntu 22.04 (kernel 5.15) and 22.10 (kernel 5.19)
+- Ubuntu 22.04 (kernel 5.15) and 22.10 (kernel 5.19) (kernel 6.2 rc1)
 
 - Void Linux (kernel 5.18)
 
@@ -87,10 +87,10 @@ supported due to the way kernel patches are handled. I will support
 knowledgable RHEL developers if they want to merge the required
 support and keep it current.
 
-Note: Android is not supported but I will support knowledgable Android
-developers if they want to merge and keep current the required support
-(most likely just instructions about how to compile and maybe a modification
-or two to the Makefile). 
+Note: Android is supported in the driver according to Realtek. I will support
+knowledgable Android developers if they want to merge and keep current the
+required support (most likely just instructions about how to compile and maybe
+a modification or two to the Makefile).
 
 
 ### Download Locations for Tested Linux Distributions
@@ -114,11 +114,6 @@ or two to the Makefile).
 
 ### Compatible Devices
 
-Warning: If you are looking for information about what adapter to buy,
-click [here](https://github.com/morrownr/USB-WiFi) and look for Main Menu
-item 2 which will show information about and links to recommended adapters.
-
-
 * [ALFA AWUS036ACS](https://store.rokland.com/collections/wi-fi-usb-adapters/products/alfa-awus036acs-802-11ac-ac600-dual-band-wifi-usb-adapter-rp-sma)
 * Buffalo WI-U2-433DHP
 * Edimax EW-7811UTC
@@ -131,6 +126,11 @@ item 2 which will show information about and links to recommended adapters.
 * Planex GW-450S
 * EDUP EP-1607
 * Numerous adapters that are based on the supported chipsets.
+
+Note: If you are looking for information about what adapter to buy,
+click [here](https://github.com/morrownr/USB-WiFi) and look for Main Menu
+item 2 which will show information about and links to recommended adapters.
+
 
 ### Installation Information
 
@@ -204,24 +204,6 @@ performed if necessary. To test if secure boot is the problem:  If you
 install this driver and, after a reboot, the driver is not working, you
 can go into the BIOS and temporarily turn secure boot off to see if
 secure boot is the problem.
-
-Please ensure the ISO 3166-1 alpha-2 Country Code is set in your Linux distro.
-If it is not set, you will likely have problems accessing some channels, especially
-5 Ghz and 6 GHz channels. To set your Country Code:
-
-```
-iw reg set US
-```
-
-If you are not in the US, please use the country code for your country. See:
-
-ISO 3166-1 alpha-2 codes: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
-
-To check if your country code is properly set:
-
-```
-iw reg get
-```
 
 ### Installation Steps
 
@@ -567,17 +549,16 @@ sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
 
 Question: Is WPA3 supported?
 
-Answer: WPA3-SAE support is in this driver according to Realtek and it
-works well on some Linux distros but not all. Generally the reason for
-WPA3 not working on Linux distros is that the distro has an old version
-of wpa_supplicant or Network Manager. Your options are to upgrade to a
-more modern distro (most distros released after mid 2022) or compile and
-install new versions of the wpa_supplicant and Network Manager utilities.
+Answer: WPA3-SAE is supported. It works well on most modern Linux distros but
+not all. Generally the reason for WPA3 not working on Linux distros is that the
+distro has an old version of wpa_supplicant or Network Manager. Your options
+are to upgrade to a more modern distro (distros released after mid 2022) or
+compile and install new versions of wpa_supplicant and/or Network Manager.
 
 -----
 
-Question: I bought two rtl8811au based adapters and am planning to use
-both in the same computer. How do I set that up?
+Question: I bought two usb wifi adapters based on this chipset and am planning
+to use both in the same computer. How do I set that up?
 
 Answer: Realtek drivers do not support more than one adapter with the
 same chipset in the same computer. You can have multiple Realtek based
@@ -647,6 +628,34 @@ and users of other distros that show this problem to investigate and
 present what you know to the devs of your distro via their problem
 reporting system. Turning off secure boot is NOT a fix. A real fix needs
 to happen.
+
+-----
+
+Question: Can you provide additional information about monitor mode?
+
+Answer: I have a repo that is setup to help with monitor mode:
+
+https://github.com/morrownr/Monitor_Mode
+
+Work to improve monitor mode is ongoing with this driver. Your
+reports of success or failure are needed. If you have yet to buy an
+adapter to use with monitor mode, there are adapters available that are
+known to work very well with monitor mode. My recommendation for those
+looking to buy an adapter for monitor mode is to buy adapters based on
+the following chipsets: mt7921au, mt7612u, mt7610u, rtl8812au and
+rtl8811au. My specific recommendations for adapters in order of
+preference are:
+
+ALFA AWUS036ACHM - long range - in-kernel driver
+
+ALFA AWUS036ACM - in-kernel driver
+
+ALFA AWUS036ACH - long range - [driver](https://github.com/morrownr/8812au-20210629)
+
+ALFA AWUS036ACS - [driver](https://github.com/morrownr/8821au-20210708)
+
+To ask questions, go to [USB-WiFi](https://github.com/morrownr/USB-WiFi)
+and post in `Discussions` or `Issues`.
 
 -----
 
