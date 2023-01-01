@@ -66,7 +66,8 @@
 	#endif
 #endif
 #ifdef CONFIG_80211AC_VHT
-	#define CONFIG_BEAMFORMING
+/* nrm */
+//	#define CONFIG_BEAMFORMING
 #endif
 
 #define CONFIG_RECV_REORDERING_CTRL	1
