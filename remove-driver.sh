@@ -57,7 +57,7 @@ do
 done
 
 # displays script name and version
-echo "Script:  ${SCRIPT_NAME} version ${SCRIPT_VERSION}"
+echo "Script:  ${SCRIPT_NAME} v${SCRIPT_VERSION}"
 
 # check for and remove non-dkms installations
 # standard naming
