@@ -17,16 +17,16 @@ confirm that this is the correct driver for your adapter.
   * Supports site survey scan and manual connect
   * Supports WPA/WPA2 TLS client
 - Power saving modes
+- Miracast
 - Wireshark compatible
 - Aircrack-ng compatible
 - Packet injection
 - hostapd compatible
 - AP mode DFS channel support
-- Miracast
 - Supported interface modes
   * Managed
   * Monitor (see FAQ)
-  * AP (see FAQ)
+  * AP
   * P2P-client
   * P2P-GO
 - Log level control
@@ -36,6 +36,8 @@ confirm that this is the correct driver for your adapter.
 - AP mode DFS channel control
 
 ### A FAQ is available at the end of this document.
+
+### Additional documentation is the file `8821au.conf`.
 
 ### Compatible CPU Architectures
 
@@ -78,7 +80,7 @@ be provided via PR or message in Issues.
 
 - SkiffOS for Odroid XU4 (ARM 32 bit) (kernel 6.0.7)
 
-- Ubuntu 22.04 (kernel 5.15) and 22.10 (kernel 5.19) (kernel 6.2 rc1)
+- Ubuntu 22.04 (kernel 5.15) and 22.10 (kernel 5.19) (kernel 6.2)
 
 - Void Linux (kernel 5.18)
 
@@ -134,9 +136,9 @@ item 2 which will show information about and links to recommended adapters.
 
 ### Installation Information
 
-Warning: Installing multiple drivers for the same hardware usually does
-not end well. If a previous attempt to install this driver failed or if
-you have previously installed another driver for chipsets supported by
+Warning: Installing multiple out-of-kernel drivers for the same hardware
+usually does not end well. If a previous attempt to install this driver failed
+or if you have previously installed another driver for chipsets supported by
 this driver, you MUST remove anything that the previous attempt
 installed BEFORE attempting to install this driver. This driver can be
 removed with the script called `./remove-driver.sh`. Information is
@@ -213,7 +215,7 @@ on a best effort basis, based on the steps below.
 
 #### Step 1: Open a terminal (e.g. Ctrl+Alt+T)
 
-#### Step 2: Update and upgrade system packages (select the option for the OS you are using)
+#### Step 2: Update and upgrade system packages (select the option for the distro you are using)
 
 Note: If your Linux distro does not fall into one of options listed
 below, you will need to research how to update and upgrade your system
