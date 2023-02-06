@@ -377,7 +377,9 @@ not be applied. Rebooting is strongly recommended.
 Note: Fedora users that have secure boot turned on should run the following to
 enroll the key:
 
+```
 $ sudo mokutil --import /var/lib/dkms/mok.pub
+```
 
 Manual build instructions: The above script automates the installation
 process, however, if you want to or need to do a command line
