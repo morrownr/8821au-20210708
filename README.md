@@ -86,11 +86,11 @@ be provided via PR or message in Issues.
 
 Note: Red Hat Enterprise Linux (RHEL) and distros based on RHEL are not
 supported due to the way kernel patches are handled. I will support
-knowledgable RHEL developers if they want to merge the required
+knowledgeable RHEL developers if they want to merge the required
 support and keep it current.
 
 Note: Android is supported in the driver according to Realtek. I will support
-knowledgable Android developers if they want to merge and keep current the
+knowledgeable Android developers if they want to merge and keep current the
 required support (most likely just instructions about how to compile and maybe
 a modification or two to the Makefile).
 
@@ -163,7 +163,7 @@ $ sudo ./install-driver.sh
 
 Temporary internet access is required for installation. There are numerous ways
 to enable temporary internet access depending on your hardware and situation.
-[One method is to use tethering from a phone.](https://www.makeuseof.com/tag/how-to-tether-your-smartphone-in-linux).
+[One method is to use tethering from a phone.](https://www.makeuseof.com/tag/how-to-tether-your-smartphone-in-linux)
 Another method is to keep a [WiFi adapter that uses an in-kernel driver](https://github.com/morrownr/USB-WiFi) in your toolkit.
 
 You will need to use the terminal interface. The quick way to open a terminal:
@@ -190,7 +190,7 @@ may need in the future.
 Secure Boot: The installation script, `install-driver.sh`, will
 automatically support secure boot... if your distro supports the method
 dkms uses. I regularly test the installation script on systems with
-secure boot on. It works seemlessly on modern Ubuntu based distros as
+secure boot on. It works seamlessly on modern Ubuntu based distros as
 long as secure boot was set up properly during the installation of the
 operating system. Some distros, such as the Raspberry Pi OS, do not
 support secure boot because the hardware they support does not support
@@ -252,7 +252,7 @@ sudo xbps-install -Syu
 ```
 
 Note: It is recommended that you reboot your system at this point. The
-rest of the installation will appreciate having a fully up to date
+rest of the installation will appreciate having a fully up-to-date
 system to work with. The installation can then be continued with Step 3.
 
 ```
@@ -377,7 +377,9 @@ not be applied. Rebooting is strongly recommended.
 Note: Fedora users that have secure boot turned on should run the following to
 enroll the key:
 
+```
 $ sudo mokutil --import /var/lib/dkms/mok.pub
+```
 
 Manual build instructions: The above script automates the installation
 process, however, if you want to or need to do a command line
@@ -497,7 +499,7 @@ Note: These are general recommendations, some of which may not apply to your spe
 
 - Best location for the WiFi router/access point: Near center of apartment or house, at least a couple of feet away from walls, in an elevated location. You may have to test to see what the best location is in your environment.
 
-- Check congestion: There are apps available for smart phones that allow you to get an idea of the congestion levels on WiFi channels. The apps generally go by the name of ```WiFi Analyzer``` or something similar.
+- Check congestion: There are apps available for smartphones that allow you to get an idea of the congestion levels on WiFi channels. The apps generally go by the name of ```WiFi Analyzer``` or something similar.
 
 After making and saving changes, reboot the router.
 
@@ -515,7 +517,7 @@ After making and saving changes, reboot the router.
 
 - If you use an extension cable and your adapter is USB 3 capable, the cable needs to be USB 3 capable (if not, you will be limited to USB 2 speeds).
 
-- Extention cables can be problematic. A way to check if the extension cable is the problem is to plug the adapter temporarily into a USB port on the computer.
+- Extension cables can be problematic. A way to check if the extension cable is the problem is to plug the adapter temporarily into a USB port on the computer.
 
 - Some USB WiFi adapters require considerable electrical current and push the capabilities of the power available via USB port. One example is adapters that use the Realtek 8814au chipset. Using a powered multiport USB extension can be a good idea in cases like this.
 
@@ -539,7 +541,7 @@ dtoverlay=disable-wifi
 sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
 ```
 
-#### Step 2: Delete the relevant WiFi network block (including the 'network=' and opening/closing braces.
+#### Step 2: Delete the relevant WiFi network block (including the 'network=' and opening/closing braces).
 
 #### Step 3: Press ctrl-x followed by 'y' and enter to save the file.
 
@@ -559,7 +561,7 @@ compile and install new versions of wpa_supplicant and/or Network Manager.
 
 -----
 
-Question: I bought two usb wifi adapters based on this chipset and am planning
+Question: I bought two USB WiFi adapters based on this chipset and am planning
 to use both in the same computer. How do I set that up?
 
 Answer: Realtek drivers do not support more than one adapter with the
@@ -625,7 +627,7 @@ regarding Debian systems and secure boot:
 https://wiki.debian.org/SecureBoot
 
 That document contains a lot of information that can help an investigation
-into what the real problem is and I invite you and other Fedora, OpemSUSE
+into what the real problem is and I invite you and other Fedora, OpenSUSE
 and users of other distros that show this problem to investigate and
 present what you know to the devs of your distro via their problem
 reporting system. Turning off secure boot is NOT a fix. A real fix needs
@@ -635,7 +637,7 @@ to happen.
 
 Question: Can you provide additional information about monitor mode?
 
-Answer: I have a repo that is setup to help with monitor mode:
+Answer: I have a repo that is set up to help with monitor mode:
 
 https://github.com/morrownr/Monitor_Mode
 
