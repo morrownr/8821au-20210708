@@ -1,0 +1,82 @@
+name: CI
+
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - docs/**
+      - LICENSE
+      - README.md
+
+  pull_request:
+    branches: [ main ]
+    paths-ignore:
+      - docs/**
+      - LICENSE
+      - README.md
+
+jobs:
+  ubuntu_22_04:
+    runs-on: ubuntu-22.04
+
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler:
+          - cc: gcc-12
+            cxx: g++-12
+
+    name: Ubuntu 22.04 ${{ matrix.compiler.cc }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y ${{ matrix.compiler.cc }} ${{ matrix.compiler.cxx }} build-essential dkms git iw
+      - name: Build with ${{ matrix.compiler.cc }}
+        run: |
+          CPUS=$(nproc)
+          echo "::group::make clean"
+          make clean
+          echo "::endgroup::"
+          echo "::group::build"
+          make -j ${CPUS} CC=${{ matrix.compiler.cc }} CXX=${{ matrix.compiler.cxx }}
+          echo "::endgroup::"
+
+  ubuntu_20_04:
+    runs-on: ubuntu-20.04
+
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler:
+          - cc:  gcc-11
+            cxx: g++-11
+          - cc:  gcc-10
+            cxx: g++-10
+          - cc:  gcc-9
+            cxx: g++-9
+
+    name: Ubuntu 20.04 ${{ matrix.compiler.cc }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y ${{ matrix.compiler.cc }} ${{ matrix.compiler.cxx }} build-essential dkms git iw
+      - name: Build with ${{ matrix.compiler.cc }}
+        run: |
+          CPUS=$(nproc)
+          echo "::group::make clean"
+          make clean
+          echo "::endgroup::"
+          echo "::group::build"
+          make -j ${CPUS} CC=${{ matrix.compiler.cc }} CXX=${{ matrix.compiler.cxx }}
+          echo "::endgroup::"
