@@ -2539,7 +2539,7 @@ static int isFileReadable(const char *path, u32 *sz)
 }
 
 /*
-* Open the file with @param path and wirte @param sz byte of data starting from @param buf into the file
+* Open the file with @param path and write @param sz byte of data starting from @param buf into the file
 * @param path the path of the file to open and write
 * @param buf the starting address of the data to write into file
 * @param sz how many bytes to write at most
