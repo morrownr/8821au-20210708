@@ -5773,10 +5773,10 @@ int rtw_ap_rx_data_validate_hdr(_adapter *adapter, union recv_frame *rframe, str
 #endif
 
 	process_pwrbit_data(adapter, rframe, *sta);
-	
+
 	if ((get_frame_sub_type(whdr) & WIFI_QOS_DATA_TYPE) == WIFI_QOS_DATA_TYPE)
 		process_wmmps_data(adapter, rframe, *sta);
-	
+
 	if (get_frame_sub_type(whdr) & BIT(6)) {
 		/* No data, will not indicate to upper layer, temporily count it here */
 		count_rx_stats(adapter, rframe, *sta);
