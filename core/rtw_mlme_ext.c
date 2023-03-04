@@ -16657,4 +16657,3 @@ u8 rtw_write_bcnlen_hdl(_adapter *padapter, u8 *pbuf)
 #endif
 	return H2C_SUCCESS;
 }
-

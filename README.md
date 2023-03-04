@@ -7,7 +7,7 @@
 Note: Please read "supported-device-IDs" for information about how to
 confirm that this is the correct driver for your adapter.
 
-### Features
+### Supported Features
 
 - IEEE 802.11 b/g/n/ac WiFi compliant
 - 802.1x, WEP, WPA TKIP and WPA2 AES/Mixed mode for PSK and TLS (Radius)
@@ -34,6 +34,10 @@ confirm that this is the correct driver for your adapter.
 - Power saving control
 - VHT control (allows 80 MHz channel width in AP mode)
 - AP mode DFS channel control
+
+### Not supported
+
+- hcxdumptool
 
 ### A FAQ is available at the end of this document.
 
@@ -132,7 +136,6 @@ a modification or two to the Makefile).
 Note: If you are looking for information about what adapter to buy,
 click [here](https://github.com/morrownr/USB-WiFi) and look for Main Menu
 item 2 which will show information about and links to recommended adapters.
-
 
 ### Installation Information
 
