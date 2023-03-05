@@ -12,6 +12,10 @@
 #
 # $ sudo ./install-driver.sh
 #
+# or
+#
+# $ sudo sh install-driver.sh
+#
 # Copyright(c) 2023 Nick Morrow
 #
 # This program is free software; you can redistribute it and/or modify
@@ -24,7 +28,7 @@
 # GNU General Public License for more details.
 
 SCRIPT_NAME="install-driver.sh"
-SCRIPT_VERSION="20230126"
+SCRIPT_VERSION="20230227"
 MODULE_NAME="8821au"
 DRV_VERSION="5.12.5.2"
 
@@ -166,28 +170,24 @@ if command -v dkms >/dev/null 2>&1; then
 	echo ": ""${dkms_ver}"
 fi
 
-# display secure mode status if mokutil is installed
+# display secure mode status if SecureBoot is enabled and if mokutil is installed
 if command -v mokutil >/dev/null 2>&1; then
-	sb_state=$(mokutil --sb-state)
-	echo ": ""${sb_state}"
+	if mokutil --sb-state | grep -i  enabled >/dev/null 2>&1; then
+		echo ": SecureBoot enabled - read FAQ about SecureBoot"
+	fi
 fi
 
-# needs work
-# display ISO 3166-1 alpha-2 Country Code
-#a2_country_code=$(iw reg get | grep -i country)
-#echo ": Location: ""${a2_country_code}"
-#if [[ $a2_country_code == *"00"* ]];
-#then
-#    echo "The Country Code may not be properly set."
-#    echo "File alpha-2_Country_Codes is located in the driver directory."
-#    echo "Please read and follow the directions in the file after installation."
-#fi
 
 echo ": ---------------------------"
+echo
+
+echo "Checking for previously installed drivers."
 
 # check for and remove non-dkms installations
 # standard naming
 if [ -f "${MODDESTDIR}${MODULE_NAME}.ko" ]; then
+	echo ": ---------------------------"
+	echo
 	echo "Removing a non-dkms installation: ${MODDESTDIR}${MODULE_NAME}.ko"
 	rm -f "${MODDESTDIR}"${MODULE_NAME}.ko
 	/sbin/depmod -a "${KVER}"
@@ -196,11 +196,14 @@ if [ -f "${MODDESTDIR}${MODULE_NAME}.ko" ]; then
 	echo "Removing source files from /usr/src/${DRV_NAME}-${DRV_VERSION}"
 	rm -rf /usr/src/${DRV_NAME}-${DRV_VERSION}
 	make clean >/dev/null 2>&1
+	echo "Removal complete."
 fi
 
 # check for and remove non-dkms installations
 # with rtl added to module name (PClinuxOS)
 if [ -f "${MODDESTDIR}rtl${MODULE_NAME}.ko" ]; then
+	echo ": ---------------------------"
+	echo
 	echo "Removing a non-dkms installation: ${MODDESTDIR}rtl${MODULE_NAME}.ko"
 	rm -f "${MODDESTDIR}"rtl${MODULE_NAME}.ko
 	/sbin/depmod -a "${KVER}"
@@ -209,6 +212,7 @@ if [ -f "${MODDESTDIR}rtl${MODULE_NAME}.ko" ]; then
 	echo "Removing source files from /usr/src/${DRV_NAME}-${DRV_VERSION}"
 	rm -rf /usr/src/${DRV_NAME}-${DRV_VERSION}
 	make clean >/dev/null 2>&1
+	echo "Removal complete."
 fi
 
 # check for and remove non-dkms installations
@@ -216,6 +220,8 @@ fi
 # Example: /usr/lib/modules/5.15.80-rockchip64/kernel/drivers/net/wireless/rtl8821cu/8821cu.ko.xz
 # Dear Armbiam, this is a really bad idea.
 if [ -f "/usr/lib/modules/${KVER}/kernel/drivers/net/wireless/${DRV_NAME}/${MODULE_NAME}.ko.xz" ]; then
+	echo ": ---------------------------"
+	echo
 	echo "Removing a non-dkms installation: /usr/lib/modules/${KVER}/kernel/drivers/net/wireless/${DRV_NAME}/${MODULE_NAME}.ko.xz"
 	rm -f /usr/lib/modules/"${KVER}"/kernel/drivers/net/wireless/${DRV_NAME}/${MODULE_NAME}.ko.xz
 	/sbin/depmod -a "${KVER}"
@@ -224,25 +230,32 @@ if [ -f "/usr/lib/modules/${KVER}/kernel/drivers/net/wireless/${DRV_NAME}/${MODU
 	echo "Removing source files from /usr/src/${DRV_NAME}-${DRV_VERSION}"
 	rm -rf /usr/src/${DRV_NAME}-${DRV_VERSION}
 	make clean >/dev/null 2>&1
+	echo "Removal complete."
 fi
 
 # check for and remove dkms installations
 if command -v dkms >/dev/null 2>&1; then
 	if dkms status | grep -i  ${DRV_NAME}; then
-		echo "Removing a dkms installation: ${DRV_NAME}"
+		echo ": ---------------------------"
+		echo
+		echo "Removing a dkms installation."
 		dkms remove -m ${DRV_NAME} -v ${DRV_VERSION} --all
 		echo "Removing ${OPTIONS_FILE} from /etc/modprobe.d"
 		rm -f /etc/modprobe.d/${OPTIONS_FILE}
 		echo "Removing source files from /usr/src/${DRV_NAME}-${DRV_VERSION}"
 		rm -rf /usr/src/${DRV_NAME}-${DRV_VERSION}
+		echo "Removal complete."
 	fi
 fi
 
 # sets module parameters (driver options) and blacklisted modules
+echo ": ---------------------------"
+echo
+echo "Starting installation."
 echo "Installing ${OPTIONS_FILE} to /etc/modprobe.d"
 cp -f ${OPTIONS_FILE} /etc/modprobe.d
 
-# determine if dkms is installed and run the appropriate routines
+# determine if dkms is installed and run the appropriate installation routines
 if ! command -v dkms >/dev/null 2>&1; then
 	echo "The non-dkms installation routines are in use."
 
@@ -270,6 +283,8 @@ if ! command -v dkms >/dev/null 2>&1; then
 	if [ "$RESULT" = "0" ]; then
         	make clean >/dev/null 2>&1
 		echo "The driver was installed successfully."
+		echo ": ---------------------------"
+		echo
 	else
 		echo "An error occurred:  ${RESULT}"
 		echo "Please report this error."
@@ -306,6 +321,7 @@ else
 		fi
 	else
 		echo "The driver was added to dkms successfully."
+		echo ": ---------------------------"
 	fi
 
 	if command -v /usr/bin/time >/dev/null 2>&1; then
@@ -324,6 +340,7 @@ else
 		exit $RESULT
 	else
 		echo "The driver was built by dkms successfully."
+		echo ": ---------------------------"
 	fi
 
 	dkms install -m ${DRV_NAME} -v ${DRV_VERSION}
@@ -338,8 +355,20 @@ else
 		exit $RESULT
 	else
 		echo "The driver was installed by dkms successfully."
+		echo ": ---------------------------"
+		echo
 	fi
 fi
+
+# provide driver upgrade information
+echo "Info: Upgrade this driver with the following commands as needed:"
+echo "$ git pull"
+echo "$ sudo sh install-driver.sh"
+echo "Note: Upgrades to this driver should be performed before distro upgrades."
+echo "Note: Upgrades can be performed as often as you like."
+echo "Note: Work on this driver is continuous."
+echo ": ---------------------------"
+echo
 
 # unblock wifi
 if command -v rfkill >/dev/null 2>&1; then
@@ -350,15 +379,17 @@ fi
 
 # if NoPrompt is not used, ask user some questions
 if [ $NO_PROMPT -ne 1 ]; then
-	printf "Do you want to edit the driver options file now? [y/N] "
-	read -r REPLY
-	case "$REPLY" in
-		[yY]*) ${TEXT_EDITOR} /etc/modprobe.d/${OPTIONS_FILE} ;;
+	printf "Do you want to edit the driver options file now? (recommended) [Y/n] "
+	read -r yn
+	case "$yn" in
+		[nN]) ;;
+		*) ${TEXT_EDITOR} /etc/modprobe.d/${OPTIONS_FILE} ;;
 	esac
 
-	printf "Do you want to apply the new options by rebooting now? (recommended) [y/N] "
-	read -r REPLY
-	case "$REPLY" in
-		[yY]*) reboot ;;
+	printf "Do you want to apply the new options by rebooting now? (recommended) [Y/n] "
+	read -r yn
+	case "$yn" in
+		[nN]) ;;
+		*) reboot ;;
 	esac
 fi

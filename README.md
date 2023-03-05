@@ -25,8 +25,8 @@ confirm that this is the correct driver for your adapter.
 - AP mode DFS channel support
 - Supported interface modes
   * Managed
-  * Monitor (see FAQ)
-  * AP
+  * Monitor (see FAQ) (see [Monitor_Mode](https://github.com/morrownr/Monitor_Mode))
+  * AP (see [Bridged Wireless Access Point](https://github.com/morrownr/USB-WiFi/blob/main/home/AP_Mode/Bridged_Wireless_Access_Point.md))
   * P2P-client
   * P2P-GO
 - Log level control
@@ -39,7 +39,9 @@ confirm that this is the correct driver for your adapter.
 
 - hcxdumptool
 
-### A FAQ is available at the end of this document.
+### A FAQ is available in this repo with the name `FAQ.md`
+
+- Please read the FAQ and this document before posting issues.
 
 ### Additional documentation is in the file `8821au.conf`.
 
@@ -64,59 +66,40 @@ confirm that this is the correct driver for your adapter.
 Note: The information in this section depends largely on user reports which can
 be provided via PR or message in Issues.
 
-- Arch Linux (kernels 5.4 and 5.11)
+- [Arch Linux](https://www.archlinux.org) (kernels 5.4 and 5.11)
 
-- Armbian_22.11.1 (kernel 5.15) (Rock 4 SE (Rock 4b image with xfce))
+- [Armbian](https://www.armbian.com/) (kernel 5.15) (Rock 4 SE (Rock 4b image with xfce))
 
-- Debian 11 (kernels 5.10 and 5.15)
+- [Debian](https://www.debian.org/) (kernels 5.10 and 5.15)
 
-- Fedora (kernels 5.11, 6.0 and 6.1)
+- [Fedora](https://getfedora.org) (kernel 6.0)
 
-- Kali Linux (kernel 5.10)
+- [Kali Linux](https://www.kali.org/) (kernel 5.10)
 
-- Manjaro 21.1 (kernel 5.13)
+- [Manjaro](https://manjaro.org) (kernel 5.13)
 
-- openSUSE Tumbleweed (rolling) (kernel 5.15)
+- [openSUSE](https://www.opensuse.org/) Tumbleweed (rolling) (kernel 5.15)
 
-- Raspberry Pi OS (2022-09-22) (ARM 32 bit and 64 bit) (kernel 5.15)
+- [Raspberry Pi OS](https://www.raspberrypi.org) (2023-02-21) (ARM 32 bit and 64 bit) (kernel 5.15)
 
-- Raspberry Pi Desktop (2022-07-01) (x86 32 bit) (kernel 5.10)
+- [Raspberry Pi Desktop](https://www.raspberrypi.org) (2022-07-01) (x86 32 bit) (kernel 5.10)
 
-- SkiffOS for Odroid XU4 (ARM 32 bit) (kernel 6.0.7)
+- [SkiffOS](https://github.com/skiffos/skiffos/) for Odroid XU4 (ARM 32 bit) (kernel 6.0.7)
 
-- Ubuntu 22.04 (kernel 5.15) and 22.10 (kernel 5.19) (kernel 6.2)
+- [Ubuntu](https://www.ubuntu.com) 22.04 (kernel 5.15) and 22.10 (kernel 5.19) (kernel 6.2)
 
-- Void Linux (kernel 5.18)
+- [Void Linux](https://voidlinux.org/) (kernel 5.18)
 
 Note: Red Hat Enterprise Linux (RHEL) and distros based on RHEL are not
 supported due to the way kernel patches are handled. I will support
-knowledgeable RHEL developers if they want to merge the required
-support and keep it current.
+knowledgable RHEL developers if they want to merge the required
+support and keep it current. I reserve the right to delete this support
+if it causes any problems.
 
 Note: Android is supported in the driver according to Realtek. I will support
-knowledgeable Android developers if they want to merge and keep current the
-required support (most likely just instructions about how to compile and maybe
+knowledgable Android developers if they want to merge and keep current the
+required support (most likely just instructions about how to compile and make
 a modification or two to the Makefile).
-
-
-### Download Locations for Tested Linux Distributions
-
-- [Arch Linux](https://www.archlinux.org)
-- [Armbian](https://www.armbian.com/)
-- [Debian](https://www.debian.org/)
-- [Fedora](https://getfedora.org)
-- [Kali Linux](https://www.kali.org/)
-- [Manjaro](https://manjaro.org)
-- [openSUSE](https://www.opensuse.org/)
-- [Raspberry Pi OS](https://www.raspberrypi.org)
-- [SkiffOS](https://github.com/skiffos/skiffos/)
-- [Ubuntu](https://www.ubuntu.com)
-- [Void Linux](https://voidlinux.org/)
-
-### Tested Hardware
-
-- [ALFA AWUS036ACS](https://store.rokland.com/collections/wi-fi-usb-adapters/products/alfa-awus036acs-802-11ac-ac600-dual-band-wifi-usb-adapter-rp-sma)
-- EDUP EP-1607
 
 ### Compatible Devices
 
@@ -137,25 +120,30 @@ Note: If you are looking for information about what adapter to buy,
 click [here](https://github.com/morrownr/USB-WiFi) and look for Main Menu
 item 2 which will show information about and links to recommended adapters.
 
+Note: If you decide to buy an adapter that is supported by this driver, I
+recommend you search for an adapter that is `single-state and single-function`.
+Multi-function adapters, wifi and bluetooth, can be problematic. The rtl8821au
+chipset is multi-fuction. The rtl8811au chipset is single-function. For advice
+about single-state and multi-state adapters. click
+[here](https://github.com/morrownr/USB-WiFi) and look for Main Menu item 1.
+
 ### Installation Information
 
 Warning: Installing multiple out-of-kernel drivers for the same hardware
-usually does not end well. If a previous attempt to install this driver failed
-or if you have previously installed another driver for chipsets supported by
-this driver, you MUST remove anything that the previous attempt
-installed BEFORE attempting to install this driver. This driver can be
-removed with the script called `./remove-driver.sh`. Information is
-available in the section called `Removal of the Driver`. You can get a
-good idea as to whether you need to remove a previously installed
-driver by running the following command:
+usually does not end well. The install-driver.sh script has the capability
+to detect and remove many conflicting drivers but not all. If this driver
+does not work well after installation and you have previously installed a
+driver that you did not remove, it suggested that you run the following
+command in an effort to determine if you need to take action to manually
+remove conflicting drivers:
 
 ```
 sudo dkms status
 ```
 
-Warning: If you decide to upgrade to a new version of kernel such as
-5.15 to 5.19, you need to upgrade the driver you have installed with
-the newest available before installing the new kernel. Use the
+Warning: If you decide to do a distro upgrade, which will likely install a
+new version of kernel such as 5.15 to 6.1, you need to upgrade this driver
+with the newest available before performing the disto upgrade. Use the
 following commands in the driver directory:
 
 ```
@@ -192,25 +180,7 @@ It is recommended that you do not delete the driver directory after
 installation as the directory contains information and scripts that you
 may need in the future.
 
-Secure Boot: The installation script, `install-driver.sh`, will
-automatically support secure boot... if your distro supports the method
-dkms uses. I regularly test the installation script on systems with
-secure boot on. It works seamlessly on modern Ubuntu based distros as
-long as secure boot was set up properly during the installation of the
-operating system. Some distros, such as the Raspberry Pi OS, do not
-support secure boot because the hardware they support does not support
-secure boot making it unnecessary to attempt to support it. There are
-distros that may require additional steps to sign the driver for secure
-boot operation. Fedora is an example. In installation Step 3, note that
-`openssl` must be installed as Fedora does not install it by default.
-There will also be another step for Fedora after `install-driver.sh`
-script is completed. This will be explained in the instructions at the
-appropriate time. Overall, secure boot requires that
-`openssl` and `mokutil` be installed and that additional steps be
-performed if necessary. To test if secure boot is the problem:  If you
-install this driver and, after a reboot, the driver is not working, you
-can go into the BIOS and temporarily turn secure boot off to see if
-secure boot is the problem.
+Secure Boot: see FAQ.
 
 ### Installation Steps
 
@@ -223,7 +193,7 @@ on a best effort basis, based on the steps below.
 #### Step 2: Update and upgrade system packages (select the option for the distro you are using)
 
 Note: If your Linux distro does not fall into one of options listed
-below, you will need to research how to update and upgrade your system
+below, you will need to research how to `update` and `upgrade` your system
 packages.
 
 - Option for Debian based distributions such as Ubuntu, Kali, Armbian and Raspberry Pi OS
@@ -268,7 +238,17 @@ sudo reboot
 
 Note: If your Linux distro does not fall into one of options listed
 below, you will need to research how to properly setup up the development
-environment for your system.
+environment for your system. General guidance follows.
+
+Development Environment Requirements: (package names may vary by distro)
+
+- Mandatory: `gcc` `make` `bc` `kernel-headers` `build-essential` `git`
+- Highly recommended: `dkms` `rfkill` `iw` `ip`
+- Mandatory if Secure Boot is active: `openssl` `mokutil`
+
+Note: The below options should take care of the mandatory and highly recommended
+requirements but only you know if Secure Boot is active. If Secure Boot is
+active on your system, please also install the mandatory packages for Secure Boot.
 
 - Option for Armbian (arm64)
 
@@ -296,10 +276,8 @@ sudo apt install -y build-essential dkms git iw
 
 - Option for Fedora
 
-Note: Installing `openssl` is only necessary for secure boot support.
-
 ```
-sudo dnf -y install git dkms kernel-devel openssl
+sudo dnf -y install git dkms kernel-devel
 ```
 
 - Option for openSUSE
@@ -325,7 +303,7 @@ sudo xbps-install linux-headers dkms git make
 If using pacman
 
 ```
-sudo pacman -S --noconfirm linux-headers dkms git bc
+sudo pacman -S --noconfirm linux-headers dkms git bc iw
 ```
 
 Note: The following is needed if using Manjaro for RasPi4B.
@@ -532,7 +510,7 @@ Note: These are general recommendations, some of which may not apply to your spe
 
 - Best location for the WiFi router/access point: Near center of apartment or house, at least a couple of feet away from walls, in an elevated location. You may have to test to see what the best location is in your environment.
 
-- Check congestion: There are apps available for smartphones that allow you to get an idea of the congestion levels on WiFi channels. The apps generally go by the name of ```WiFi Analyzer``` or something similar.
+- Check congestion: There are apps available for smart phones that allow you to get an idea of the congestion levels on WiFi channels. The apps generally go by the name of `WiFi Analyzer` or something similar.
 
 After making and saving changes, reboot the router.
 
@@ -550,155 +528,12 @@ After making and saving changes, reboot the router.
 
 - If you use an extension cable and your adapter is USB 3 capable, the cable needs to be USB 3 capable (if not, you will be limited to USB 2 speeds).
 
-- Extension cables can be problematic. A way to check if the extension cable is the problem is to plug the adapter temporarily into a USB port on the computer.
+- Extention cables can be problematic. A way to check if the extension cable is the problem is to plug the adapter temporarily into a USB port on the computer.
 
 - Some USB WiFi adapters require considerable electrical current and push the capabilities of the power available via USB port. One example is adapters that use the Realtek 8814au chipset. Using a powered multiport USB extension can be a good idea in cases like this.
-
------
-
-### How to disable onboard WiFi on Raspberry Pi 3B, 3B+, 3A+, 4B and Zero W
-
-Add the following line to `/boot/config.txt`
-
-```
-dtoverlay=disable-wifi
-```
-
------
-
-### How to forget a saved WiFi network on a Raspberry Pi
-
-#### Step 1: Edit `wpa_supplicant.conf`
-
-```
-sudo ${EDITOR} /etc/wpa_supplicant/wpa_supplicant.conf
-```
-
-Note: Replace ${EDITOR} with the name of the text editor you wish to use.
-
-#### Step 2: Delete the relevant WiFi network block (including the '`network=`' and opening/closing braces).
-
-#### Step 3: Press ctrl-x followed by '`y`' and enter to save the file.
-
-#### Step 4: Reboot
-
------
-
-### FAQ
-
-Question: Is WPA3 supported?
-
-Answer: WPA3-SAE is supported. It works well on most modern Linux distros but
-not all. Generally the reason for WPA3 not working on Linux distros is that the
-distro has an old version of wpa_supplicant or Network Manager. Your options
-are to upgrade to a more modern distro (distros released after mid 2022) or
-compile and install new versions of wpa_supplicant and/or Network Manager.
-
------
-
-Question: I bought two USB WiFi adapters based on this chipset and am planning
-to use both in the same computer. How do I set that up?
-
-Answer: Realtek drivers do not support more than one adapter with the
-same chipset in the same computer. You can have multiple Realtek based
-adapters in the same computer as long as the adapters are based on
-different chipsets.
-
------
-
-Question: Why do you recommend Mediatek based adapters when you maintain
-this repo for a Realtek driver?
-
-Answer: Many new and existing Linux users already have adapters based on
-Realtek chipsets. This repo is for Linux users to support their existing
-adapters but my STRONG recommendation is for Linux users to seek out USB
-WiFi solutions based on Mediatek chipsets:
-
-https://github.com/morrownr/USB-WiFi
-
------
-
-Question: Will you put volunteers to work?
-
-Answer: Yes. Post a message in `Issues` or `Discussions` if interested.
-
------
-
-Question: I am having problems with my adapter and I use Virtualbox?
-
-Answer: This [article](https://null-byte.wonderhowto.com/forum/wifi-hacking-attach-usb-wireless-adapter-with-virtual-box-0324433/) may help.
-
------
-
-Question: The driver installation script completed successfully and the
-driver is installed but does not seem to be working. What is wrong?
-
-Answer: Turn secure boot off to see if that allows the driver to work.
-This driver is primarily tested on Debian based distros such as Ubuntu,
-Raspberry Pi OS and Kali. In an attempt to make this driver work well on
-many Linux distros, other distros, including the Arch based Manjaro is
-used for testing. Currently I do not have installations of Fedora or
-OpenSUSE available for testing and reply on user reports of success or
-failure. I have two test systems with secure boot on so as to test secure
-boot. I have not seen any secure boot problems with Debian based systems
-and I don't remember problems with Manjaro.
-
-dkms is used in the installation script. It helps with a lot of issues that
-will come up if a simple manual installation is used. dkms has the
-capability to handle the needs of secure boot. dkms was written by and is
-maintained by Dell. Dell has been offering some Ubuntu pre-loaded systems
-for years so their devs likely test on Ubuntu. I suspect Fedora and
-OpenSUSE may be handing their secure boot support differently than Debian
-based systems and this is leading to problems. This and the other repos
-I have are VERY heavily used and I am sure there are plenty of non-Debian
-users that use this driver. Are they all turning off secure boot and not
-reporting the problem? I don't know. What I do know is that reports like
-this are rare.
-
-For the driver to compile and install correctly but not be available
-tells me there is likely a key issue. Here is an interesting link
-regarding Debian systems and secure boot:
-
-https://wiki.debian.org/SecureBoot
-
-That document contains a lot of information that can help an investigation
-into what the real problem is and I invite you and other Fedora, OpenSUSE
-and users of other distros that show this problem to investigate and
-present what you know to the devs of your distro via their problem
-reporting system. Turning off secure boot is NOT a fix. A real fix needs
-to happen.
-
------
-
-Question: Can you provide additional information about monitor mode?
-
-Answer: I have a repo that is set up to help with monitor mode:
-
-https://github.com/morrownr/Monitor_Mode
-
-Work to improve monitor mode is ongoing with this driver. Your
-reports of success or failure are needed. If you have yet to buy an
-adapter to use with monitor mode, there are adapters available that are
-known to work very well with monitor mode. My recommendation for those
-looking to buy an adapter for monitor mode is to buy adapters based on
-the following chipsets: mt7921au, mt7612u, mt7610u, rtl8812au, rtl8821cu and
-rtl8811au. My specific recommendations for adapters in order of
-preference are:
-
-ALFA AWUS036ACHM - long range - in-kernel driver
-
-ALFA AWUS036ACM - in-kernel driver
-
-ALFA AWUS036ACH - long range - [driver](https://github.com/morrownr/8812au-20210629)
-
-ALFA AWUS036ACS - [driver](https://github.com/morrownr/8821au-20210708)
-
-To ask questions, go to [USB-WiFi](https://github.com/morrownr/USB-WiFi)
-and post in `Discussions` or `Issues`.
 
 -----
 
 #### [Go to Main Menu](https://github.com/morrownr/USB-WiFi)
 
 -----
-
