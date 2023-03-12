@@ -1,6 +1,6 @@
 ## 8821au ( 8821au.ko ) :rocket:
 
-[![CI](https://github.com/morrownr/8821au-20210708/actions/workflows/ci.yml/badge.svg?event=push)](https://github.com/morrownr/8821au-20210708/actions/workflows/ci.yml)
+[![Build CI](https://github.com/morrownr/8821au-20210708/actions/workflows/build.yml/badge.svg?event=push)](https://github.com/morrownr/8821au-20210708/actions/workflows/build.yml)
 
 ## Linux Driver for USB WiFi Adapters that are based on the RTL8811AU and RTL8821AU Chipsets
 
