@@ -1,0 +1,39 @@
+name: Shellcheck CI
+
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+  push:
+    branches: [ main ]
+    paths:
+      - .github/workflows/shellcheck.yml
+      - '**.sh'
+
+  pull_request:
+    branches: [ main ]
+    paths:
+      - .github/workflows/shellcheck.yml
+      - '**.sh'
+
+jobs:
+  ubuntu_22_04:
+    runs-on: ubuntu-22.04
+
+    name: Ubuntu 22.04 shellcheck
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y shellcheck
+      - name: Shellcheck
+        run: |
+          echo "::group::list files"
+          find . -type f -name '*.sh' -print0 | xargs -0 -n1 ls
+          echo "::endgroup::"
+          echo "::group::shellcheck"
+          find . -type f -name '*.sh' -print0 | xargs -0 -n1 shellcheck
+          echo "::endgroup::"
