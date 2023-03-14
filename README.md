@@ -1,5 +1,6 @@
 ## 8821au ( 8821au.ko ) :rocket:
 
+[![Codespell CI](https://github.com/morrownr/8821au-20210708/actions/workflows/codespell.yml/badge.svg?event=push)](https://github.com/morrownr/8821au-20210708/actions/workflows/codespell.yml)
 [![Build CI](https://github.com/morrownr/8821au-20210708/actions/workflows/build.yml/badge.svg?event=push)](https://github.com/morrownr/8821au-20210708/actions/workflows/build.yml)
 [![Shellcheck CI](https://github.com/morrownr/8821au-20210708/actions/workflows/shellcheck.yml/badge.svg?event=push)](https://github.com/morrownr/8821au-20210708/actions/workflows/shellcheck.yml)
 
