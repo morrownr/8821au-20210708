@@ -1,5 +1,6 @@
 ## 8821au ( 8821au.ko ) :rocket:
 
+[![Codespell CI](https://github.com/morrownr/8821au-20210708/actions/workflows/codespell.yml/badge.svg?event=push)](https://github.com/morrownr/8821au-20210708/actions/workflows/codespell.yml)
 [![Build CI](https://github.com/morrownr/8821au-20210708/actions/workflows/build.yml/badge.svg?event=push)](https://github.com/morrownr/8821au-20210708/actions/workflows/build.yml)
 [![Shellcheck CI](https://github.com/morrownr/8821au-20210708/actions/workflows/shellcheck.yml/badge.svg?event=push)](https://github.com/morrownr/8821au-20210708/actions/workflows/shellcheck.yml)
 
@@ -531,7 +532,7 @@ After making and saving changes, reboot the router.
 
 - If you use an extension cable and your adapter is USB 3 capable, the cable needs to be USB 3 capable (if not, you will be limited to USB 2 speeds).
 
-- Extention cables can be problematic. A way to check if the extension cable is the problem is to plug the adapter temporarily into a USB port on the computer.
+- Extension cables can be problematic. A way to check if the extension cable is the problem is to plug the adapter temporarily into a USB port on the computer.
 
 - Some USB WiFi adapters require considerable electrical current and push the capabilities of the power available via USB port. One example is adapters that use the Realtek 8814au chipset. Using a powered multiport USB extension can be a good idea in cases like this.
 
