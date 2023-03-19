@@ -2,6 +2,7 @@
 
 [![Codespell CI](https://github.com/morrownr/8821au-20210708/actions/workflows/codespell.yml/badge.svg?event=push)](https://github.com/morrownr/8821au-20210708/actions/workflows/codespell.yml)
 [![Build CI](https://github.com/morrownr/8821au-20210708/actions/workflows/build.yml/badge.svg?event=push)](https://github.com/morrownr/8821au-20210708/actions/workflows/build.yml)
+[![Markdown link CI](https://github.com/morrownr/8821au-20210708/actions/workflows/markdown-link.yml/badge.svg?event=push)](https://github.com/morrownr/8821au-20210708/actions/workflows/markdown-link.yml)
 [![Shellcheck CI](https://github.com/morrownr/8821au-20210708/actions/workflows/shellcheck.yml/badge.svg?event=push)](https://github.com/morrownr/8821au-20210708/actions/workflows/shellcheck.yml)
 
 ## Linux Driver for USB WiFi Adapters that are based on the RTL8811AU and RTL8821AU Chipsets
@@ -169,7 +170,7 @@ Ctrl+Alt+T (hold down on the Ctrl and Alt keys then press the T key).
 An alternative terminal is to use SSH (Secure Shell) from the same or from
 another computer, in which case you will be in a suitable terminal after logging
 in, but this step requires that an SSH daemon/server has already been
-configured. (There are lots of SSH guides available, e.g., for the [Raspberry Pi](https://www.raspberrypi.com/documentation/computers/remote-access.html#setting-up-an-ssh-server) and for [Ubuntu](https://linuxconfig.org/ubuntu-20-04-ssh-server). Do not forget [to secure the SSH server](https://www.howtogeek.com/443156/the-best-ways-to-secure-your-ssh-server/).)
+configured. (There are lots of SSH guides available, e.g., for the [Raspberry Pi](https://www.raspberrypi.com/documentation/computers/remote-access.html#setting-up-an-ssh-server) and for <!-- markdown-link-check-disable -->[Ubuntu](https://linuxconfig.org/ubuntu-20-04-ssh-server)<!-- markdown-link-check-enable -->. Do not forget [to secure the SSH server](https://www.howtogeek.com/443156/the-best-ways-to-secure-your-ssh-server/).)
 
 You will need to have sufficient access rights to use `sudo` so that commands
 can be executed as the `root` user. (If the command `sudo echo Yes` returns
