@@ -7,6 +7,7 @@ on:
   push:
     branches: [ main ]
     paths-ignore:
+      - .github/workflows/codespell.yml
       - .github/workflows/markdown-link.yml
       - .github/workflows/shellcheck.yml
       - docs/**
@@ -16,6 +17,7 @@ on:
   pull_request:
     branches: [ main ]
     paths-ignore:
+      - .github/workflows/codespell.yml
       - .github/workflows/markdown-link.yml
       - .github/workflows/shellcheck.yml
       - docs/**
