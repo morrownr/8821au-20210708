@@ -2514,7 +2514,7 @@ uninstall:
 sign:
 	@openssl req -new -x509 -newkey rsa:2048 -keyout MOK.priv -outform DER -out MOK.der -nodes -days 36500 -subj "/CN=Custom MOK/"
 	@mokutil --import MOK.der
-	@$(KSRC)/scripts/sign-file sha256 MOK.priv MOK.der 8821cu.ko
+	@$(KSRC)/scripts/sign-file sha256 MOK.priv MOK.der 8821au.ko
 
 sign-install: all sign install
 
