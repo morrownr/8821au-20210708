@@ -41,6 +41,9 @@ Here is a link regarding Debian and Secure Boot:
 
 https://wiki.debian.org/SecureBoot
 
+There is work underway to add Secure Boot support for systems that do not
+have `dkms` available or if a manual installation is desired.
+
 If you are using a basic command line (non-dkms) installation, see the
 following section in the Installation Steps part of the README:
 
@@ -190,5 +193,33 @@ Add the following line to `/boot/config.txt`
 ```
 dtoverlay=disable-wifi
 ```
+
+-----
+
+Question: When running `sudo sh install-driver.sh` on my RasPi 4B or
+400, I see the following:
+
+```
+Your kernel header files aren't properly installed.
+Please consult your distro documentation or user support forums.
+Once the header files are properly installed, please run...
+```
+
+Answer: The Pi 4/400 firmware now prefers the 64-bit kernel if one
+exists so even if you installed the 32 bit version of the RasPiOS,
+you may now have the 64 bit kernel active.
+
+The fix:
+
+add the following to /boot/config.txt and reboot:
+
+arm_64bit=0
+
+Reference:
+
+https://forums.raspberrypi.com/viewtopic.php?p=2091532&hilit=Tp+link#p2091532
+
+Note to RasPiOS devs: We really really wish you would consider the 
+consequences of the changes you make. Thank you.
 
 -----

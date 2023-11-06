@@ -24,7 +24,7 @@
 # GNU General Public License for more details.
 
 SCRIPT_NAME="edit-options.sh"
-# SCRIPT_VERSION="20230126"
+# SCRIPT_VERSION="20230710"
 OPTIONS_FILE="8821au.conf"
 
 # check to ensure sudo was used to start the script
@@ -47,10 +47,16 @@ if ! command -v "${TEXT_EDITOR}" >/dev/null 2>&1; then
         exit 1
 fi
 
-${TEXT_EDITOR} /etc/modprobe.d/${OPTIONS_FILE}
+if [ -f "/etc/modprobe.d/${OPTIONS_FILE}" ]; then
+	${TEXT_EDITOR} /etc/modprobe.d/${OPTIONS_FILE}
+else
+	cp -f ${OPTIONS_FILE} /etc/modprobe.d
+	${TEXT_EDITOR} /etc/modprobe.d/${OPTIONS_FILE}
+fi
 
-printf "Do you want to apply the new options by rebooting now? (recommended) [y/N] "
-read -r REPLY
-case "$REPLY" in
-	[yY]*) reboot ;;
+printf "Do you want to apply the new options by rebooting now? (recommended) [Y/n] "
+read -r yn
+case "$yn" in
+	[nN]) ;;
+	*) reboot ;;
 esac
