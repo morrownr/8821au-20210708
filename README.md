@@ -711,7 +711,7 @@ not with USB 3.1 Gen 2.
 cable needs to be USB 3 capable (if not, you will be limited to USB 2
 speeds).
 
-- Extention cables can be problematic. A way to check if the extension
+- Extension cables can be problematic. A way to check if the extension
 cable is the problem is to plug the adapter temporarily into a USB port
 on the computer.
 
