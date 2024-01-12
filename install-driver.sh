@@ -30,7 +30,7 @@
 SCRIPT_NAME="install-driver.sh"
 SCRIPT_VERSION="20231001"
 
-DRV_NAME="rt8821au"
+DRV_NAME="rtl8821au"
 DRV_VERSION="5.12.5.2"
 DRV_DIR="$(pwd)"
 
