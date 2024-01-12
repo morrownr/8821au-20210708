@@ -28,11 +28,14 @@
 # GNU General Public License for more details.
 
 SCRIPT_NAME="remove-driver.sh"
-SCRIPT_VERSION="20230830"
+SCRIPT_VERSION="20231118"
+
+MODULE_NAME="8821au"
 
 DRV_NAME="rtl8821au"
 DRV_VERSION="5.12.5.2"
-MODULE_NAME="8821au"
+
+OPTIONS_FILE="${MODULE_NAME}.conf"
 
 #KARCH="$(uname -m)"
 if [ -z "${KARCH+1}" ]; then
@@ -45,7 +48,6 @@ if [ -z "${KVER+1}" ]; then
 fi
 
 MODDESTDIR="/lib/modules/${KVER}/kernel/drivers/net/wireless/"
-OPTIONS_FILE="${MODULE_NAME}.conf"
 
 # check to ensure sudo or su - was used to start the script
 if [ "$(id -u)" -ne 0 ]; then
