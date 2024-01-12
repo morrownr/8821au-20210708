@@ -28,13 +28,13 @@
 # GNU General Public License for more details.
 
 SCRIPT_NAME="install-driver.sh"
-SCRIPT_VERSION="20231001"
-
-DRV_NAME="rt8821au"
-DRV_VERSION="5.12.5.2"
-DRV_DIR="$(pwd)"
+SCRIPT_VERSION="20231115"
 
 MODULE_NAME="8821au"
+
+DRV_NAME="rtl8821au"
+DRV_VERSION="5.12.5.2"
+DRV_DIR="$(pwd)"
 
 OPTIONS_FILE="${MODULE_NAME}.conf"
 
@@ -157,7 +157,7 @@ echo ": ${KARCH} (kernel architecture)"
 # display architecture to send to gcc
 echo ": ${GARCH} (architecture to send to gcc)"
 
-SMEM=$(LANG=C free | awk '/Mem:/ { print $2 }')
+SMEM=$(LC_ALL=C free | awk '/Mem:/ { print $2 }')
 sproc=$(nproc)
 # avoid Out of Memory condition in low-RAM systems by limiting core usage
 if [ "$sproc" -gt 1 ]; then
