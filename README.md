@@ -2,40 +2,37 @@
 
 ## Linux Driver for USB WiFi Adapters that are based on the RTL8811AU and RTL8821AU Chipsets
 
-- v5.12.5.2 (Realtek) (20210708) plus updates from the Linux community
-- Realtek development of this driver terminated in 2021.
+- v5.12.5.2 (Realtek) plus updates from the Linux community
 
 Note: Please read the file "supported-device-IDs" for information about
 how to confirm that this is the correct driver for your adapter.
 
 Note: Posting this driver is not a recommendation for Linux users to buy
-USB WiFi adapters based on the Realtek chipsets supported by this
-driver. Realtek out-of-kernel wifi drivers, such as this one, are not
-Linux Wireless Standards compliant and appear to be designed to be used
-by skilled programmers producing products such as embedded systems.
-Users of desktop and server distros such as Ubuntu, Debian, Manjaro,
-Arch, Fedora, Raspberry Pi OS will likely find that adapters that use
-in-kernel drivers are more stable and much more trouble-free. The
-following links will provide more information:
-
-[USB WiFi adapter information for Linux](https://github.com/morrownr/USB-WiFi/blob/main/home/USB_WiFi_Adapter_Information_for_Linux.md)
+USB WiFi adapters based on the Realtek chipsets supported by this driver.
+Realtek out-of-kernel wifi drivers, such as this one, are not Linux Wireless
+Standards compliant and appear to be designed to be used by skilled
+programmers producing products such as embedded systems. Users of desktop
+and server distros such as Ubuntu, Debian, Manjaro, Fedora, Raspberry Pi OS
+and other mainline desktop and server distros will likely find adapters that
+use in-kernel drivers (Linux Wireless Standards compliant) to be more stable
+and much more trouble-free. The following links will provide more
+information:
 
 [USB WiFi adapters that are supported with Linux in-kernel drivers](https://github.com/morrownr/USB-WiFi/blob/main/home/USB_WiFi_Adapters_that_are_supported_with_Linux_in-kernel_drivers.md)
+
+[USB WiFi adapter information for Linux](https://github.com/morrownr/USB-WiFi/blob/main/home/USB_WiFi_Adapter_Information_for_Linux.md)
 
 ### Supported Features
 
 - IEEE 802.11 b/g/n/ac WiFi compliant
-- 802.1x, WEP, WPA TKIP and WPA2 AES/Mixed mode for PSK and TLS (Radius)
-- WPA3 (see FAQ)
+- 802.1x, WPA2 AES for PSK and TLS (Radius)
+- WPA3-SAE (Personal)
 - IEEE 802.11b/g/n/ac Client mode
-  * Supports wireless security for WEP, WPA TKIP and WPA2 AES PSK
+  * Supports wireless security for WPA2 AES PSK and WPA3-SAE
   * Supports site survey scan and manual connect
-  * Supports WPA/WPA2 TLS client
+  * Supports TLS client
+- TDLS support
 - Power saving modes
-- Miracast
-- Wireshark compatible
-- Aircrack-ng compatible
-- Packet injection
 - hostapd compatible
 - AP mode DFS channel support
 - Supported interface modes
@@ -52,13 +49,11 @@ following links will provide more information:
 
 ### Not supported
 
-- hcxdumptool (see hcxdumptool documentation)
-
 ### A FAQ is available in this repo with the name `FAQ.md`
 
 - Please read the FAQ and this document before posting issues.
 
-### Additional documentation is in the file `8821au.conf`.
+### Additional documentation is in the file `8821au.conf`
 
 ### Compatible CPU Architectures
 
@@ -73,43 +68,37 @@ the hardware to test the above.
 ### Compatible Kernels
 
 - Kernels: 4.19 - 5.11 (Realtek)
-- Kernels: 5.12 - 6.7  (community support)
+- Kernels: 5.12 - 6.8  (community support)
 
 Note: Kernels earlier than 4.19 may work but are not tested or
 supported.
 
 ### Tested Compilers
 
-- gcc 10, 11, 12 and 13
+- gcc 11, 12 and 13
 
 ### Tested Linux Distributions
 
 Note: The information in this section depends largely on user reports
 which can be provided via PR or message in Issues.
 
-- [Arch Linux](https://www.archlinux.org) (kernels 5.4 and 5.11)
+- [Arch Linux](https://www.archlinux.org) (kernels 5.4, 5.11 and 6.6)
 
 - [Armbian](https://www.armbian.com/) (kernel 5.15) (Rock 4 SE (Rock 4b image with xfce))
 
-- [Debian](https://www.debian.org/) (kernels 5.10, 5.15 and 6.1)
+- [Debian](https://www.debian.org/) (kernels 5.10, 5.15, 6.1 and 6.6)
 
 - [Fedora](https://getfedora.org) Fedora 38 (6.2.13-300)
-
-- [Kali Linux](https://www.kali.org/) (kernel 6.3)
 
 - [Manjaro](https://manjaro.org) (kernel 5.15)
 
 - [openSUSE](https://www.opensuse.org/) Tumbleweed (rolling) (kernel 5.15)
 
-- [Raspberry Pi OS](https://www.raspberrypi.org) (2023-05-03)(ARM 32 bit and 64 bit) (kernel 6.1.38)
+- [Raspberry Pi OS](https://www.raspberrypi.org) (2023-12-05)(ARM 32 bit and 64 bit)
 
 - [Raspberry Pi Desktop](https://www.raspberrypi.org) (2022-07-01) (x86 32 bit) (kernel 5.10)
 
-- [SkiffOS](https://github.com/skiffos/skiffos/) for Odroid XU4 (ARM 32 bit) (kernel 6.0.7)
-
-- [Ubuntu](https://www.ubuntu.com) 22.04 (kernel 5.15) and 22.10 (kernel 5.19) (kernel 6.2)
-
-- [Void Linux](https://voidlinux.org/) (kernel 5.18)
+- [Ubuntu](https://www.ubuntu.com) 22.04 (kernel 5.15) and 22.10 (kernel 5.19) (kernel 6.5)
 
 Note: Red Hat Enterprise Linux (RHEL) and distros based on RHEL are
 supported by Red Hat devs due to the way kernel patches are handled in
@@ -134,10 +123,10 @@ OpenWRT so it is strongly advised to use the already supported chipsets.
 
 ### Compatible Devices
 
-* [ALFA AWUS036ACS](https://store.rokland.com/collections/wi-fi-usb-adapters/products/alfa-awus036acs-802-11ac-ac600-dual-band-wifi-usb-adapter-rp-sma)
+* ALFA AWUS036ACS
 * Buffalo WI-U2-433DHP
 * Edimax EW-7811UTC
-* [Edimax EW-7811UAC](https://www.amazon.com/Edimax-EW-7811UAC-Extension-Reception-Transmission/dp/B00LGN8I40)
+* Edimax EW-7811UAC
 * Edimax EW-7811UCB
 * ELECOM WDC-433DU2H
 * GMYLE - AC450
@@ -147,28 +136,16 @@ OpenWRT so it is strongly advised to use the already supported chipsets.
 * EDUP EP-1607
 * Numerous adapters that are based on the supported chipsets.
 
-Note: If you are looking for information about what adapter to buy,
-click [here](https://github.com/morrownr/USB-WiFi) and look for Main
-Menu item 2 which will show information about and links to recommended
-adapters.
-
-Note: If you decide to buy an adapter that is supported by this driver,
-I recommend you search for an adapter that is `single-state and
-single-function`. Multi-function adapters, wifi and bluetooth, can be
-problematic. The rtl8821au chipset is multi-fuction. The rtl8811au
-chipset is single-function. For advice about single-state and
-multi-state adapters. click [here](https://github.com/morrownr/USB-WiFi)
-and look for Main Menu item 1.
-
 ### Installation Information
 
 Warning: It is recommended that you follow the installation instructions
 in the Installation Steps section. Avoid installation by downloading the
 zip file if at all possible. Support can only be provided, on a best
-effort basis, if the Installation Steps in the next section are followed.
+effort basis, if the instructions in the Installation Steps section are
+followed.
 
 Warning: Installing multiple out-of-kernel drivers for the same hardware
-usually does not end well. The install-driver.sh script has the
+usually does not end well. The `install-driver.sh` script has the
 capability to detect and remove most conflicting drivers but not all. If
 this driver does not work well after installation and you have
 previously installed a driver that you did not remove, it is suggested
@@ -181,23 +158,13 @@ sudo dkms status
 
 Warning: If you decide to do a distro upgrade, which will likely install
 a new version of kernel such as 5.15 to 6.1, you need to update this
-driver with the newest available code and then run the removal script
-before performing the disto upgrade. Use the following commands in the
-driver directory:
+driver with the newest available code and then reinstall it before
+performing the disto upgrade. Use the following commands in the driver
+directory:
 
 ```
 git pull
 ```
-
-Note: Do not reboot before running the below command so that the driver
-stays active until after your distro upgrade is complete.
-
-```
-sudo sh remove-driver.sh
-```
-
-Note: The following command will reinstall the updated driver after you
-are finished with the distro upgrade and reboot.
 
 ```
 sudo sh install-driver.sh
@@ -236,9 +203,9 @@ Secure Boot: see FAQ.
 
 Note: The installation instructions are for the novice user. Experienced
 users are welcome to alter the installation to meet their needs. Support
-will be provided, on a best effort basis, based on the steps below. Another
-way to word this paragraph is that if you do not follow the below steps for
-installation, you are your own tech support.
+will be provided, on a best effort basis, based on the steps below.
+Another way to word this paragraph is that if you do not follow the
+below steps for installation, you are your own tech support.
 
 #### Step 1: Open a terminal (e.g. Ctrl+Alt+T)
 
@@ -404,7 +371,7 @@ cd ~/src/8821au-20210708
 #### Step 8: Run the installation script (`install-driver.sh`)
 
 Important: The compilation may fail if the major version of gcc that is
-in use is not the same as the major version of the gcc that was used to
+in use is not the same as the major version of gcc that was used to
 compile the kernel that is in use:
 
 Example of bad situation:
@@ -469,7 +436,7 @@ sudo mokutil --import /var/lib/dkms/mok.pub
 
 ### Manual Installation Instructions
 
-Note: The installation script, install-driver.sh, automates the
+Note: The installation script, `install-driver.sh` , automates the
 installation process, however, if you want to or need to do a basic
 command line installation, use the following:
 
@@ -560,7 +527,7 @@ installed in your distro.
 
 ### Driver Options (`edit-options.sh`)
 
-Note: In Linux, driver options are called module parameters.
+Note: In Linux, driver options are also called `module parameters` .
 
 A file called `8821au.conf` will be installed in `/etc/modprobe.d` by
 default if you use the installation script, `install-driver.sh`. If you
@@ -590,20 +557,17 @@ continuous.
 
 Note: Upgrading the driver is advised in the following situations:
 
+- every 2-3 months
 - if a new or updated version of the driver needs to be installed
 - if a distro version upgrade is going to be installed (i.e. going from
 kernel 5.10 to kernel 5.15)
 
-#### Step 1: Move to the driver directory
+#### Step 1: Open a terminal (e.g. Ctrl+Alt+T)
+
+#### Step 2: Move to the driver directory
 
 ```
 cd ~/src/8821au-20210708
-```
-
-#### Step 2: Remove the currently installed driver
-
-```
-sudo ./remove-driver.sh
 ```
 
 #### Step 3: Pull updated code from this repo
@@ -612,7 +576,10 @@ sudo ./remove-driver.sh
 git pull
 ```
 
-#### Step 4: Install the driver
+#### Step 4: Reinstall the driver
+
+Note: The `install-driver.sh` script will automatically remove the
+previously installed driver.
 
 ```
 sudo ./install-driver.sh
@@ -623,7 +590,6 @@ sudo ./install-driver.sh
 
 Note: Removing the driver is advised in the following situations:
 
-- if driver installation fails
 - if the driver is no longer needed
 
 Note: The following removes everything that has been installed, with the
@@ -650,6 +616,9 @@ sudo ./remove-driver.sh
 -----
 
 ### Recommended WiFi Router/ Access Point Settings
+
+Note: These recommendations apply when using your adapter in managed
+(client) mode, not AP mode.
 
 Note: These are general recommendations, some of which may not apply to
 your specific situation.
@@ -683,7 +652,7 @@ work on 5 GHz. (For US, other countries may vary.)
 
 - Best location for the WiFi router/access point: Near center of
 apartment or house, at least a couple of feet away from walls, in an
-elevated location. You may have to test to see what the best location is
+elevated location. You may have to test to find the best location is
 in your environment.
 
 - Check congestion: There are apps available for smart phones that allow
@@ -700,22 +669,23 @@ After making and saving changes, reboot the router.
 fix a variety of problems.
 
 - If connecting your USB WiFi adapter to a desktop computer, use the USB
-ports on the rear of the computer. Why? The ports on the rear are
-directly connected to the motherboard which will reduce problems with
-interference and disconnection.
+ports on the rear of the computer if you encounter any problems. Why?
+The ports on the rear are directly connected to the motherboard which
+will reduce problems with interference and disconnection. An extension
+cable can be helpful to position the adapter for best reception.
 
 - If your USB WiFi adapter is USB 3 capable and you want it to operate
 in USB3 mode, plug it into a USB 3 port.
 
-- Avoid USB 3.1 Gen 2 ports if possible as almost all currently
-available adapters have been tested with USB 3.1 Gen 1 (aka USB 3) and
-not with USB 3.1 Gen 2.
+- Avoid USB 3.1 Gen 2 ports if possible as most currently available
+adapters have been tested with USB 3.1 Gen 1 (aka USB 3) and not with
+USB 3.1 Gen 2.
 
 - If you use an extension cable and your adapter is USB 3 capable, the
 cable needs to be USB 3 capable (if not, you will be limited to USB 2
 speeds).
 
-- Extension cables can be problematic. A way to check if the extension
+- Extention cables can be problematic. A way to check if the extension
 cable is the problem is to plug the adapter temporarily into a USB port
 on the computer.
 
@@ -730,7 +700,7 @@ To Contribute:
 
 - Fork this repository.
 - Make your edits.
-- TEST!
+- TEST THEM!
 - Create a pull request.
 
 -----
