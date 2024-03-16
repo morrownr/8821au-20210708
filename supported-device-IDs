@@ -12,37 +12,37 @@ ID VendorID:DeviceID = 0bda:b811
 
 We can search the list of driver supported IDs shown below.
 
-Realtek default IDs
+Realtek default IDs (6)
 
-ID 0BDA:0811
-ID 0BDA:0821
-ID 0BDA:8822
-ID 0BDA:A811
-ID 0BDA:0820
-ID 0BDA:0823
+ID 0bda:0811
+ID 0bda:0821
+ID 0bda:8822
+ID 0bda:a811
+ID 0bda:0820
+ID 0bda:0823
 
-Seller specific IDs
+Seller specific IDs (20)
 
-ID 7392:A811
-ID 7392:A812
-ID 7392:A813
-ID 7392:B611
-ID 04BB:0953
-ID 2001:3314
-ID 2001:3318
-ID 0E66:0023
-ID 056E:400E
-ID 056E:400F
-ID 0411:0242
-ID 2019:AB32
-ID 0846:9052
-ID 0411:029B
-ID 056E:4007
-ID 3823:6249
-ID 2357:011E
-ID 2357:0120
-ID 2357:011F
-ID 20f4:804b
+ID 0411:0242 /* Buffalo */
+ID 0411:029b /* Buffalo */
+ID 04bb:0953 /* I-O DATA */
+ID 056e:4007 /* ELECOM */
+ID 056e:400e /* ELECOM */
+ID 056e:400f /* ELECOM */
+ID 0846:9052 /* Netgear */
+ID 0e66:0023 /* HAWKING */
+ID 2001:3314 /* D-Link */
+ID 2001:3318 /* D-Link */
+ID 2019:ab32 /* Planex */
+ID 20f4:804b /* TRENDnet */
+ID 2357:011e /* TP Link */
+ID 2357:011f /* TP Link */
+ID 2357:0120 /* TP Link */
+ID 3823:6249 /* Obihai */
+ID 7392:a811 /* Edimax */
+ID 7392:a812 /* Edimax */
+ID 7392:a813 /* Edimax */
+ID 7392:b611 /* Edimax */
 
 If your adapter matches one of the default or seller specific
 IDs then this is the driver to use.
