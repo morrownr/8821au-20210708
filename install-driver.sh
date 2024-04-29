@@ -122,12 +122,12 @@ fi
 
 
 # check to see if the correct header files are installed
-if [ ! -d "/lib/modules/$(uname -r)/build" ]; then
-	echo "Your kernel header files aren't properly installed."
-	echo "Please consult your distro documentation or user support forums."
-	echo "Once the header files are properly installed, please run \"sudo ./${SCRIPT_NAME}\""
-	exit 1
-fi
+#if [ ! -d "/lib/modules/$(uname -r)/build" ]; then
+#	echo "Your kernel header files aren't properly installed."
+#	echo "Please consult your distro documentation or user support forums."
+#	echo "Once the header files are properly installed, please run \"sudo ./${SCRIPT_NAME}\""
+#	exit 1
+#fi
 
 
 # ensure /usr/sbin is in the PATH so iw can be found
