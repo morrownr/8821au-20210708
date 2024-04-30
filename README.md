@@ -1,8 +1,7 @@
 ## 8821au ( 8821au.ko ) :rocket:
 
-## Hot: An effort is underway to add in-kernel support for the rtl8821/11au chipset.
-## For more information, go to:
-## https://github.com/morrownr/8821au-20210708/issues/133
+HOT: An effort is underway to add in-kernel support for the rtl8821/11au chipset.
+For more information, go to: https://github.com/morrownr/8821au-20210708/issues/133
 
 ## Linux Driver for USB WiFi Adapters that are based on the RTL8811AU and RTL8821AU Chipsets
 
