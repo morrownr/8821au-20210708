@@ -1,7 +1,11 @@
 ## 8821au ( 8821au.ko ) :rocket:
 
-HOT: An effort is underway to add in-kernel support for the rtl8821/11au chipset.
-For more information, go to: https://github.com/morrownr/8821au-20210708/issues/133
+## Hot: An in-kernel driver for the rtl8821/11au chipsets has been merged into
+## kernels 6.13 and 6.14. Installing this driver will automatically blacklist
+## the new in-kernel driver, which is part of the rtw88 series of drivers. The
+## new in-kernel driver is Linux Standards comliant and is a much better driver
+## than this one. This driver will no longer get API related updates beyond
+## kernel 6.13. Pull Requests are still welcome.
 
 ## Linux Driver for USB WiFi Adapters that are based on the RTL8811AU and RTL8821AU Chipsets
 
@@ -68,15 +72,15 @@ the hardware to test the above.
 
 ### Compatible Kernels
 
-- Kernels: 5.4 - 5.11 (Realtek)
-- Kernels: 5.12 - 6.10  (community support)
+- Kernels: 5.4 - 5.11   (Realtek)
+- Kernels: 5.12 - 6.13  (community support)
 
 Note: Kernels earlier than 5.4 may work but are not tested or
 supported.
 
 ### Tested Compilers
 
-- gcc 11, 12 and 13
+- gcc 12, 13 and 14
 
 ### Tested Linux Distributions
 
