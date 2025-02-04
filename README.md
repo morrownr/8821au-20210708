@@ -1,11 +1,11 @@
 ## 8821au ( 8821au.ko ) :rocket:
 
-## Hot: An in-kernel driver for the rtl8821/11au chipsets has been merged into
-## kernels 6.13 and 6.14. Installing this driver will automatically blacklist
-## the new in-kernel driver, which is part of the rtw88 series of drivers. The
-## new in-kernel driver is Linux Standards comliant and is a much better driver
-## than this one. This driver will no longer get API related updates beyond
-## kernel 6.13. Pull Requests are still welcome.
+Hot: An in-kernel driver for the rtl8821/11au chipsets has been merged into
+kernels 6.13 and 6.14. Installing this driver will automatically blacklist
+the new in-kernel driver, which is part of the rtw88 series of drivers. The
+new in-kernel driver is Linux Standards comliant and is a much better driver
+than this one. This driver will no longer get API related updates beyond
+kernel 6.13. Pull Requests are still welcome.
 
 ## Linux Driver for USB WiFi Adapters that are based on the RTL8811AU and RTL8821AU Chipsets
 
