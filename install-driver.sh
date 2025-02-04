@@ -39,7 +39,7 @@
 # GNU General Public License for more details.
 
 SCRIPT_NAME="install-driver.sh"
-SCRIPT_VERSION="20240314"
+SCRIPT_VERSION="20241003"
 
 MODULE_NAME="8821au"
 
@@ -92,66 +92,6 @@ do
 	esac
 	shift
 done
-
-
-# check to ensure gcc is installed
-if ! command -v gcc >/dev/null 2>&1; then
-	echo "A required package is not installed."
-	echo "Please install the following package: gcc"
-	echo "Once the package is installed, please run \"sudo ./${SCRIPT_NAME}\""
-	exit 1
-fi
-
-
-# check to ensure bc is installed
-if ! command -v bc >/dev/null 2>&1; then
-	echo "A required package is not installed."
-	echo "Please install the following package: bc"
-	echo "Once the package is installed, please run \"sudo ./${SCRIPT_NAME}\""
-	exit 1
-fi
-
-
-# check to ensure make is installed
-if ! command -v make >/dev/null 2>&1; then
-	echo "A required package is not installed."
-	echo "Please install the following package: make"
-	echo "Once the package is installed, please run \"sudo ./${SCRIPT_NAME}\""
-	exit 1
-fi
-
-
-# check to see if the correct header files are installed
-#if [ ! -d "/lib/modules/$(uname -r)/build" ]; then
-#	echo "Your kernel header files aren't properly installed."
-#	echo "Please consult your distro documentation or user support forums."
-#	echo "Once the header files are properly installed, please run \"sudo ./${SCRIPT_NAME}\""
-#	exit 1
-#fi
-
-
-# ensure /usr/sbin is in the PATH so iw can be found
-#if ! echo "$PATH" | grep -qw sbin; then
-#        export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-#fi
-
-
-# check to ensure iw is installed
-#if ! command -v iw >/dev/null 2>&1; then
-#	echo "A required package is not installed."
-#	echo "Please install the following package: iw"
-#	echo "Once the package is installed, please run \"sudo ./${SCRIPT_NAME}\""
-#	exit 1
-#fi
-
-
-# check to ensure rfkill is installed
-#if ! command -v rfkill >/dev/null 2>&1; then
-#	echo "A required package is not installed."
-#	echo "Please install the following package: rfkill"
-#	echo "Once the package is installed, please run \"sudo ./${SCRIPT_NAME}\""
-#	exit 1
-#fi
 
 
 # set default editor
@@ -240,53 +180,115 @@ fi
 echo ": ---------------------------"
 echo
 
+
+# check to ensure gcc is installed
+if ! command -v gcc >/dev/null 2>&1; then
+	echo "A required package is not installed."
+	echo "Please install the following package: gcc"
+	echo "Once the package is installed, please run \"sudo ./${SCRIPT_NAME}\""
+	exit 1
+fi
+
+
+# check to ensure bc is installed
+if ! command -v bc >/dev/null 2>&1; then
+	echo "A required package is not installed."
+	echo "Please install the following package: bc"
+	echo "Once the package is installed, please run \"sudo ./${SCRIPT_NAME}\""
+	exit 1
+fi
+
+
+# check to ensure make is installed
+if ! command -v make >/dev/null 2>&1; then
+	echo "A required package is not installed."
+	echo "Please install the following package: make"
+	echo "Once the package is installed, please run \"sudo ./${SCRIPT_NAME}\""
+	exit 1
+fi
+
+
+# check to see if the correct header files are installed
+# - problem with fedora 40 reported
+if [ ! -d "/lib/modules/$(uname -r)/build" ]; then
+	echo "Your kernel header files aren't properly installed."
+	echo "Please consult your distro documentation or user support forums."
+	echo "Once the header files are properly installed, please run \"sudo ./${SCRIPT_NAME}\""
+	exit 1
+fi
+
+
+# ensure /usr/sbin is in the PATH so iw can be found
+#if ! echo "$PATH" | grep -qw sbin; then
+#        export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+#fi
+
+
+# check to ensure iw is installed
+#if ! command -v iw >/dev/null 2>&1; then
+#	echo "A required package is not installed."
+#	echo "Please install the following package: iw"
+#	echo "Once the package is installed, please run \"sudo ./${SCRIPT_NAME}\""
+#	exit 1
+#fi
+
+
+# check to ensure rfkill is installed
+#if ! command -v rfkill >/dev/null 2>&1; then
+#	echo "A required package is not installed."
+#	echo "Please install the following package: rfkill"
+#	echo "Once the package is installed, please run \"sudo ./${SCRIPT_NAME}\""
+#	exit 1
+#fi
+
+
 echo "Checking for previously installed drivers..."
 
 
-# check for and remove non-dkms installations
+# check for and uninstall non-dkms installations
 # standard naming
 if [ -f "${MODDESTDIR}${MODULE_NAME}.ko" ]; then
-	echo "Removing a non-dkms installation: ${MODDESTDIR}${MODULE_NAME}.ko"
+	echo "Uninstalling a non-dkms installation:"
+	echo "${MODDESTDIR}${MODULE_NAME}.ko"
 	rm -f "${MODDESTDIR}"${MODULE_NAME}.ko
 	/sbin/depmod -a "${KVER}"
-	echo "Removing ${OPTIONS_FILE} from /etc/modprobe.d"
+	echo "Deleting ${OPTIONS_FILE} from /etc/modprobe.d"
 	rm -f /etc/modprobe.d/${OPTIONS_FILE}
-	echo "Removing source files from /usr/src/${DRV_NAME}-${DRV_VERSION}"
+	echo "Deleting source files from /usr/src/${DRV_NAME}-${DRV_VERSION}"
 	rm -rf /usr/src/${DRV_NAME}-${DRV_VERSION}
 	make clean >/dev/null 2>&1
-	echo "Removal complete."
 fi
 
 
-# check for and remove non-dkms installations
+# check for and uninstall non-dkms installations
 # with rtl added to module name (PClinuxOS)
 # Dear PCLinuxOS devs, the driver name uses rtl, the module name does not.
 if [ -f "${MODDESTDIR}rtl${MODULE_NAME}.ko" ]; then
-	echo "Removing a non-dkms installation: ${MODDESTDIR}rtl${MODULE_NAME}.ko"
+	echo "Uninstalling a non-dkms installation:"
+	echo "${MODDESTDIR}rtl${MODULE_NAME}.ko"
 	rm -f "${MODDESTDIR}"rtl${MODULE_NAME}.ko
 	/sbin/depmod -a "${KVER}"
-	echo "Removing ${OPTIONS_FILE} from /etc/modprobe.d"
+	echo "Deleting ${OPTIONS_FILE} from /etc/modprobe.d"
 	rm -f /etc/modprobe.d/${OPTIONS_FILE}
-	echo "Removing source files from /usr/src/${DRV_NAME}-${DRV_VERSION}"
+	echo "Deleting source files from /usr/src/${DRV_NAME}-${DRV_VERSION}"
 	rm -rf /usr/src/${DRV_NAME}-${DRV_VERSION}
 	make clean >/dev/null 2>&1
-	echo "Removal complete."
 fi
 
 
-# check for and remove non-dkms installations
-# with compressed module in a unique non-standard location (Armbian)
+# check for and uninstall non-dkms installations
+# with module in a unique non-standard location (Armbian)
 # Example: /usr/lib/modules/5.15.80-rockchip64/kernel/drivers/net/wireless/rtl8821cu/8821cu.ko.xz
 if [ -f "/usr/lib/modules/${KVER}/kernel/drivers/net/wireless/${DRV_NAME}/${MODULE_NAME}.ko.xz" ]; then
-	echo "Removing a non-dkms installation: /usr/lib/modules/${KVER}/kernel/drivers/net/wireless/${DRV_NAME}/${MODULE_NAME}.ko.xz"
+	echo "Uninstalling a non-dkms installation:"
+	echo "/usr/lib/modules/${KVER}/kernel/drivers/net/wireless/${DRV_NAME}/${MODULE_NAME}.ko.xz"
 	rm -f /usr/lib/modules/"${KVER}"/kernel/drivers/net/wireless/${DRV_NAME}/${MODULE_NAME}.ko.xz
 	/sbin/depmod -a "${KVER}"
-	echo "Removing ${OPTIONS_FILE} from /etc/modprobe.d"
+	echo "Deleting ${OPTIONS_FILE} from /etc/modprobe.d"
 	rm -f /etc/modprobe.d/${OPTIONS_FILE}
-	echo "Removing source files from /usr/src/${DRV_NAME}-${DRV_VERSION}"
+	echo "Deleting source files from /usr/src/${DRV_NAME}-${DRV_VERSION}"
 	rm -rf /usr/src/${DRV_NAME}-${DRV_VERSION}
 	make clean >/dev/null 2>&1
-	echo "Removal complete."
 fi
 
 
@@ -295,8 +297,10 @@ if command -v dkms >/dev/null 2>&1; then
 	dkms status | while IFS="/,: " read -r drvname drvver kerver _dummy; do
 		case "$drvname" in *${MODULE_NAME})
 			if [ "${kerver}" = "added" ]; then
+				echo "Removing a driver that was added to dkms."
 				dkms remove -m "${drvname}" -v "${drvver}" --all
 			else
+				echo "Removing a driver that was installed by dkms."
 				dkms remove -m "${drvname}" -v "${drvver}" -k "${kerver}" -c "/usr/src/${drvname}-${drvver}/dkms.conf"
 			fi
 		esac
@@ -311,12 +315,14 @@ if command -v dkms >/dev/null 2>&1; then
 	fi
 fi
 
-echo "Finished checking for and removing previously installed drivers."
+echo "Finished checking for and uninstalling previously installed drivers."
 echo ": ---------------------------"
 
 echo
+#echo "Updating driver."
+#git pull
 echo "Starting installation."
-echo "Installing ${OPTIONS_FILE} to /etc/modprobe.d"
+echo "Copying ${OPTIONS_FILE} to /etc/modprobe.d"
 cp -f ${OPTIONS_FILE} /etc/modprobe.d
 
 
@@ -326,7 +332,7 @@ if ! command -v dkms >/dev/null 2>&1; then
 
 	make clean >/dev/null 2>&1
 
-	make -j"$(nproc)"
+	make -j"${sproc}"
 	RESULT=$?
 
 	if [ "$RESULT" != "0" ]; then
