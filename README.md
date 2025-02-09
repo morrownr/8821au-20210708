@@ -93,7 +93,7 @@ which can be provided via PR or message in Issues.
 
 - [Debian](https://www.debian.org/) (kernels 5.10, 5.15, 6.1 and 6.6)
 
-- [Fedora](https://getfedora.org) Fedora 38 (6.2.13-300)
+- [Fedora](https://getfedora.org) Fedora 38, 41 (kernel 6.11)
 
 - [Manjaro](https://manjaro.org) (kernel 5.15)
 
@@ -103,7 +103,7 @@ which can be provided via PR or message in Issues.
 
 - [Raspberry Pi Desktop](https://www.raspberrypi.org) (2022-07-01) (x86 32 bit) (kernel 5.10)
 
-- [Ubuntu](https://www.ubuntu.com) 22.04 (kernel 5.15) and 22.10 (kernel 5.19) (kernel 6.5)
+- [Ubuntu](https://www.ubuntu.com) 22.04 (kernel 5.15), 22.10 (kernel 5.19) (kernel 6.5) and 24.10 (kernel 6.11)
 
 Note: Red Hat Enterprise Linux (RHEL) and distros based on RHEL are
 supported by Red Hat devs due to the way kernel patches are handled in
@@ -139,6 +139,7 @@ OpenWRT so it is strongly advised to use the already supported chipsets.
 * Netis WF2180
 * Planex GW-450S
 * EDUP EP-1607
+* TP-Link Archer T2U nano
 * Numerous adapters that are based on the supported chipsets.
 
 ### Installation Information
