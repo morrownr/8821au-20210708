@@ -3,7 +3,7 @@
 Hot: An in-kernel driver for the rtl8821/11au chipsets has been merged into
 kernels 6.13 and 6.14. Installing this driver will automatically blacklist
 the new in-kernel driver, which is part of the rtw88 series of drivers. The
-new in-kernel driver is Linux Standards comliant and is a much better driver
+new in-kernel driver is Linux Standards compliant and is a much better driver
 than this one. This driver will no longer get API related updates beyond
 kernel 6.13. Pull Requests are still welcome.
 
@@ -16,7 +16,7 @@ how to confirm that this is the correct driver for your adapter.
 
 Note: Posting this driver is not a recommendation for Linux users to buy
 USB WiFi adapters based on the Realtek chipsets supported by this driver.
-Realtek out-of-kernel wifi drivers, such as this one, are not Linux Wireless
+Realtek out-of-kernel WiFi drivers, such as this one, are not Linux Wireless
 Standards compliant and appear to be designed to be used by skilled
 programmers producing products such as embedded systems. Users of desktop
 and server distros such as Ubuntu, Debian, Manjaro, Fedora, Raspberry Pi OS
