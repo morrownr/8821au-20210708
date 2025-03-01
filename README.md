@@ -473,7 +473,7 @@ enter commands.
 sudo make sign-install
 ```
 
-Note: You will be promted for a password, please remember the password
+Note: You will be prompted for a password, please remember the password
 as it will be used in some of the following steps.
 
 ```
