@@ -46,6 +46,8 @@ EXTRA_CFLAGS += -Wno-int-in-bool-context
 EXTRA_CFLAGS += -Wno-missing-prototypes
 EXTRA_CFLAGS += -Wno-missing-declarations
 
+EXTRA_CFLAGS += -Wno-empty-body
+
 GCC_VER_49 := $(shell echo `$(CC) -dumpversion | cut -f1-2 -d.` \>= 4.9 | bc )
 ifeq ($(GCC_VER_49),1)
 EXTRA_CFLAGS += -Wno-date-time	# Fix compile error && warning on gcc 4.9 and later
