@@ -1,11 +1,13 @@
 ## 8821au ( 8821au.ko ) :rocket:
 
-Hot: An in-kernel driver for the rtl8821/11au chipsets has been merged into
-kernels 6.13 and 6.14. Installing this driver will automatically blacklist
-the new in-kernel driver, which is part of the rtw88 series of drivers. The
-new in-kernel driver is Linux Standards compliant and is a much better driver
-than this one. This driver will no longer get API related updates beyond
-kernel 6.13. Pull Requests are still welcome.
+Hot: An in-kernel driver for the rtl8821/11au chipsets has been merged
+into kernels 6.13 and 6.14. Installing this driver will automatically
+blacklist the new in-kernel driver, which is part of the rtw88 series of
+drivers. The new in-kernel driver is Linux Standards compliant
+(mac80211) and is a much better driver than this one. This driver will
+no longer get API related updates beyond kernel 6.14. Pull Requests are
+still welcome. If you use a kernel prior to 6.14, it is possible use the
+new standards compliant driver. See: https://github.com/lwfinger/rtw88
 
 ## Linux Driver for USB WiFi Adapters that are based on the RTL8811AU and RTL8821AU Chipsets
 
@@ -72,8 +74,8 @@ the hardware to test the above.
 
 ### Compatible Kernels
 
-- Kernels: 5.4 - 5.11   (Realtek)
-- Kernels: 5.12 - 6.13  (community support)
+- Kernels: 5.4  - 5.11  (Realtek)
+- Kernels: 5.12 - 6.14  (community support)
 
 Note: Kernels earlier than 5.4 may work but are not tested or
 supported.
@@ -88,8 +90,6 @@ Note: The information in this section depends largely on user reports
 which can be provided via PR or message in Issues.
 
 - [Arch Linux](https://www.archlinux.org) (kernels 5.4, 5.11 and 6.6)
-
-- [Armbian](https://www.armbian.com/) (kernel 5.15) (Rock 4 SE (Rock 4b image with xfce))
 
 - [Debian](https://www.debian.org/) (kernels 5.10, 5.15, 6.1 and 6.6)
 
