@@ -1,13 +1,21 @@
-## 8821au ( 8821au.ko ) :rocket:
+Notice: An updated standards compliant (mac80211), in-kernel driver for rtl8821/11au chipset based adapters and modules is available and as of kernel 6.14 is of good quality. If your distro uses kernel 6.14 or later, there is no need to install this driver. The in-kernel driver is part of the rtw88 series of drivers. The in-kernel driver is Linux Standards compliant (mac80211) and is a much better driver than this one. This driver will no longer get API related updates beyond kernel 6.14 (unless provided by a user). If you use a kernel prior to 6.14, it is possible to use the new standards compliant driver by going to the following repo:
 
-Hot: An in-kernel driver for the rtl8821/11au chipsets has been merged
-into kernels 6.13 and 6.14. Installing this driver will automatically
-blacklist the new in-kernel driver, which is part of the rtw88 series of
-drivers. The new in-kernel driver is Linux Standards compliant
-(mac80211) and is a much better driver than this one. This driver will
-no longer get API related updates beyond kernel 6.14. Pull Requests are
-still welcome. If you use a kernel prior to 6.14, it is possible use the
-new standards compliant driver. See: https://github.com/lwfinger/rtw88
+https://github.com/lwfinger/rtw88
+
+If you decide to use the in-kernel driver, remember to first remove the driver in this repo. You can run the following to remove the driver in this repo:
+
+$ sudo sh remove-driver.sh
+
+It has been my pleasure to maintain this driver for the last several years. Thanks to all of those who helped.
+
+Remember: Ask not what your operating system can do for you, but what you can do for your operating system.
+
+Regards,
+
+@morrownr
+
+
+## 8821au ( 8821au.ko ) :rocket:
 
 ## Linux Driver for USB WiFi Adapters that are based on the RTL8811AU and RTL8821AU Chipsets
 
