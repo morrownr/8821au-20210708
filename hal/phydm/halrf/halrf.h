@@ -29,36 +29,36 @@
 /*@============================================================*/
 /*@include files*/
 /*@============================================================*/
-#include "halrf/halrf_psd.h"
+#include "halrf_psd.h"
 #if (RTL8822B_SUPPORT == 1)
-#include "halrf/rtl8822b/halrf_rfk_init_8822b.h"
+#include "rtl8822b/halrf_rfk_init_8822b.h"
 #endif
 #if (RTL8822C_SUPPORT == 1)
-#include "halrf/rtl8822c/halrf_rfk_init_8822c.h"
-#include "halrf/rtl8822c/halrf_iqk_8822c.h"
-#include "halrf/rtl8822c/halrf_tssi_8822c.h"
-#include "halrf/rtl8822c/halrf_dpk_8822c.h"
-#include "halrf/rtl8822c/halrf_txgapk_8822c.h"
+#include "rtl8822c/halrf_rfk_init_8822c.h"
+#include "rtl8822c/halrf_iqk_8822c.h"
+#include "rtl8822c/halrf_tssi_8822c.h"
+#include "rtl8822c/halrf_dpk_8822c.h"
+#include "rtl8822c/halrf_txgapk_8822c.h"
 #endif
 
 #if (DM_ODM_SUPPORT_TYPE & ODM_AP)
 #if (RTL8197G_SUPPORT == 1)
-#include "halrf/rtl8197g/halrf_rfk_init_8197g.h"
+#include "rtl8197g/halrf_rfk_init_8197g.h"
 #endif
 #if (RTL8198F_SUPPORT == 1)
-#include "halrf/rtl8198f/halrf_rfk_init_8198f.h"
+#include "rtl8198f/halrf_rfk_init_8198f.h"
 #endif
 #if (RTL8812F_SUPPORT == 1)
-#include "halrf/rtl8812f/halrf_rfk_init_8812f.h"
+#include "rtl8812f/halrf_rfk_init_8812f.h"
 #endif
 
 #endif
 
 #if (RTL8814B_SUPPORT == 1)
-#include "halrf/rtl8814b/halrf_rfk_init_8814b.h"
-#include "halrf/rtl8814b/halrf_iqk_8814b.h"
-#include "halrf/rtl8814b/halrf_dpk_8814b.h"
-#include "halrf/rtl8814b/halrf_txgapk_8814b.h"
+#include "rtl8814b/halrf_rfk_init_8814b.h"
+#include "rtl8814b/halrf_iqk_8814b.h"
+#include "rtl8814b/halrf_dpk_8814b.h"
+#include "rtl8814b/halrf_txgapk_8814b.h"
 #endif
 
 /*@============================================================*/

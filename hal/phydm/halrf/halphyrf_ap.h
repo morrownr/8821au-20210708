@@ -16,49 +16,49 @@
 #ifndef __HALPHYRF_H__
 #define __HALPHYRF_H__
 
-#include "halrf/halrf_powertracking_ap.h"
-#include "halrf/halrf_kfree.h"
+#include "halrf_powertracking_ap.h"
+#include "halrf_kfree.h"
 
 #if (RTL8814A_SUPPORT == 1)
-	#include "halrf/rtl8814a/halrf_iqk_8814a.h"
+	#include "rtl8814a/halrf_iqk_8814a.h"
 #endif
 
 #if (RTL8822B_SUPPORT == 1)
-	#include "halrf/rtl8822b/halrf_iqk_8822b.h"
+	#include "rtl8822b/halrf_iqk_8822b.h"
 #endif
 
 #if (RTL8821C_SUPPORT == 1)
-	#include "halrf/rtl8821c/halrf_iqk_8821c.h"
+	#include "rtl8821c/halrf_iqk_8821c.h"
 #endif
 
 #if (RTL8195B_SUPPORT == 1)
-//	#include "halrf/rtl8195b/halrf.h"
-	#include "halrf/rtl8195b/halrf_iqk_8195b.h"
-	#include "halrf/rtl8195b/halrf_txgapk_8195b.h"
-	#include "halrf/rtl8195b/halrf_dpk_8195b.h"
+//	#include "rtl8195b/halrf.h"
+	#include "rtl8195b/halrf_iqk_8195b.h"
+	#include "rtl8195b/halrf_txgapk_8195b.h"
+	#include "rtl8195b/halrf_dpk_8195b.h"
 #endif
 
 #if (RTL8198F_SUPPORT == 1)
-	#include "halrf/rtl8198f/halrf_iqk_8198f.h"
-	#include "halrf/rtl8198f/halrf_dpk_8198f.h"
+	#include "rtl8198f/halrf_iqk_8198f.h"
+	#include "rtl8198f/halrf_dpk_8198f.h"
 #endif
 
 #if (RTL8812F_SUPPORT == 1)
-	#include "halrf/rtl8812f/halrf_iqk_8812f.h"
-	#include "halrf/rtl8812f/halrf_dpk_8812f.h"
-	#include "halrf/rtl8812f/halrf_tssi_8812f.h"
+	#include "rtl8812f/halrf_iqk_8812f.h"
+	#include "rtl8812f/halrf_dpk_8812f.h"
+	#include "rtl8812f/halrf_tssi_8812f.h"
 #endif
 
 #if (RTL8814B_SUPPORT == 1)
-	#include "halrf/rtl8814b/halrf_iqk_8814b.h"
-	#include "halrf/rtl8814b/halrf_dpk_8814b.h"
-	#include "halrf/rtl8814b/halrf_txgapk_8814b.h"
+	#include "rtl8814b/halrf_iqk_8814b.h"
+	#include "rtl8814b/halrf_dpk_8814b.h"
+	#include "rtl8814b/halrf_txgapk_8814b.h"
 #endif
 
 #if (RTL8197G_SUPPORT == 1)
-	#include "halrf/rtl8197g/halrf_iqk_8197g.h"
-	#include "halrf/rtl8197g/halrf_dpk_8197g.h"
-	#include "halrf/rtl8197g/halrf_tssi_8197g.h"
+	#include "rtl8197g/halrf_iqk_8197g.h"
+	#include "rtl8197g/halrf_dpk_8197g.h"
+	#include "rtl8197g/halrf_tssi_8197g.h"
 #endif
 
 enum pwrtrack_method {

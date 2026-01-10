@@ -14,7 +14,7 @@
  *****************************************************************************/
 
 #include "mp_precomp.h"
-#include "phydm_precomp.h"
+#include "../phydm_precomp.h"
 
 #ifndef index_mapping_NUM_88E
 	#define	index_mapping_NUM_88E	15

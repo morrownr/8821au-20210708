@@ -29,7 +29,7 @@
  */
 
 #include "mp_precomp.h"
-#include "phydm_precomp.h"
+#include "../phydm_precomp.h"
 
 #if (RTL8822B_SUPPORT == 1 || RTL8821C_SUPPORT == 1 ||\
 	RTL8195B_SUPPORT == 1 || RTL8198F_SUPPORT == 1 ||\

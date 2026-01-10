@@ -79,12 +79,12 @@ int sha256_prf_bits(const u8 *key, size_t key_len, const char *label,
 		plen = buf_len - pos;
 		WPA_PUT_LE16(counter_le, counter);
 		if (plen >= SHA256_MAC_LEN) {
-			if (hmac_sha256_vector(key, key_len, 4, addr, len,
+			if (rtw_hmac_sha256_vector(key, key_len, 4, addr, len,
 					       &buf[pos]) < 0)
 				return -1;
 			pos += SHA256_MAC_LEN;
 		} else {
-			if (hmac_sha256_vector(key, key_len, 4, addr, len,
+			if (rtw_hmac_sha256_vector(key, key_len, 4, addr, len,
 					       hash) < 0)
 				return -1;
 			os_memcpy(&buf[pos], hash, plen);

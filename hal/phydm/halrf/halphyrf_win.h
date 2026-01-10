@@ -17,30 +17,30 @@
 #define __HALPHYRF_H__
 
 #if (RTL8814A_SUPPORT == 1)
-	#include "halrf/rtl8814a/halrf_iqk_8814a.h"
+	#include "rtl8814a/halrf_iqk_8814a.h"
 #endif
 
 #if (RTL8822B_SUPPORT == 1)
-	#include "halrf/rtl8822b/halrf_iqk_8822b.h"
+	#include "rtl8822b/halrf_iqk_8822b.h"
 	#include "../mac/Halmac_type.h"
 #endif
-#include "halrf/halrf_powertracking_win.h"
-#include "halrf/halrf_kfree.h"
-#include "halrf/halrf_txgapcal.h"
+#include "halrf_powertracking_win.h"
+#include "halrf_kfree.h"
+#include "halrf_txgapcal.h"
 #if (RTL8821C_SUPPORT == 1)
-	#include "halrf/rtl8821c/halrf_iqk_8821c.h"
+	#include "rtl8821c/halrf_iqk_8821c.h"
 #endif
 
 #if (RTL8195B_SUPPORT == 1)
-//	#include "halrf/rtl8195b/halrf.h"
-	#include "halrf/rtl8195b/halrf_iqk_8195b.h"
-	#include "halrf/rtl8195b/halrf_txgapk_8195b.h"
-	#include "halrf/rtl8195b/halrf_dpk_8195b.h"
+//	#include "rtl8195b/halrf.h"
+	#include "rtl8195b/halrf_iqk_8195b.h"
+	#include "rtl8195b/halrf_txgapk_8195b.h"
+	#include "rtl8195b/halrf_dpk_8195b.h"
 #endif
 
 #if (RTL8814B_SUPPORT == 1)
-	#include "halrf/rtl8814b/halrf_iqk_8814b.h"
-	#include "halrf/rtl8814b/halrf_txgapk_8814b.h"
+	#include "rtl8814b/halrf_iqk_8814b.h"
+	#include "rtl8814b/halrf_txgapk_8814b.h"
 #endif
 
 enum spur_cal_method {

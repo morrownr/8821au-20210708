@@ -28,7 +28,7 @@
  * ************************************************************
  */
 #include "mp_precomp.h"
-#include "phydm_precomp.h"
+#include "../phydm_precomp.h"
 
 boolean
 odm_check_power_status(void *dm_void)
