@@ -209,7 +209,6 @@ static struct usb_device_id rtw_usb_id_tbl[] = {
 	{USB_DEVICE(0x0E66, 0x0023), .driver_info = RTL8821}, /* HAWKING */
 	{USB_DEVICE(0x2001, 0x3314), .driver_info = RTL8821}, /* D-Link */
 	{USB_DEVICE(0x2001, 0x3318), .driver_info = RTL8821}, /* D-Link */
-	{USB_DEVICE(0x2001, 0x3321), .driver_info = RTL8821}, /* D-Link DWA-182 */
 	{USB_DEVICE(0x2019, 0xAB32), .driver_info = RTL8821}, /* Planex */
 	{USB_DEVICE(0x20f4, 0x804b), .driver_info = RTL8821}, /* TRENDnet */
 	{USB_DEVICE(0x2357, 0x011E), .driver_info = RTL8821}, /* TP Link */
