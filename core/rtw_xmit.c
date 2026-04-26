@@ -6502,11 +6502,11 @@ bool rtw_xmit_ac_blocked(_adapter *adapter)
 		mlme = &iface->mlmepriv;
 		mlmeext = &iface->mlmeextpriv;
 
-		/* check scan state — gated by _FW_UNDER_SURVEY to avoid permanent
+		/* check scan state — gated by WIFI_UNDER_SURVEY to avoid permanent
 		 * TX stall when rtw_scan_timeout_handler clears the upper flag but
 		 * mlmeext->scan_state stays stuck in SCAN_PROCESS (race when scan
 		 * never reaches SCAN_COMPLETE handler that resets scan_state). */
-		if (check_fwstate(mlme, _FW_UNDER_SURVEY)
+		if (check_fwstate(mlme, WIFI_UNDER_SURVEY)
 			&& mlmeext_scan_state(mlmeext) != SCAN_DISABLE
 			&& mlmeext_scan_state(mlmeext) != SCAN_BACK_OP
 		) {
@@ -6514,7 +6514,7 @@ bool rtw_xmit_ac_blocked(_adapter *adapter)
 			goto exit;
 		}
 
-		if (check_fwstate(mlme, _FW_UNDER_SURVEY)
+		if (check_fwstate(mlme, WIFI_UNDER_SURVEY)
 			&& mlmeext_scan_state(mlmeext) == SCAN_BACK_OP
 			&& !mlmeext_chk_scan_backop_flags(mlmeext, SS_BACKOP_TX_RESUME)
 		) {
