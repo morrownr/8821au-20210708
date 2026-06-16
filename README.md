@@ -83,14 +83,14 @@ the hardware to test the above.
 ### Compatible Kernels
 
 - Kernels: 5.4  - 5.11  (Realtek)
-- Kernels: 5.12 - 6.14  (community support)
+- Kernels: 5.12 - 7.0   (community support)
 
 Note: Kernels earlier than 5.4 may work but are not tested or
 supported.
 
 ### Tested Compilers
 
-- gcc 12, 13 and 14
+- gcc 12, 13, 14 and 15
 
 ### Tested Linux Distributions
 
@@ -111,7 +111,7 @@ which can be provided via PR or message in Issues.
 
 - [Raspberry Pi Desktop](https://www.raspberrypi.org) (2022-07-01) (x86 32 bit) (kernel 5.10)
 
-- [Ubuntu](https://www.ubuntu.com) 22.04 (kernel 5.15), 22.10 (kernel 5.19) (kernel 6.5) and 24.10 (kernel 6.11)
+- [Ubuntu](https://www.ubuntu.com) 22.04 (kernel 5.15), 22.10 (kernel 5.19) (kernel 6.5), 24.10 (kernel 6.11) and 26.04 (kernel 7.0)
 
 Note: Red Hat Enterprise Linux (RHEL) and distros based on RHEL are
 supported by Red Hat devs due to the way kernel patches are handled in
