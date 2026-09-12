@@ -16,6 +16,9 @@
 
 #include <drv_types.h>
 #include <hal_data.h>
+#if defined(CONFIG_IOCTL_CFG80211) && (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 30))
+#include <net/cfg80211.h>
+#endif
 
 #ifdef CONFIG_NEW_SIGNAL_STAT_PROCESS
 static void rtw_signal_stat_timer_hdl(void *ctx);
@@ -4427,6 +4430,37 @@ static void rtw_signal_stat_timer_hdl(void *ctx)
 		recvpriv->signal_strength = tmp_s;
 		recvpriv->rssi = (s8)translate_percentage_to_dbm(tmp_s);
 		recvpriv->signal_qual = tmp_q;
+
+#if defined(CONFIG_IOCTL_CFG80211) && (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 30))
+		/* cfg80211 connection quality monitoring (NL80211_CMD_SET_CQM):
+		 * userspace (wpa_supplicant's bgscan "simple"/"learn", NetworkManager,
+		 * etc.) configures a threshold via cfg80211_rtw_set_cqm_rssi_config()
+		 * so it gets an event instead of polling RSSI on a timer. Evaluated
+		 * here once per signal-stat tick against the just-updated rssi;
+		 * cqm_rssi_state avoids re-notifying every tick while rssi stays on
+		 * the same side of the hysteresis band. */
+		if (recvpriv->cqm_rssi_thold != 0) {
+			s32 thold = recvpriv->cqm_rssi_thold;
+			s32 hyst = (s32)recvpriv->cqm_rssi_hyst;
+			s32 rssi = recvpriv->rssi;
+
+			if (rssi <= thold - hyst) {
+				if (recvpriv->cqm_rssi_state != 1) {
+					recvpriv->cqm_rssi_state = 1;
+					cfg80211_cqm_rssi_notify(adapter->pnetdev,
+						NL80211_CQM_RSSI_THRESHOLD_EVENT_LOW,
+						rssi, GFP_ATOMIC);
+				}
+			} else if (rssi >= thold + hyst) {
+				if (recvpriv->cqm_rssi_state != 2) {
+					recvpriv->cqm_rssi_state = 2;
+					cfg80211_cqm_rssi_notify(adapter->pnetdev,
+						NL80211_CQM_RSSI_THRESHOLD_EVENT_HIGH,
+						rssi, GFP_ATOMIC);
+				}
+			}
+		}
+#endif /* CONFIG_IOCTL_CFG80211 && LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 30) */
 
 #if defined(DBG_RX_SIGNAL_DISPLAY_PROCESSING) && 1
 		RTW_INFO(FUNC_ADPT_FMT" signal_strength:%3u, rssi:%3d, signal_qual:%3u"

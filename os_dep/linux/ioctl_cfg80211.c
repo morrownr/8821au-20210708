@@ -4732,6 +4732,31 @@ inline bool rtw_cfg80211_pwr_mgmt(_adapter *adapter)
 	return wdev->ps;
 }
 
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 30))
+static int cfg80211_rtw_set_cqm_rssi_config(struct wiphy *wiphy,
+				       struct net_device *ndev,
+				       s32 rssi_thold, u32 rssi_hyst)
+{
+	_adapter *padapter = (_adapter *)rtw_netdev_priv(ndev);
+	struct recv_priv *precvpriv = &padapter->recvpriv;
+
+	RTW_INFO(FUNC_NDEV_FMT" rssi_thold:%d, rssi_hyst:%u\n", FUNC_NDEV_ARG(ndev),
+		rssi_thold, rssi_hyst);
+
+	/* rssi_thold == 0 is used internally as "not configured"; cfg80211
+	 * itself never asks for exactly 0 dBm (nl80211 validates the
+	 * threshold is a plausible RSSI value before calling this). */
+	precvpriv->cqm_rssi_thold = rssi_thold;
+	precvpriv->cqm_rssi_hyst = rssi_hyst;
+	/* Re-evaluate from scratch against the next signal-stat tick instead
+	 * of assuming a side, so a genuine threshold crossing that happens to
+	 * match the previous config's last-known side still notifies. */
+	precvpriv->cqm_rssi_state = 0;
+
+	return 0;
+}
+#endif /* (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 30)) */
+
 static int cfg80211_rtw_set_power_mgmt(struct wiphy *wiphy,
 				       struct net_device *ndev,
 				       bool enabled, int timeout)
@@ -10562,6 +10587,9 @@ static struct cfg80211_ops rtw_cfg80211_ops = {
 	.get_tx_power = cfg80211_rtw_get_txpower,
 #endif
 	.set_power_mgmt = cfg80211_rtw_set_power_mgmt,
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 30))
+	.set_cqm_rssi_config = cfg80211_rtw_set_cqm_rssi_config,
+#endif
 	.set_pmksa = cfg80211_rtw_set_pmksa,
 	.del_pmksa = cfg80211_rtw_del_pmksa,
 	.flush_pmksa = cfg80211_rtw_flush_pmksa,
