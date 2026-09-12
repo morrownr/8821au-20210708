@@ -446,6 +446,19 @@ struct recv_priv {
 #endif /* CONFIG_NEW_SIGNAL_STAT_PROCESS */
 	u16 sink_udpport, pre_rtp_rxseq, cur_rtp_rxseq;
 
+#if defined(CONFIG_IOCTL_CFG80211) && (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 30))
+	/* cfg80211 connection quality monitoring (NL80211_CMD_SET_CQM) --
+	 * cqm_rssi_thold == 0 means "not configured" (adapter is
+	 * zero-allocated via rtw_zvmalloc(), no separate init needed).
+	 * Evaluated against recvpriv->rssi in rtw_signal_stat_timer_hdl()
+	 * once per signal-stat tick; cqm_rssi_state tracks which side of
+	 * the hysteresis band the last notification was for, so repeated
+	 * ticks on the same side don't re-notify userspace every time. */
+	s32 cqm_rssi_thold;
+	u32 cqm_rssi_hyst;
+	u8 cqm_rssi_state; /* 0=unknown/not yet evaluated, 1=low, 2=high */
+#endif
+
 	BOOLEAN store_law_data_flag;
 };
 
