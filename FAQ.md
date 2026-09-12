@@ -102,7 +102,7 @@ Question: I am having problems with my adapter and I use Virtualbox or
 another VM?
 
 Answer: Running under VMs is not supported. It can work but you are
-your own techical support. There are guides available on the internet
+your own technical support. There are guides available on the internet
 and it is recommended that you seek support with the provider of the VM.
 
 Note: There are alternatives to using VM's. For example: Almost all
