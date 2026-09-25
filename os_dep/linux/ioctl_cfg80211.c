@@ -7617,7 +7617,7 @@ static s32 cfg80211_rtw_remain_on_channel(struct wiphy *wiphy,
 	enum nl80211_channel_type channel_type,
 #endif
 	unsigned int duration, u64 *cookie
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(7, 0, 0))
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(7, 2, 0))
 	, const u8 *rx_addr
 #endif
 	)
@@ -10303,7 +10303,7 @@ static int rtw_cfg80211_init_wiphy(_adapter *adapter, struct wiphy *wiphy)
 	#endif
 #endif
 
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 11, 0)) && (LINUX_VERSION_CODE < KERNEL_VERSION(7, 0, 0))
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 11, 0)) && (LINUX_VERSION_CODE < KERNEL_VERSION(7, 2, 0))
 #ifdef CONFIG_WIFI_MONITOR
 	/* Currently only for Monitor debugging; flag removed upstream */
 	wiphy->flags |= WIPHY_FLAG_SUPPORTS_5_10_MHZ;
