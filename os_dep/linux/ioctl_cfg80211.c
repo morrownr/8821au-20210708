@@ -7617,7 +7617,7 @@ static s32 cfg80211_rtw_remain_on_channel(struct wiphy *wiphy,
 	enum nl80211_channel_type channel_type,
 #endif
 	unsigned int duration, u64 *cookie
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(7, 0, 0))
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(7, 1, 0))
 	, const u8 *rx_addr
 #endif
 	)
